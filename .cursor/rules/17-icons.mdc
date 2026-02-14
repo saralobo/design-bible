@@ -1,0 +1,423 @@
+---
+alwaysApply: true
+---
+
+# Icons — Consistency, Sizing, and Optical Alignment
+
+> Icons are the universal language of interfaces. When they're inconsistent
+> in size, weight, or style, the interface looks broken — even if no one
+> can pinpoint exactly why. Icon inconsistency is a subtle but devastating error.
+
+---
+
+## THE GOLDEN RULE OF ICONS
+
+> **Every icon in the same context MUST have the same visual bounding box.**
+> Same container size. Same icon optical size. No exceptions.
+
+"Same context" means:
+- Icons in the same row (quick actions, toolbars)
+- Icons in the same navigation bar (bottom nav, top bar)
+- Icons in the same list (leading icons on list items)
+- Icons in the same grid (action grids, dashboards)
+- Icons in the same card (action buttons within a card)
+
+---
+
+## ICON SIZE STANDARDS
+
+### Standard Sizes (Bounding Box):
+| Token | Size | Typical Use |
+|---|---|---|
+| icon-xs | 16×16px | Inline with small text, badges |
+| icon-sm | 20×20px | Inside small buttons (36px), secondary indicators |
+| icon-md | 24×24px | **Default for most UI** — lists, nav, toolbars |
+| icon-lg | 28×28px | Emphasized icons, bottom nav active state |
+| icon-xl | 32×32px | Feature icons, empty states, onboarding |
+| icon-2xl | 40×40px | Card leading icons, avatars placeholder |
+| icon-3xl | 48×48px | Hero icons, success/error screens |
+
+### RULE:
+> Pick ONE size per context and apply it to ALL icons in that context.
+> Within a row of 4 action buttons, all 4 icons are 24×24px. Period.
+
+---
+
+## THE ICON CONTAINER PATTERN
+
+### Why Containers?
+Even well-designed SVG icons from the same library can have slightly different
+optical weights. An arrow icon might "look" smaller than a gear icon at the
+same bounding box. The container pattern solves this.
+
+### How It Works:
+```
+┌──────────────────┐
+│                  │
+│   ┌──────────┐   │  ← Icon Container: FIXED size frame
+│   │   ICON   │   │  ← Actual icon SVG/vector inside
+│   └──────────┘   │
+│                  │
+└──────────────────┘
+    Button Frame
+```
+
+### Implementation in Figma:
+```javascript
+// ✅ CORRECT — Icon inside a fixed-size container
+function createIconContainer(parent, size = 24) {
+  const container = figma.createFrame();
+  container.name = `Icon/${size}`;
+  container.resize(size, size);
+  container.fills = [];  // Transparent
+  container.layoutMode = 'HORIZONTAL';
+  container.primaryAxisAlignItems = 'CENTER';
+  container.counterAxisAlignItems = 'CENTER';
+  container.primaryAxisSizingMode = 'FIXED';
+  container.counterAxisSizingMode = 'FIXED';
+  container.clipsContent = true;
+
+  parent.appendChild(container);
+  return container;
+}
+
+// Then place the actual icon (vector, text, or component) INSIDE the container
+// The container guarantees consistent outer dimensions
+```
+
+### RULE:
+> Every icon that appears alongside other icons MUST be wrapped in a
+> fixed-size container frame. The container enforces uniform bounding boxes
+> regardless of the icon's internal optical weight.
+
+---
+
+## ICON CONSISTENCY WITHIN GROUPS
+
+### Quick Actions Row (e.g., Pay, Lock, Statement, Settings):
+```
+❌ WRONG:
+[ $ ]  [ 🔒 ]  [ ≡ ]  [ ⚙ ]
+ 18px   22px   16px   20px   ← Different visual sizes!
+
+✅ CORRECT:
+[ $ ]  [ 🔒 ]  [ ≡ ]  [ ⚙ ]
+ 24px   24px   24px   24px   ← All inside 24×24 containers
+```
+
+### Bottom Navigation:
+```
+❌ WRONG:
+🏠    🔍    +    🔔    👤
+20px  24px 32px 22px  24px   ← Mismatched sizes
+
+✅ CORRECT:
+🏠    🔍    +    🔔    👤
+24px  24px  24px 24px  24px  ← All uniform
+(except FAB center icon which has its own rules)
+```
+
+### List Leading Icons:
+```
+❌ WRONG:
+💳 Credit Card       (icon 28px)
+🏦 Bank Transfer     (icon 22px)
+📱 Mobile Payment    (icon 26px)
+
+✅ CORRECT:
+💳 Credit Card       (icon 24px in 24×24 container)
+🏦 Bank Transfer     (icon 24px in 24×24 container)
+📱 Mobile Payment    (icon 24px in 24×24 container)
+```
+
+---
+
+## NEVER USE TEXT CHARACTERS AS ICONS
+
+### THE CRITICAL ANTI-PATTERN:
+
+```javascript
+// ❌ FATAL — Text characters are NOT icons
+const icon = figma.createText();
+icon.characters = '$';       // Dollar sign — renders ~18px tall at fontSize 24
+icon.fontSize = 24;
+
+const icon2 = figma.createText();
+icon2.characters = '⊘';     // Unicode symbol — renders ~22px tall at fontSize 24
+icon2.fontSize = 24;
+
+// Even with the SAME fontSize, these characters have
+// DIFFERENT visual sizes because of font metrics:
+// - ascenders, descenders
+// - character width vs height
+// - optical weight
+// - Unicode block differences
+```
+
+### WHY THIS HAPPENS:
+1. **Font metrics vary per character**: `$` has different proportions than `⊘`
+2. **Unicode symbols are inconsistent**: Symbols from different Unicode blocks
+   (Basic Latin vs. Miscellaneous Symbols) have wildly different optical sizes
+3. **Emoji rendering is OS-dependent**: Same emoji looks different on macOS vs Windows vs Android
+4. **No guaranteed bounding box**: Text characters don't respect a uniform visual grid
+
+### WHAT TO USE INSTEAD:
+
+| Priority | Source | Example |
+|---|---|---|
+| **1st (Best)** | SVG/Vector icons from a single icon library | Lucide, Phosphor, Heroicons |
+| **2nd** | Figma icon components from a shared library | Library icon components |
+| **3rd** | Simple vector shapes drawn in Figma | Rectangle + lines = custom icon |
+| **4th (Last resort)** | Text character in a FIXED container | Only if no alternative exists |
+
+### If You MUST Use Text as Icons:
+```javascript
+// ✅ ACCEPTABLE — Text wrapped in fixed container with center alignment
+const ICON_SIZE = 24;
+
+const container = figma.createFrame();
+container.name = 'Icon/Dollar';
+container.resize(ICON_SIZE, ICON_SIZE);
+container.fills = [];
+container.layoutMode = 'HORIZONTAL';
+container.primaryAxisAlignItems = 'CENTER';
+container.counterAxisAlignItems = 'CENTER';
+container.primaryAxisSizingMode = 'FIXED';
+container.counterAxisSizingMode = 'FIXED';
+container.clipsContent = true;
+
+await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+const text = figma.createText();
+text.characters = '$';
+text.fontSize = 18;  // ← Adjust VISUALLY, not mathematically
+text.fontName = { family: 'Inter', style: 'Medium' };
+text.textAlignHorizontal = 'CENTER';
+text.textAlignVertical = 'CENTER';
+container.appendChild(text);
+
+// CRITICAL: Visually test ALL icons in the row together
+// Adjust individual fontSize values until they LOOK the same size
+```
+
+---
+
+## ICON LIBRARY RULES
+
+### 1. One Library Per Project
+> Choose ONE icon library and stick with it.
+> Mixing Lucide icons with Material Symbols with Feather icons creates
+> visual inconsistency in stroke weight, corner radius, and optical size.
+
+### Recommended Libraries:
+| Library | Style | Stroke | Best For |
+|---|---|---|---|
+| **Lucide** | Outline | 1.5-2px | Clean, modern apps |
+| **Phosphor** | Multiple weights | Variable | Versatile, 6 weights |
+| **Heroicons** | Outline + Solid | 1.5px | Tailwind/utility |
+| **SF Symbols** | Variable | Variable | iOS native |
+| **Material Symbols** | Variable | Variable | Android/Material |
+| **Tabler Icons** | Outline | 2px | Dashboard, admin |
+
+### 2. One Weight Per Context
+> If using outline icons, ALL icons are outline.
+> If using filled (solid) icons, ALL icons are filled.
+> Don't mix outline and filled in the same nav bar or toolbar.
+
+| Context | Recommended Style |
+|---|---|
+| Bottom nav (inactive) | Outline |
+| Bottom nav (active) | Filled (same icon, filled variant) |
+| Toolbar actions | Outline |
+| List leading icons | Outline or Filled (pick one) |
+| Buttons with icon | Outline (matches text weight) |
+| Tab bar | Outline (inactive) / Filled (active) |
+
+### 3. Consistent Stroke Weight
+> All icons in the project should have the same stroke weight.
+> Standard: 1.5px or 2px. Never mix 1px icons with 2.5px icons.
+
+---
+
+## OPTICAL ALIGNMENT VS MATHEMATICAL ALIGNMENT
+
+### The Problem:
+A mathematically centered circle icon and a mathematically centered
+play triangle look off — the triangle appears to be shifted left.
+
+### The Fix:
+Some icons need **optical adjustments** (1-2px nudge) to look centered:
+- **Play/Arrow icons**: Shift 1-2px in the direction they point
+- **Asymmetric icons**: May need minor position tweaking
+- **Text-heavy icons**: May need to be 1px smaller than geometric icons
+
+### RULE:
+> Always visually inspect icon alignment after placing them.
+> Mathematical center ≠ Optical center.
+> Trust your eyes over the numbers, but only adjust by 1-2px maximum.
+
+---
+
+## ICON INSIDE BUTTONS — SIZING TABLE
+
+| Button Height | Icon Container Size | Icon Visual Size | Gap (icon → text) |
+|---|---|---|---|
+| 32px (XSmall) | 16×16px | 16px | 4px |
+| 36px (Small) | 16×16px | 16px | 6px |
+| 44px (Medium) | 20×20px | 20px | 8px |
+| 48px (Large) | 24×24px | 24px | 8px |
+| 56px (XLarge/FAB) | 24×24px | 24px | 8px |
+
+### RULE:
+> The icon size inside a button is ALWAYS smaller than the button height.
+> Ratio: icon ≈ 40-50% of button height (visually balanced).
+
+---
+
+## ICON INSIDE CIRCULAR BUTTONS — THE COMPLETE RECIPE
+
+This is the full recipe that prevents the "different-sized icons" problem:
+
+```javascript
+// ✅ COMPLETE — Circular button with properly sized icon
+async function createCircularIconButton(opts) {
+  const {
+    parent,
+    size = 52,         // Button size (width = height)
+    iconChar = '?',    // Fallback text character
+    iconFontSize = 20, // Visually calibrated — NOT same as container
+    bgColor = '#1C1C24',
+    iconColor = '#F0F0F5',
+    name = 'IconButton'
+  } = opts;
+
+  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+
+  // 1. Button frame — FIXED circle
+  const btn = figma.createFrame();
+  btn.name = `Button/${name}`;
+  btn.resize(size, size);
+  btn.cornerRadius = size / 2;
+  btn.fills = [{ type: 'SOLID', color: hexToRGB(bgColor) }];
+  btn.layoutMode = 'HORIZONTAL';
+  btn.primaryAxisAlignItems = 'CENTER';
+  btn.counterAxisAlignItems = 'CENTER';
+  btn.primaryAxisSizingMode = 'FIXED';
+  btn.counterAxisSizingMode = 'FIXED';
+
+  // 2. Icon container — FIXED, guarantees uniform bounding box
+  const ICON_CONTAINER_SIZE = Math.round(size * 0.46);  // ~46% of button
+  const iconFrame = figma.createFrame();
+  iconFrame.name = `Icon/${name}`;
+  iconFrame.resize(ICON_CONTAINER_SIZE, ICON_CONTAINER_SIZE);
+  iconFrame.fills = [];
+  iconFrame.layoutMode = 'HORIZONTAL';
+  iconFrame.primaryAxisAlignItems = 'CENTER';
+  iconFrame.counterAxisAlignItems = 'CENTER';
+  iconFrame.primaryAxisSizingMode = 'FIXED';
+  iconFrame.counterAxisSizingMode = 'FIXED';
+
+  // 3. Icon content (text fallback — ideally use SVG/component)
+  const icon = figma.createText();
+  icon.characters = iconChar;
+  icon.fontSize = iconFontSize;
+  icon.fontName = { family: 'Inter', style: 'Medium' };
+  icon.fills = [{ type: 'SOLID', color: hexToRGB(iconColor) }];
+  icon.textAlignHorizontal = 'CENTER';
+  icon.textAlignVertical = 'CENTER';
+
+  // 4. Assembly
+  iconFrame.appendChild(icon);
+  btn.appendChild(iconFrame);
+  if (parent) parent.appendChild(btn);
+
+  return btn;
+}
+```
+
+### KEY INSIGHT:
+> The `ICON_CONTAINER_SIZE` is the same for ALL buttons in the group.
+> Even if one icon character renders slightly larger or smaller,
+> the container clips and centers it, making all buttons look uniform.
+
+---
+
+## VISUAL CALIBRATION TABLE FOR TEXT-AS-ICON
+
+When forced to use text characters, use this calibration guide:
+
+| Character Type | Recommended fontSize | Notes |
+|---|---|---|
+| Currency symbols ($, €, £, ¥) | 18-20px in 24px container | These render tall and narrow |
+| Arrows (←, →, ↑, ↓) | 20-22px in 24px container | Usually well-balanced |
+| Math symbols (+, ×, ÷) | 20-22px in 24px container | Fairly consistent |
+| Miscellaneous (⊘, ◎, ⚙) | 18-20px in 24px container | Unicode blocks vary wildly |
+| Emoji (🔒, 📊, ⚡) | 16-18px in 24px container | OS-dependent rendering |
+| Letters (A, X, i) | 16-18px in 24px container | Follow font metrics |
+
+### CRITICAL:
+> These values are STARTING POINTS. You MUST screenshot and visually verify
+> that all icons in a row appear the same size. Adjust ±1-2px as needed.
+
+---
+
+## ANTI-PATTERNS — ICONS
+
+### AP-I01: Mixed Icon Sizes in Same Row
+```
+❌ Pay (18px)  Lock (22px)  Statement (16px)  Settings (20px)
+✅ Pay (24px)  Lock (24px)  Statement (24px)  Settings (24px)
+```
+**Severity**: Major — breaks visual rhythm, looks unprofessional
+
+### AP-I02: Mixed Icon Libraries
+```
+❌ Lucide home + Material search + Feather bell + SF Symbols profile
+✅ Lucide home + Lucide search + Lucide bell + Lucide profile
+```
+**Severity**: Major — inconsistent stroke weight and style
+
+### AP-I03: Mixed Icon Styles (Outline + Filled)
+```
+❌ Outline home + Filled search + Outline bell + Filled profile
+✅ Outline home + Outline search + Outline bell + Outline profile
+   (Active state: Filled for the selected item only)
+```
+**Severity**: Moderate — creates confusion about which is active
+
+### AP-I04: Text Characters as Icons Without Container
+```
+❌ Raw text "$" placed directly in a button (fontSize varies per glyph)
+✅ Text "$" inside a FIXED 24×24 container with center alignment
+```
+**Severity**: Major — guarantees inconsistent sizing
+
+### AP-I05: Icon Without Accessible Label
+```
+❌ Button with only 🔍 icon (no text, no aria-label)
+✅ Button with 🔍 icon + "Search" label (or aria-label="Search")
+```
+**Severity**: Critical for accessibility
+
+### AP-I06: Oversized Icons in Small Buttons
+```
+❌ 32px icon inside 36px button (icon bleeds to edges)
+✅ 16px icon inside 36px button (comfortable breathing room)
+```
+**Severity**: Moderate — looks cramped, hard to tap
+
+---
+
+## ICON CHECKLIST
+
+Before finalizing any screen with icons:
+
+- [ ] Are ALL icons in the same row/group the same container size?
+- [ ] Is there only ONE icon library used in the project?
+- [ ] Are icons the same style (all outline OR all filled) within a context?
+- [ ] Do icons have consistent stroke weight across the project?
+- [ ] Are text-character icons wrapped in fixed-size containers?
+- [ ] Has the screen been visually inspected for optical size consistency?
+- [ ] Do standalone icons (no text label) have accessible names?
+- [ ] Is the icon size proportional to the button (40-50% of button height)?
+- [ ] Are active/inactive icon states clearly differentiated?
+- [ ] Have you screenshotted and verified the icon row looks uniform?
