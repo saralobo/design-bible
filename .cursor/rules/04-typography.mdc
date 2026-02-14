@@ -1,0 +1,187 @@
+---
+alwaysApply: true
+---
+
+# Tipografia — O Sistema Tipográfico para Interfaces
+
+> Tipografia é responsável por 95% da comunicação em uma interface.
+> Um sistema tipográfico bem definido elimina inconsistências e acelera a criação de telas.
+
+---
+
+## ESCALA TIPOGRÁFICA (Type Scale)
+
+Baseada em escala modular com ratio ~1.25 (Major Third) ou ratio fixo de 2px.
+
+### Mobile Type Scale:
+| Token | Size | Weight | Line Height | Uso |
+|---|---|---|---|---|
+| display-xl | 40px | Bold (700) | 48px (1.2) | Hero, splash |
+| display-lg | 32px | Bold (700) | 40px (1.25) | Valor monetário grande |
+| heading-xl | 28px | SemiBold (600) | 36px (1.28) | Título de tela principal |
+| heading-lg | 24px | SemiBold (600) | 32px (1.33) | Título de seção principal |
+| heading-md | 20px | SemiBold (600) | 28px (1.4) | Subtítulo, card title |
+| heading-sm | 18px | SemiBold (600) | 24px (1.33) | Subtítulo menor |
+| body-lg | 16px | Regular (400) | 24px (1.5) | Corpo principal, inputs |
+| body-md | 14px | Regular (400) | 20px (1.43) | Corpo secundário, labels |
+| body-sm | 12px | Regular (400) | 16px (1.33) | Caption, helper text |
+| body-xs | 10px | Medium (500) | 14px (1.4) | Badge count, overline (USAR RARAMENTE) |
+
+---
+
+## REGRAS DE LINE-HEIGHT
+
+**Fórmula geral**: Line-height = Font-size × 1.3 a 1.5
+
+| Contexto | Multiplicador |
+|---|---|
+| Display/Headlines (>24px) | 1.2 — 1.3 |
+| Body text (14-16px) | 1.4 — 1.5 |
+| Small text (<14px) | 1.3 — 1.4 |
+| Botões (single line) | 1.0 — 1.2 |
+| Input text | 1.25 (auto no Figma) |
+
+### REGRA:
+> Line-height SEMPRE deve ser múltiplo de 4 para alinhar ao grid de 8px.
+> Ex: 16px × 1.5 = 24px ✅ | 16px × 1.4 = 22.4px ❌ (arredondar para 24px)
+
+---
+
+## PESOS DE FONTE (Font Weights)
+
+### Máximo 3 pesos por projeto:
+| Weight | Valor | Uso |
+|---|---|---|
+| Regular | 400 | Corpo, descrições, placeholders |
+| Medium | 500 | Labels, caption com ênfase, overline |
+| SemiBold | 600 | Títulos, botões, valores numéricos |
+| Bold | 700 | Display, preços, headlines hero |
+
+### REGRA:
+> Escolha NO MÁXIMO 3 pesos. Regular + SemiBold é o mínimo funcional.
+> NUNCA use Light (300) ou Thin (100) em mobile — legibilidade ruim.
+> NUNCA use Bold (700) para body text — cansa a leitura.
+
+---
+
+## FONTES RECOMENDADAS PARA UI
+
+### Sans-Serif (Padrão para apps):
+| Fonte | Características | Uso Ideal |
+|---|---|---|
+| **Inter** | Otimizada para telas, x-height alta | Apps, dashboards, fintechs |
+| **SF Pro** | System font iOS | Apps iOS nativos |
+| **Roboto** | System font Android | Apps Android nativos |
+| **DM Sans** | Geométrica, limpa | Apps modernos, startups |
+| **Manrope** | Geométrica, friendly | SaaS, produtos |
+| **Plus Jakarta Sans** | Geométrica, profissional | Fintechs, enterprise |
+| **Satoshi** | Moderna, elegante | Apps premium, dark themes |
+
+### Monospace (Para números e código):
+| Fonte | Uso |
+|---|---|
+| **JetBrains Mono** | Código, dados técnicos |
+| **SF Mono** | Valores numéricos em iOS |
+| **Roboto Mono** | Valores numéricos em Android |
+| **Inter (tabular nums)** | Usar OpenType feature `tnum` para valores alinhados |
+
+### REGRA:
+> Máximo 2 famílias de fonte por projeto (1 sans-serif + 1 mono se necessário).
+> Para valores monetários grandes, use tabular numbers (monospace ou tnum).
+
+---
+
+## HIERARQUIA TIPOGRÁFICA POR TELA
+
+### Tela Típica de App Mobile:
+```
+┌──────────────────────────────┐
+│  ← Back    [Screen Title]    │  heading-md (20px SemiBold)
+├──────────────────────────────┤
+│                              │
+│  Section Header              │  heading-sm (18px SemiBold)
+│  Description text that       │  body-lg (16px Regular)
+│  explains the section.       │
+│                              │
+│  ┌────────────────────────┐  │
+│  │ Card Title             │  │  body-lg (16px SemiBold)
+│  │ Subtitle text          │  │  body-md (14px Regular)
+│  │ Helper info   $42.00   │  │  body-sm (12px) + heading-md (20px)
+│  └────────────────────────┘  │
+│                              │
+│  ┌────────────────────────┐  │
+│  │    [CTA Button]        │  │  body-lg (16px SemiBold)
+│  └────────────────────────┘  │
+│                              │
+│  Caption text, 12px          │  body-sm (12px Regular)
+└──────────────────────────────┘
+```
+
+---
+
+## REGRAS DE CAPITALIZAÇÃO
+
+| Contexto | Estilo | Exemplo |
+|---|---|---|
+| Headlines / Títulos de tela | Sentence case | "Enviar pagamento" |
+| Botões | Sentence case | "Continuar" |
+| Labels de form | Sentence case | "Nome completo" |
+| Tab items | Sentence case | "Transações" |
+| Overline/Categoria | UPPERCASE | "TRANSFERÊNCIA PIX" |
+| Valores monetários | Normal | "R$ 1.234,56" |
+
+### REGRA:
+> Sentence case é o padrão para TUDO exceto overlines.
+> Title Case (Cada Palavra Maiúscula) é aceitável para heading em inglês.
+> ALL CAPS apenas para overlines e labels curtas (máx 2-3 palavras).
+> NUNCA use all caps para parágrafos ou frases longas — reduz legibilidade em 13-20%.
+
+---
+
+## TRUNCAÇÃO E OVERFLOW
+
+### Regras para texto longo:
+- **Título de card** (1 linha): Truncar com ellipsis (`...`) após overflow
+- **Descrição** (2-3 linhas): Limitar a 2-3 linhas com line-clamp
+- **Nome de usuário**: Truncar após 20 caracteres
+- **Valor monetário**: NUNCA truncar — sempre mostrar completo
+- **Botão**: NUNCA truncar — reduza font-size ou abrevie o texto
+
+### No Figma:
+- Text node com `textTruncation: 'ENDING'` para single-line
+- Defina `maxLines` para multi-line truncation
+
+---
+
+## NÚMEROS E VALORES MONETÁRIOS
+
+### Formatação:
+| Tipo | Formato | Exemplo |
+|---|---|---|
+| Moeda BRL | R$ X.XXX,XX | R$ 1.234,56 |
+| Moeda USD | $X,XXX.XX | $1,234.56 |
+| Moeda EUR | €X.XXX,XX | €1.234,56 |
+| Percentual | X,X% | 12,5% |
+| Telefone BR | (XX) X XXXX-XXXX | (11) 9 8765-4321 |
+| CPF | XXX.XXX.XXX-XX | 123.456.789-00 |
+| CNPJ | XX.XXX.XXX/XXXX-XX | 12.345.678/0001-00 |
+
+### Para Display de Valores Grandes:
+- Usar fonte com `tabular numbers` (largura fixa para cada dígito)
+- Peso SemiBold ou Bold para valores principais
+- Tamanho 24-40px para valores hero
+- Cor: accent ou high-emphasis (não use cor de body text)
+
+---
+
+## CHECKLIST DE TIPOGRAFIA
+
+- [ ] Máximo 2 famílias de fonte no projeto?
+- [ ] Máximo 3 pesos de fonte?
+- [ ] Tamanho mínimo de body text é 16px?
+- [ ] Tamanho mínimo de texto é 12px?
+- [ ] Line-heights são múltiplos de 4?
+- [ ] Headlines usam sentence case?
+- [ ] Valores monetários usam tabular numbers?
+- [ ] Textos longos têm truncação definida?
+- [ ] Não há text com peso Light/Thin em mobile?

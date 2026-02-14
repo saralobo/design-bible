@@ -1,0 +1,107 @@
+---
+alwaysApply: true
+---
+
+# REGRA ZERO — Princípios Fundamentais de Design
+
+> Este documento é a base de TUDO. Antes de criar qualquer elemento visual, estas regras são invioláveis.
+
+## ANTES DE CRIAR QUALQUER TELA
+
+1. **Defina a hierarquia visual** — O que o usuário deve ver PRIMEIRO? SEGUNDO? TERCEIRO?
+2. **Uma ação primária por tela** — Nunca competir com 2 CTAs de mesmo peso visual
+3. **Respire** — Espaço em branco não é desperdício, é clareza
+4. **Consistência sobre criatividade** — Se o design system define um padrão, siga-o. Sempre.
+5. **Mobile-first** — Comece pelo menor viewport e expanda
+
+---
+
+## OS 4 PILARES DO DESIGN VISUAL
+
+### 1. Hierarquia
+- **Tamanho** — O elemento mais importante é o maior
+- **Peso** — Bold para títulos, regular para corpo
+- **Cor** — Cores vibrantes para ações, neutras para suporte
+- **Posição** — O olho lê em padrão F (web) ou centralizado (mobile)
+- **Espaçamento** — Mais espaço ao redor = mais importância
+
+### 2. Contraste
+- Não use cores parecidas lado a lado
+- Texto sobre fundo precisa de ratio mínimo 4.5:1 (WCAG AA)
+- Texto grande (>18px bold ou >24px regular): ratio mínimo 3:1
+- NUNCA cinza claro sobre branco — é invisível
+- Dark mode: Não use branco puro (#FFFFFF) sobre preto puro (#000000) — causa vibração visual. Use #E0E0E0 sobre #121212
+
+### 3. Alinhamento
+- **Tudo se alinha a algo** — Se um elemento não está alinhado a nenhum outro, ele está errado
+- Use grid de 8px para TUDO (espaçamento, padding, margin, tamanhos)
+- Alinhe à esquerda por padrão (LTR languages)
+- Centro apenas para títulos de tela, modais, e estados vazios
+- NUNCA misture alinhamentos diferentes na mesma seção
+
+### 4. Proximidade
+- Elementos relacionados ficam JUNTOS (8-12px)
+- Elementos não-relacionados ficam SEPARADOS (24-32px+)
+- O espaço entre grupos deve ser PELO MENOS 2x o espaço entre itens do mesmo grupo
+- Label + Input = 4-8px de gap
+- Seções diferentes = 32-48px de gap
+
+---
+
+## REGRAS DE OURO PARA MOBILE
+
+### Touch Targets (Alvos de Toque)
+- **Mínimo absoluto**: 44×44px (Apple HIG) / 48×48dp (Material Design)
+- **Recomendado**: 48×48px
+- **Espaçamento entre alvos**: mínimo 8px
+- **Botão circular DEVE ser circular**: width === height, cornerRadius = width/2
+- NUNCA crie um botão oval quando a intenção é circular
+
+### Safe Areas
+- **Top**: Respeite a status bar (44px iOS, 24dp Android)
+- **Bottom**: Respeite o home indicator (34px iOS) e navigation bar
+- **Thumb zone**: Ações primárias na metade inferior da tela (alcance do polegar)
+- **Zona de perigo**: Canto superior esquerdo = mais difícil de alcançar
+
+### Tamanhos Mínimos de Texto
+- **Corpo/Body**: 16px mínimo (NUNCA menor)
+- **Caption/Helper**: 12px mínimo (NUNCA menor)
+- **Label em input**: 14-16px
+- **Título de tela**: 20-28px
+- **Display/Hero**: 32-48px
+
+---
+
+## PRINCÍPIO DA PREVISIBILIDADE
+
+O usuário deve SEMPRE saber:
+1. **Onde está** — Título da tela, breadcrumbs, tab ativa
+2. **O que pode fazer** — Botões visíveis, affordances claras
+3. **O que vai acontecer** — Labels descritivos ("Enviar PIX" não "Confirmar")
+4. **Como voltar** — Botão back, gesture, X para fechar
+
+---
+
+## CHECKLIST PRÉ-CRIAÇÃO
+
+Antes de criar qualquer tela no Figma, responda:
+
+- [ ] Qual é a ÚNICA ação primária desta tela?
+- [ ] Qual é a hierarquia visual? (1º, 2º, 3º elemento)
+- [ ] O espaçamento segue o grid de 8px?
+- [ ] Os touch targets têm pelo menos 44×44px?
+- [ ] O contraste do texto é suficiente (4.5:1)?
+- [ ] O usuário sabe como voltar?
+- [ ] Há espaço de respiro suficiente entre as seções?
+- [ ] Todos os botões circulares são REALMENTE circulares (width = height)?
+
+---
+
+## FONTES DE REFERÊNCIA
+
+- "Don't Make Me Think" — Steve Krug
+- "The Design of Everyday Things" — Don Norman
+- "Refactoring UI" — Adam Wathan & Steve Schoger
+- Apple Human Interface Guidelines (developer.apple.com/design)
+- Material Design 3 (m3.material.io)
+- Laws of UX (lawsofux.com)

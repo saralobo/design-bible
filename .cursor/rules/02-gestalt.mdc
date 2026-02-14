@@ -1,0 +1,195 @@
+---
+alwaysApply: true
+---
+
+# Princípios Gestalt — Como o Cérebro Organiza o Visual
+
+> A psicologia Gestalt explica como o cérebro humano agrupa e interpreta elementos visuais.
+> Dominar Gestalt = dominar layout. Cada princípio tem aplicação direta em UI design.
+
+---
+
+## 1. PROXIMIDADE (Proximity)
+
+**Definição**: Elementos próximos são percebidos como pertencentes ao mesmo grupo.
+
+**Por que importa**: É o princípio mais violado em interfaces ruins. Quando tudo tem o mesmo espaçamento, nada tem relação.
+
+### REGRAS PRÁTICAS:
+- **Espaço DENTRO do grupo**: 8-12px (itens relacionados)
+- **Espaço ENTRE grupos**: 24-32px (seções diferentes)
+- **Proporção**: Espaço entre grupos ≥ 2× espaço dentro do grupo
+- **Label + Input**: 4-8px de gap (são um grupo)
+- **Input + Input**: 16-20px de gap (itens do mesmo grupo)
+- **Seção + Seção**: 32-48px de gap (grupos diferentes)
+- **Card padding interno**: 16-24px (o conteúdo pertence ao card)
+
+### EXEMPLO CORRETO:
+```
+[Label]           ← 4px gap
+[Input Field]     ← 16px gap
+[Label]           ← 4px gap
+[Input Field]     ← 32px gap ← SEPARAÇÃO DE SEÇÃO
+[Section Title]   ← 12px gap
+[Content]
+```
+
+### ANTI-PADRÃO:
+```
+[Label]           ← 16px gap
+[Input Field]     ← 16px gap  ← ERRADO: mesmo espaço que entre label e input
+[Label]           ← 16px gap
+[Input Field]     ← 16px gap  ← Tudo parece igual, sem hierarquia
+```
+
+---
+
+## 2. SIMILARIDADE (Similarity)
+
+**Definição**: Elementos que parecem similares (cor, forma, tamanho) são percebidos como relacionados.
+
+**Por que importa**: Consistência visual = significado consistente.
+
+### REGRAS PRÁTICAS:
+- **Todos os botões primários**: Mesma cor, mesmo border-radius, mesmo peso de fonte
+- **Todos os links**: Mesma cor (accent blue), mesma decoração (underline ou não)
+- **Todos os cards**: Mesmo border-radius, mesma sombra, mesmo padding
+- **Ícones de ação**: Mesmo tamanho (24px), mesmo peso de traço
+- **Tags/Badges**: Mesmo formato entre si, mas diferenciados por cor para categorias
+- **NUNCA**: Usar botão arredondado em um lugar e quadrado em outro para a mesma ação
+
+### MAPA DE CONSISTÊNCIA:
+| Elemento | Cor | Border-Radius | Altura | Fonte |
+|---|---|---|---|---|
+| Botão Primary | Accent sólido | 8-12px | 48px | SemiBold 16px |
+| Botão Secondary | Outlined accent | 8-12px | 48px | SemiBold 16px |
+| Botão Ghost | Transparent | 8-12px | 48px | SemiBold 16px |
+| Card | Branco/Surface | 12-16px | Auto | - |
+| Input | Outlined neutral | 8px | 48-56px | Regular 16px |
+
+---
+
+## 3. CONTINUIDADE (Continuity)
+
+**Definição**: O olho segue naturalmente linhas, curvas e padrões que fluem de forma contínua.
+
+**Por que importa**: O olhar do usuário deve ser guiado naturalmente pela tela.
+
+### REGRAS PRÁTICAS:
+- **Alinhe elementos em eixos claros**: Margem esquerda consistente cria uma linha invisível
+- **Cards em lista**: Mesma largura, mesma margem — formam uma coluna visual contínua
+- **Progress stepper**: Conecte os passos com uma linha horizontal
+- **Dividers**: Use separadores sutis (1px, cor 5-8% opacity) para guiar sem interromper
+- **Scroll horizontal**: Mostre metade do próximo item para indicar que há mais conteúdo
+- **NUNCA**: Quebrar o alinhamento visual sem motivo (um card 16px margem, outro 24px)
+
+### DICA PARA CARROSSEL:
+Para indicar que há mais conteúdo à direita, o último card visível deve estar cortado em ~30%. Isso cria continuidade visual e convida ao scroll.
+```
+|  [Card 1]  [Card 2]  [Card 3]  [Car... |
+                                    ↑ cortado
+```
+
+---
+
+## 4. FECHAMENTO (Closure)
+
+**Definição**: O cérebro completa formas incompletas, "fechando" lacunas mentalmente.
+
+**Por que importa**: Você pode sugerir formas e containers sem desenhar todas as bordas.
+
+### REGRAS PRÁTICAS:
+- **Cards sem borda**: Background + padding já cria a percepção de container
+- **Progress bar**: Uma barra parcialmente preenchida sugere completude futura
+- **Ícones**: Ícones outline com lacunas são reconhecíveis (o cérebro completa)
+- **Grid de ícones/apps**: O grid implícito é percebido mesmo sem linhas
+- **Tab indicators**: Uma linha sob a tab ativa sugere a separação das seções
+- **NUNCA**: Usar bordas grossas ao redor de TUDO — confie no espaçamento e background
+
+---
+
+## 5. FIGURA-FUNDO (Figure-Ground)
+
+**Definição**: O cérebro separa automaticamente o que é "figura" (foco) do que é "fundo" (contexto).
+
+**Por que importa**: Modais, overlays e hierarquia de elevação dependem disso.
+
+### REGRAS PRÁTICAS:
+- **Modal**: Fundo escurecido (overlay 50-60% opacity preto) — o modal é a "figura"
+- **Bottom sheet**: Fundo escurecido + sheet com sombra + border-radius no topo
+- **Dropdown/Popover**: Sombra para separar do fundo
+- **Botão flutuante (FAB)**: Sombra pronunciada para "flutuar" acima do conteúdo
+- **Cards**: Sombra leve OU background diferente para separar do fundo da tela
+- **Selected state**: Background preenchido para separar o item ativo dos inativos
+- **NUNCA**: Criar um modal sem overlay — o usuário não saberá o que é "frente" e "trás"
+
+### NÍVEIS DE ELEVAÇÃO (com sombra):
+| Nível | Uso | Sombra |
+|---|---|---|
+| 0 | Fundo da tela | Nenhuma |
+| 1 | Cards, inputs | 0 1px 3px rgba(0,0,0,0.08) |
+| 2 | Dropdowns, popovers | 0 4px 12px rgba(0,0,0,0.12) |
+| 3 | Bottom sheets, modais | 0 8px 24px rgba(0,0,0,0.16) |
+| 4 | FAB, elementos flutuantes | 0 12px 32px rgba(0,0,0,0.20) |
+
+---
+
+## 6. REGIÃO COMUM (Common Region)
+
+**Definição**: Elementos dentro de uma mesma região delimitada (borda, fundo) são percebidos como grupo.
+
+**Por que importa**: Cards, containers e seções existem por causa deste princípio.
+
+### REGRAS PRÁTICAS:
+- **Card como container**: Agrupe informações relacionadas dentro de um card
+- **Input group**: Coloque campos relacionados dentro de um container com background sutil
+- **Section com fundo alternado**: Alterne cores de fundo entre seções (ex: branco → cinza claro → branco)
+- **Chip/Tag group**: Envolva tags em um container com padding
+- **NUNCA**: Colocar informações não-relacionadas dentro do mesmo card/container
+
+---
+
+## 7. SIMETRIA E ORDEM (Symmetry)
+
+**Definição**: O cérebro percebe objetos simétricos como pertencentes ao mesmo grupo e como mais estáveis.
+
+**Por que importa**: Layouts simétricos transmitem ordem, profissionalismo e confiança.
+
+### REGRAS PRÁTICAS:
+- **Padding consistente**: Se o padding esquerdo é 24px, o direito também é 24px
+- **Grid centralizado**: Conteúdo centralizado no eixo vertical da tela
+- **Ícones em grupo**: Mesmo tamanho, mesmo peso, espaçamento igual entre eles
+- **Bottom nav**: Itens distribuídos igualmente na largura
+- **Cards em grid**: Todos do mesmo tamanho, gap igual entre eles
+- **NUNCA**: Padding 24px à esquerda e 16px à direita (assimetria sem propósito)
+
+---
+
+## 8. DESTINO COMUM (Common Fate)
+
+**Definição**: Elementos que se movem juntos na mesma direção são percebidos como um grupo.
+
+**Por que importa**: Animações de grupo e transições de tela.
+
+### REGRAS PRÁTICAS:
+- **Scroll**: Todos os itens de uma lista scrollam juntos
+- **Parallax**: Elementos no mesmo plano se movem na mesma velocidade
+- **Transição de tela**: Todos os elementos da tela saem juntos (não individualmente)
+- **Loading skeleton**: Shimmer se move na mesma direção em todos os placeholders
+- **Reorder**: Quando um item é arrastado, os outros se reorganizam juntos
+- **NUNCA**: Animar elementos de um mesmo grupo em direções diferentes sem motivo
+
+---
+
+## RESUMO VISUAL — QUANDO USAR CADA PRINCÍPIO
+
+| Decisão de Design | Princípio Gestalt |
+|---|---|
+| Quanto espaço entre elementos | Proximidade |
+| Estilo consistente entre componentes | Similaridade |
+| Direção do olhar do usuário | Continuidade |
+| Simplificar containers/bordas | Fechamento |
+| Modal, overlay, elevação | Figura-Fundo |
+| Agrupamento com cards/containers | Região Comum |
+| Layout equilibrado e paddings | Simetria |
+| Animações de grupo | Destino Comum |

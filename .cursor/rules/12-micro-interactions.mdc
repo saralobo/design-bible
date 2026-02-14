@@ -1,0 +1,358 @@
+---
+alwaysApply: true
+---
+
+# Micro-interações — A Alma da Interface
+
+> Baseado em "Microinteractions" de Dan Saffer + Material Design Motion + Apple HIG.
+> Micro-interações são os pequenos detalhes que transformam uma interface funcional
+> em uma experiência memorável. São a diferença entre "ok" e "uau".
+
+---
+
+## O QUE É UMA MICRO-INTERAÇÃO?
+
+Uma micro-interação é um momento contido de interação ao redor de uma única tarefa.
+Exemplos: Like de um post, toggle de dark mode, pull to refresh, swipe to delete.
+
+### Os 4 Componentes (Framework Dan Saffer):
+
+```
+┌─────────────────────────────────────────────┐
+│  1. TRIGGER (Gatilho)                       │
+│     → O que inicia a interação              │
+│     → Tap, swipe, scroll, hover, sistema    │
+├─────────────────────────────────────────────┤
+│  2. RULES (Regras)                          │
+│     → O que acontece quando ativada         │
+│     → Lógica, limites, condições            │
+├─────────────────────────────────────────────┤
+│  3. FEEDBACK (Retorno)                      │
+│     → O que o usuário vê/sente/ouve         │
+│     → Visual, háptico, sonoro               │
+├─────────────────────────────────────────────┤
+│  4. LOOPS & MODES (Ciclos e Modos)          │
+│     → O que acontece com o tempo            │
+│     → Repetição, expiração, adaptação       │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## CATÁLOGO DE MICRO-INTERAÇÕES ESSENCIAIS
+
+### 1. TOGGLE / SWITCH
+
+**Trigger**: Tap no switch
+**Rules**: Alterna entre ON/OFF. Pode ter consequência imediata.
+**Feedback**:
+- Knob desliza de um lado para outro (150-200ms)
+- Cor do track muda (neutral → accent/green)
+- Knob scale de 1.0 → 1.1 → 1.0 durante o slide
+- Háptico: light impact (iOS) / light tick (Android)
+**Loops**: Estado persiste até próximo tap
+
+**No Figma (Smart Animate)**:
+```
+Frame "Switch-OFF":
+  Track: neutral-300, height 30px, width 52px, cornerRadius 15px
+  Knob: white circle 26px, x=2, shadow level 1
+
+Frame "Switch-ON":
+  Track: accent/green, height 30px, width 52px, cornerRadius 15px
+  Knob: white circle 26px, x=24, shadow level 1
+
+Conectar: ON_CLICK → SMART_ANIMATE, 200ms, ease-in-out
+```
+
+---
+
+### 2. LIKE / FAVORITE (Heart)
+
+**Trigger**: Tap (single) ou Double-tap (Instagram style)
+**Rules**: Toggle entre liked/unliked. Incrementa/decrementa counter.
+**Feedback**:
+- Ícone: Scale 1.0 → 1.3 → 1.0 (bounce) + muda de outline para filled
+- Cor: neutral → red (#FF3B5C)
+- Opcional: Burst de partículas ao redor (confetti micro)
+- Counter: Número incrementa com slide-up animation
+- Háptico: medium impact
+**Loops**: Persiste, double-tap só ativa (não desativa)
+
+**Duração total**: 300-400ms
+
+---
+
+### 3. PULL TO REFRESH
+
+**Trigger**: Pull down (scroll overscroll no topo)
+**Rules**: Recarregar conteúdo se puxar > threshold (60-80px)
+**Feedback**:
+- Fase 1 (pulling): Spinner/ícone rotaciona proporcionalmente ao pull
+- Fase 2 (threshold): Snap visual + vibração háptica + spinner fica spinning
+- Fase 3 (loading): Spinner gira livremente, conteúdo abaixo
+- Fase 4 (complete): Spinner some, conteúdo novo slide in
+**Loops**: Pode refresh infinitamente
+
+**Detalhes**:
+- Threshold: 60-80px de overscroll
+- Spinner: 24px, accent color, linear rotation
+- Resistência: Pull fica mais difícil quanto mais puxa (rubber band)
+- Duração de dismiss: 200ms ease-in
+
+---
+
+### 4. SWIPE TO DELETE / DISMISS
+
+**Trigger**: Horizontal swipe no item de lista
+**Rules**: Revelar ação ao atingir threshold. Full swipe = executar.
+**Feedback**:
+- Fase 1 (swiping): Background vermelho aparece atrás do item
+- Ícone de delete cresce conforme o swipe avança
+- Fase 2 (threshold 30%): Snap + vibração = ação disponível
+- Fase 3 (release): Item volta OU executa ação
+- Fase 4 (execute): Item colapsa (height → 0) em 200ms, itens abaixo sobem
+**Loops**: Undo disponível via toast por 5 segundos
+
+**No Figma**:
+- Crie 3 frames: Default → Swiped (revelando ação) → Deleted (item colapsado)
+- Use SMART_ANIMATE + ON_DRAG para simular
+
+---
+
+### 5. BOTTOM SHEET (Drag)
+
+**Trigger**: Swipe up ou tap em handle bar
+**Rules**: 3 posições snap: Closed, Half, Full. Velocidade influencia o snap.
+**Feedback**:
+- Sheet sobe com spring animation (slight overshoot)
+- Overlay escurece progressivamente (0% → 50%)
+- Handle bar: 40×4px pill, neutral-400
+- Snap points com haptic feedback
+**Loops**: Pode alternar entre posições. Dismiss ao puxar abaixo do mínimo.
+
+**Detalhes**:
+- Snap positions: 0% (closed), 50% (half), 95% (full)
+- Spring: stiffness 300, damping 25
+- Velocity threshold: Se velocidade > threshold, snap para próxima posição
+
+---
+
+### 6. BUTTON PRESS
+
+**Trigger**: Touch down no botão
+**Rules**: Feedback imediato no touch, ação no touch up (release)
+**Feedback**:
+- Touch down (immediate, < 50ms):
+  - Scale: 1.0 → 0.97 (shrink sutil)
+  - Opacity: 1.0 → 0.9
+  - Ripple effect: Círculo expandindo do ponto de toque (Material)
+- Touch up:
+  - Scale: 0.97 → 1.0 (volta)
+  - Ação é executada
+- Loading state:
+  - Texto some, spinner aparece (fade 150ms)
+  - Botão mantém EXATAMENTE o mesmo tamanho
+**Loops**: Pode pressionar novamente após ação completar
+
+**REGRA CRÍTICA**:
+> O botão NUNCA muda de tamanho durante a animação.
+> Width e height são FIXOS. Apenas scale, opacity e conteúdo interno mudam.
+
+---
+
+### 7. INPUT FOCUS
+
+**Trigger**: Tap no campo de input
+**Rules**: Teclado sobe, campo recebe foco visual
+**Feedback**:
+- Borda: neutral-300 → accent (2px), animação 150ms
+- Label floating: Anima para cima (translate-y -24px) e diminui (14px → 12px)
+- Cor do label: neutral-600 → accent
+- Teclado: Sobe com spring animation
+- Scroll automático: Tela scrolla para manter campo visível
+**Loops**: Foco persiste até tap fora ou tab
+
+---
+
+### 8. CHECKBOX / RADIO
+
+**Trigger**: Tap no checkbox/radio
+**Rules**: Toggle entre checked/unchecked
+**Feedback**:
+- Checkbox:
+  - Box: neutral-300 border → accent filled, 150ms
+  - Check mark: Draw animation (SVG path) 200ms, ease-out
+  - Scale: 1.0 → 0.9 → 1.05 → 1.0 (micro bounce)
+- Radio:
+  - Outer ring: neutral-300 → accent border
+  - Inner dot: Scale 0 → 1.0 com spring, accent filled
+  - Duração: 200ms
+**Loops**: Toggle infinitamente
+
+---
+
+### 9. SCROLL INDICATORS
+
+**Trigger**: Scroll do conteúdo
+**Rules**: Indicar que há mais conteúdo
+**Feedback**:
+- Scrollbar: Aparece durante scroll, some 1.5s após parar (fade out 300ms)
+- Edge gradient: Shadow/fade nas bordas indica mais conteúdo
+- "Peek": Último item parcialmente visível indica scroll horizontal
+- Counter: "1 de 5" ou dots para carrossel
+- Parallax: Background se move mais devagar que foreground
+**Loops**: Infinito enquanto há conteúdo
+
+---
+
+### 10. SKELETON → CONTENT (Content Reveal)
+
+**Trigger**: Conteúdo terminou de carregar
+**Rules**: Substituir skeleton pelo conteúdo real
+**Feedback**:
+- Shimmer para durante loading
+- Fade out skeleton: 150ms, ease-in
+- Fade in conteúdo: 200ms, ease-out (stagger 30-50ms por item)
+- Conteúdo entra com sutil slide up (8-12px) + fade
+**Loops**: Uma vez por load
+
+**Sensação desejada**: O conteúdo "materializa" suavemente, não "pisca" na tela.
+
+---
+
+### 11. COUNTER / VALUE CHANGE
+
+**Trigger**: Valor muda (timer, preço, quantidade)
+**Rules**: Animar a transição do valor antigo para o novo
+**Feedback**:
+- Dígitos: Slide up/down individualmente (tipo odômetro)
+- Ou: Fade out valor antigo, fade in valor novo
+- Cor flash: Se valor aumentou = verde flash. Se diminuiu = vermelho flash (200ms)
+- Scale: Valor pulsa (1.0 → 1.05 → 1.0) ao mudar
+**Loops**: A cada mudança de valor
+
+**Duração**: 200-300ms por transição de valor
+
+---
+
+### 12. NOTIFICATION BADGE
+
+**Trigger**: Nova notificação chega
+**Rules**: Badge aparece ou incrementa
+**Feedback**:
+- Primeiro aparecimento: Scale 0 → 1.2 → 1.0 (bounce), 300ms
+- Incremento: Número faz slide up, badge pulsa (scale 1.0 → 1.1 → 1.0)
+- Cor: Red (#FF3B30) com texto white
+- Háptico: Subtle notification feel
+**Loops**: Persiste até visualizado. Badge some com fade out ao ler.
+
+---
+
+## MICRO-INTERAÇÕES NO FIGMA (PROTOTYPING)
+
+### Como implementar:
+
+**Método 1 — Smart Animate (mais comum)**:
+1. Crie Frame A (estado antes)
+2. Duplique para Frame B (estado depois)
+3. Modifique elementos em Frame B (posição, cor, tamanho, opacity)
+4. Mantenha os MESMOS NOMES de layers
+5. Conecte: A → B com SMART_ANIMATE
+
+**Método 2 — Component Variants**:
+1. Crie componente com variantes (State=Default, State=Active)
+2. Use SMART_ANIMATE entre variantes
+3. Benefício: Reutilizável em toda a tela
+
+**Método 3 — After Delay (Auto-play)**:
+1. Frame Loading → Frame Content com AFTER_DELAY 2000ms
+2. Transição SMART_ANIMATE ou DISSOLVE
+3. Uso: Splash screen, loading → content reveal
+
+### Parâmetros padrão para Figma prototyping:
+```javascript
+// Micro-interação padrão
+{
+  trigger: 'ON_CLICK',           // ou ON_HOVER, ON_DRAG
+  action: 'SMART_ANIMATE',      // ou SLIDE_IN, DISSOLVE
+  duration: 300,                 // ms
+  easing: { type: 'EASE_IN_AND_OUT' }
+}
+
+// Hover effect (desktop)
+{
+  trigger: 'ON_HOVER',
+  action: 'SMART_ANIMATE',
+  duration: 150,
+  easing: { type: 'EASE_OUT' }
+}
+
+// Auto-play (loading → content)
+{
+  trigger: 'AFTER_DELAY',
+  delay: 2000,                   // ms de espera
+  action: 'SMART_ANIMATE',
+  duration: 400,
+  easing: { type: 'EASE_OUT' }
+}
+```
+
+---
+
+## PRINCÍPIOS DE FEEDBACK HÁPTICO (Para referência)
+
+| Tipo | Intensidade | Uso |
+|---|---|---|
+| Light | Muito sutil | Toggle, seleção, scroll snap |
+| Medium | Moderado | Confirmação, like, threshold |
+| Heavy | Forte | Erro, delete, impacto |
+| Selection | Tick | Picker, stepper |
+| Success | Padrão | Ação completada |
+| Warning | Padrão | Atenção necessária |
+| Error | Padrão | Ação falhou |
+
+### REGRA:
+> Háptico complementa visual, NUNCA substitui.
+> No Figma, representamos háptico com visual extra (shake para erro, bounce para sucesso).
+
+---
+
+## QUANDO NÃO USAR MICRO-INTERAÇÃO
+
+- ❌ Em TODOS os elementos (fadiga de animação)
+- ❌ Em ações muito frequentes (scroll de lista longa — o sistema lag)
+- ❌ Quando o usuário está com pressa (checkout final, emergência)
+- ❌ Animações > 500ms em ações rotineiras
+- ❌ Bounces e springs em apps financeiros/médicos (seriedade)
+- ❌ Confetti/celebration para ações triviais
+
+---
+
+## PRINCÍPIO DO "DELIGHTFUL BUT DISMISSIBLE"
+
+> Uma micro-interação deve ser agradável na 1ª vez, invisível na 100ª vez.
+> Se o usuário começa a notar a animação como obstáculo → simplifique.
+
+### Teste mental:
+1. Se o usuário fizer esta ação 50 vezes por dia, a animação IRRITA?
+2. Se tirar a animação, o usuário PERDE informação?
+3. A animação AJUDA a entender o que aconteceu?
+
+Se as respostas forem SIM, NÃO, NÃO → remova a animação.
+Se as respostas forem NÃO, SIM, SIM → mantenha.
+
+---
+
+## CHECKLIST DE MICRO-INTERAÇÕES
+
+- [ ] A micro-interação tem propósito funcional (não é apenas decoração)?
+- [ ] Os 4 componentes estão definidos (trigger, rules, feedback, loops)?
+- [ ] A duração é < 400ms para ações frequentes?
+- [ ] O feedback visual acontece em < 100ms do trigger?
+- [ ] A animação não bloqueia a próxima ação do usuário?
+- [ ] O easing é natural (não linear, não robótico)?
+- [ ] Botões mantêm tamanho fixo durante animação?
+- [ ] Smart Animate tem layers com nomes iguais nos dois frames?
+- [ ] A interação seria tolerável na 100ª repetição?
+- [ ] Existe feedback alternativo para acessibilidade (visual + texto)?

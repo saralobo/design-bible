@@ -1,0 +1,180 @@
+---
+alwaysApply: true
+---
+
+# Cores — Sistema de Cores para Interfaces
+
+> Cores comunicam significado, hierarquia e emoção.
+> Um sistema de cores bem definido evita "sopa de cores" e garante consistência.
+
+---
+
+## ESTRUTURA DE UM SISTEMA DE CORES
+
+### 3 Camadas:
+1. **Primitives** — Paleta completa (blue-100, blue-200, ..., blue-900)
+2. **Semantic** — Significado funcional (accent, positive, negative, warning)
+3. **Component** — Uso específico (button-primary-bg, card-border, input-bg)
+
+---
+
+## CORES SEMÂNTICAS OBRIGATÓRIAS
+
+Todo projeto precisa de no mínimo estas cores:
+
+| Token | Significado | Uso | Exemplo Light | Exemplo Dark |
+|---|---|---|---|---|
+| **accent** | Ação primária, links, foco | CTA, links, switch ativo | #276EF1 | #5B8DEF |
+| **positive** | Sucesso, confirmação | Toasts de sucesso, check | #0E8345 | #34C759 |
+| **warning** | Alerta, atenção | Banners de aviso | #F6BC2F | #FFD60A |
+| **negative** | Erro, perigo, exclusão | Validação, delete | #DE1135 | #FF453A |
+| **neutral** | Texto, bordas, backgrounds | Body text, dividers | #1A1A1A | #E0E0E0 |
+
+---
+
+## PALETA NEUTRA (Escala de Cinzas)
+
+### Light Mode:
+| Token | Hex | Uso |
+|---|---|---|
+| neutral-900 | #1A1A1A | Texto primário (headings) |
+| neutral-800 | #333333 | Texto primário (body) |
+| neutral-600 | #666666 | Texto secundário |
+| neutral-400 | #999999 | Placeholder, disabled text |
+| neutral-300 | #CCCCCC | Bordas, dividers |
+| neutral-200 | #E5E5E5 | Bordas sutis |
+| neutral-100 | #F0F0F0 | Background de surface/card |
+| neutral-50 | #F8F8F8 | Background alternativo |
+| white | #FFFFFF | Background principal |
+
+### Dark Mode:
+| Token | Hex | Uso |
+|---|---|---|
+| neutral-50 | #E0E0E0 | Texto primário (NÃO use #FFFFFF puro) |
+| neutral-100 | #BDBDBD | Texto secundário |
+| neutral-200 | #9E9E9E | Placeholder, disabled text |
+| neutral-300 | #757575 | Bordas, dividers |
+| neutral-600 | #424242 | Surface elevada |
+| neutral-700 | #303030 | Surface/card |
+| neutral-800 | #1E1E1E | Background da tela |
+| neutral-900 | #121212 | Background mais escuro |
+| black | #000000 | APENAS para overlay/sombras |
+
+---
+
+## REGRAS DE DARK MODE
+
+1. **NUNCA use branco puro (#FFFFFF) para texto** — Use #E0E0E0 ou #F0F0F0 (reduz vibração)
+2. **NUNCA use preto puro (#000000) para fundo** — Use #121212 ou #0D0D0D (Google recommendation)
+3. **Cores accent ficam mais claras** em dark mode (desaturar levemente)
+4. **Elevação em dark mode** = backgrounds mais claros (não sombras)
+   - Surface level 0: #121212
+   - Surface level 1: #1E1E1E
+   - Surface level 2: #252525
+   - Surface level 3: #2C2C2C
+5. **Status colors** devem ser ajustadas para contraste em fundo escuro
+6. **Opacidade para overlays**: 70-80% em dark mode (vs 50-60% light mode)
+
+---
+
+## REGRAS DE CONTRASTE (WCAG 2.2)
+
+### Ratios Mínimos:
+| Contexto | Ratio Mínimo (AA) | Ratio Ideal (AAA) |
+|---|---|---|
+| Texto normal (<18px) | 4.5:1 | 7:1 |
+| Texto grande (≥18px bold ou ≥24px) | 3:1 | 4.5:1 |
+| Componentes de UI (bordas, ícones) | 3:1 | — |
+| Gráficos e data viz | 3:1 | — |
+| Placeholder text | 3:1 (recomendado) | — |
+
+### COMBINAÇÕES PROIBIDAS:
+- ❌ Cinza claro (#999) sobre branco (#FFF) — ratio 2.85:1
+- ❌ Amarelo (#FFFF00) sobre branco — ratio 1.07:1
+- ❌ Verde claro (#90EE90) sobre branco — ratio 1.84:1
+- ❌ Azul claro (#87CEEB) sobre branco — ratio 2.53:1
+- ❌ Branco puro (#FFF) sobre preto puro (#000) — causa vibração visual
+
+### COMBINAÇÕES SEGURAS:
+- ✅ #333333 sobre #FFFFFF — ratio 12.63:1
+- ✅ #276EF1 sobre #FFFFFF — ratio 4.68:1
+- ✅ #E0E0E0 sobre #121212 — ratio 13.5:1
+- ✅ #FFFFFF sobre #276EF1 — ratio 4.68:1
+
+---
+
+## USANDO CORES CORRETAMENTE
+
+### Máximo de Cores por Tela:
+- **1 cor accent** (ações primárias)
+- **1 cor de fundo** (background)
+- **1-2 cores neutras** (texto, bordas)
+- **Cores de status** apenas quando necessário (success/error/warning)
+
+### Hierarquia com Cor:
+| Elemento | Cor |
+|---|---|
+| CTA Primário | Accent sólido (ex: azul) |
+| CTA Secundário | Accent outlined OU neutro |
+| CTA Terciário | Ghost/text (sem fundo) |
+| Texto primário | Neutral-900 (light) / Neutral-50 (dark) |
+| Texto secundário | Neutral-600 (light) / Neutral-200 (dark) |
+| Texto desabilitado | Neutral-400 com 50% opacity |
+| Background da tela | White (light) / Neutral-900 (dark) |
+| Background de card | Neutral-50 (light) / Neutral-800 (dark) |
+| Bordas | Neutral-200 (light) / Neutral-600 (dark) |
+| Dividers | Neutral-300 com 50% opacity |
+
+---
+
+## SIGNIFICADO DAS CORES
+
+### Conotações Universais:
+| Cor | Significado Positivo | Significado Negativo | Uso em UI |
+|---|---|---|---|
+| **Azul** | Confiança, segurança, profissional | Frieza | CTA, links, seleção |
+| **Verde** | Sucesso, crescimento, positivo | — | Confirmação, lucro |
+| **Vermelho** | Urgência, energia | Erro, perigo, exclusão | Alertas, delete |
+| **Amarelo/Laranja** | Atenção, calor | Cuidado | Warnings, badges |
+| **Roxo** | Premium, criativo | — | Features premium |
+| **Preto/Dark** | Elegância, sofisticação | Peso | Dark themes, luxury |
+
+### REGRA:
+> NUNCA use cor como ÚNICO indicador de significado. Sempre combine com ícone + texto.
+> Motivo: 8% dos homens e 0.5% das mulheres têm daltonismo.
+
+---
+
+## OPACIDADE PARA ESTADOS
+
+| Estado | Opacidade sobre cor base |
+|---|---|
+| Default | 100% |
+| Hover | 90% ou overlay branco 8% |
+| Pressed | 80% ou overlay preto 12% |
+| Focused | 100% + ring de 2px accent |
+| Disabled | 40% opacity |
+| Selected (background) | Accent com 8-12% opacity |
+
+---
+
+## GRADIENTES
+
+### Regras para Gradientes:
+- **Máximo 2 cores** por gradiente
+- **Direção**: 135° (diagonal top-left → bottom-right) ou 180° (top → bottom)
+- **Cores próximas** no espectro (ex: azul → roxo, não azul → verde)
+- **Usar com moderação** — máximo 1 gradiente por tela
+- **NUNCA**: Gradiente em texto body. Apenas em backgrounds hero ou botões especiais
+
+---
+
+## CHECKLIST DE CORES
+
+- [ ] Tem no máximo 1 cor accent + neutras + status?
+- [ ] Contraste de texto ≥ 4.5:1 (AA)?
+- [ ] Dark mode não usa branco puro nem preto puro?
+- [ ] Cor nunca é o único indicador de significado?
+- [ ] Estados (hover, pressed, disabled) têm variações definidas?
+- [ ] Cores semânticas (success, error, warning) estão definidas?
+- [ ] CTA primário tem cor ÚNICA na tela (Von Restorff)?

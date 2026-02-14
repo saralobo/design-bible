@@ -1,0 +1,268 @@
+---
+alwaysApply: true
+---
+
+# Acessibilidade — Design Inclusivo (WCAG 2.2)
+
+> Acessibilidade não é feature, é fundamento.
+> 15% da população mundial tem alguma deficiência. 8% dos homens têm daltonismo.
+> Design acessível é design MELHOR para TODOS.
+
+---
+
+## WCAG 2.2 — RESUMO PRÁTICO
+
+### 4 Princípios (POUR):
+| Princípio | Significado | Pergunta |
+|---|---|---|
+| **Perceivable** | Pode ver/ouvir/sentir | O conteúdo é visível e legível? |
+| **Operable** | Pode interagir | Consigo navegar e agir? |
+| **Understandable** | Pode entender | O significado é claro? |
+| **Robust** | Funciona em tudo | Funciona em diferentes devices/assistive tech? |
+
+### Níveis de Conformidade:
+| Nível | Descrição | Obrigatório? |
+|---|---|---|
+| **A** | Mínimo básico | Sim, SEMPRE |
+| **AA** | Padrão da indústria | Sim, target principal |
+| **AAA** | Excelência máxima | Ideal, quando possível |
+
+---
+
+## CONTRASTE (O mais violado)
+
+### Ratios Mínimos:
+| Contexto | AA (mínimo) | AAA (ideal) |
+|---|---|---|
+| Texto normal (< 18px) | **4.5:1** | 7:1 |
+| Texto grande (≥ 18px bold / ≥ 24px) | **3:1** | 4.5:1 |
+| Componentes UI (bordas, ícones) | **3:1** | — |
+| Focus indicators | **3:1** | — |
+| Non-text (gráficos, ícones) | **3:1** | — |
+
+### Verificação Rápida:
+- Use ferramentas: Stark (plugin Figma), WebAIM contrast checker
+- No dark mode, contraste é frequentemente PIOR — verifique dobrado
+
+### REGRA:
+> Antes de finalizar qualquer tela, verifique contraste de TODOS os textos.
+> Se não atende 4.5:1, mude a cor. Sem discussão.
+
+---
+
+## TOUCH TARGETS (WCAG 2.2 Novo!)
+
+### 2.5.8 Target Size (Minimum) — Nível AA:
+- **Mínimo**: 24×24px (WCAG 2.2 AA mínimo absoluto)
+- **Recomendado**: 44×44px (Apple HIG)
+- **Ideal**: 48×48dp (Material Design)
+
+### Spacing entre alvos:
+- Se touch target é < 44px, o espaço até o próximo alvo deve compensar
+- Espaçamento mínimo entre alvos: 8px
+
+### Exceções (onde target < 24px é aceitável):
+- Links inline no meio de parágrafos
+- Alvos que têm equivalente de tamanho adequado em outra posição
+
+---
+
+## COR NÃO É O ÚNICO INDICADOR
+
+### WCAG 1.4.1 — Use of Color:
+> Cor NUNCA pode ser o ÚNICO meio de transmitir informação.
+
+| ❌ Apenas Cor | ✅ Cor + Alternativa |
+|---|---|
+| Campo vermelho = erro | Campo vermelho + ícone ⚠️ + texto "CPF inválido" |
+| Verde = sucesso | Verde + ícone ✓ + texto "Enviado com sucesso" |
+| Link em azul (sem underline) | Link azul + underline |
+| Gráfico com cores | Gráfico com cores + labels + patterns |
+| Badge vermelho | Badge vermelho + número |
+
+---
+
+## HIERARQUIA DE FOCO (Focus Management)
+
+### Tab Order:
+- A ordem de foco (Tab) deve seguir a ordem visual: top → bottom, left → right
+- NUNCA pule elementos interativos
+- NUNCA mude a tab order de forma inesperada
+
+### Focus Indicators:
+- **Estilo**: Ring/outline de 2px accent com 2px offset
+- **Visibilidade**: SEMPRE visível (nunca `outline: none` sem alternativa)
+- **Contraste**: 3:1 contra o background adjacente
+
+### Focus Trap (Modais):
+- Quando modal abre, foco vai para o primeiro elemento interativo do modal
+- Tab navega APENAS dentro do modal (não escapa para trás)
+- Quando modal fecha, foco retorna ao elemento que abriu o modal
+
+---
+
+## TEXTO E LEGIBILIDADE
+
+### Tamanhos Mínimos:
+| Contexto | Tamanho Mínimo |
+|---|---|
+| Body text | 16px |
+| Caption/Helper | 12px (NUNCA menor) |
+| Button label | 14px |
+| Input text | 16px (evita zoom iOS) |
+| Badge/Counter | 10px (com background contrastante) |
+
+### Line Height:
+- Body text: 1.4-1.5 (facilita leitura para dislexia)
+- Parágrafo: Máximo 66-75 caracteres por linha (legibilidade ideal)
+
+### Peso:
+- NUNCA use font-weight 100/200 (Thin/ExtraLight) — ilegível
+- NUNCA use font-weight 300 (Light) em tamanhos < 18px
+
+---
+
+## LABELS E DESCRIPTIONS
+
+### Todo elemento interativo DEVE ter:
+1. **Label visível**: Texto que descreve o campo/botão
+2. **Accessible name**: Para screen readers (pode ser o label visível)
+3. **Description** (quando necessário): Texto adicional de ajuda
+
+### Inputs:
+- SEMPRE label visível acima do campo
+- Placeholder NÃO substitui label
+- Helper text para instruções adicionais
+- Error messages associadas ao campo
+
+### Ícones sozinhos:
+- Ícone sem texto DEVE ter label acessível
+- Ex: Botão com ícone 🔍 precisa de `aria-label="Buscar"`
+- Exceção: Ícones decorativos ao lado de texto (são redundantes)
+
+---
+
+## SEMÂNTICA E ESTRUTURA
+
+### Heading Hierarchy:
+```
+h1: Título da tela (1 por tela)
+  h2: Seções principais
+    h3: Sub-seções
+      h4: Se necessário (raro em mobile)
+```
+- NUNCA pule níveis (h1 → h3 sem h2)
+- Screen readers usam headings para navegar
+
+### Landmarks/Regiões:
+- Header: Navegação principal
+- Main: Conteúdo principal
+- Footer: Bottom nav/info
+- Navigation: Menu, tabs, breadcrumbs
+
+---
+
+## MOTION E ACESSIBILIDADE
+
+### Prefers-reduced-motion:
+- Respeite a preferência do sistema do usuário
+- Se `prefers-reduced-motion: reduce`:
+  - Desabilite animações longas (> 300ms)
+  - Substitua slide/scale por fade ou corte direto
+  - Mantenha feedback essencial (press state)
+  - Desabilite parallax e auto-play
+
+### Epilepsia (WCAG 2.3):
+- NUNCA: Flash mais de 3 vezes por segundo
+- NUNCA: Flash vermelho + areas grandes
+- Cuidado com: Animações pulsantes, strobes, patterns animados
+
+---
+
+## DALTONISMO (Color Blindness)
+
+### Tipos mais comuns:
+| Tipo | % Homens | Confunde |
+|---|---|---|
+| Deuteranopia (verde) | 6% | Verde ↔ Vermelho |
+| Protanopia (vermelho) | 2% | Vermelho ↔ Verde |
+| Tritanopia (azul) | 0.01% | Azul ↔ Amarelo |
+| Achromatopsia (total) | 0.003% | Tudo → cinza |
+
+### REGRAS:
+- Vermelho e verde JUNTOS precisam de diferenciador extra (ícone, pattern, label)
+- Gráficos: Use patterns (linhas, dots) além de cor
+- Status: ✓ check + verde, ✕ cross + vermelho, ⚠ triangle + amarelo
+- Teste com simulador de daltonismo (plugin Figma: "Color Blind")
+
+---
+
+## ESTADOS PARA SCREEN READERS
+
+### Anúncios automáticos (aria-live):
+| Tipo | Quando Anunciar |
+|---|---|
+| Erro de validação | Imediatamente (assertive) |
+| Toast de sucesso | Após 100ms (polite) |
+| Conteúdo carregando | "Carregando..." |
+| Conteúdo carregado | "Conteúdo atualizado" |
+| Contagem atualizada | "3 notificações" |
+
+---
+
+## FORMULÁRIOS ACESSÍVEIS
+
+### Requisitos:
+- [ ] Cada campo tem `<label>` associado
+- [ ] Required fields marcados com asterisco * + aria-required
+- [ ] Errors anunciados por screen reader (aria-describedby)
+- [ ] Tab order segue ordem visual
+- [ ] Submit com Enter funciona
+- [ ] Autocomplete correto (name, email, tel, address-line1, etc.)
+- [ ] Error summary no topo do form (para errors no submit)
+- [ ] Campo com erro tem `aria-invalid="true"`
+
+---
+
+## IMAGENS E MÍDIA
+
+### Alt Text:
+| Tipo de Imagem | Alt Text |
+|---|---|
+| Informativa (foto de produto) | Descreva o conteúdo: "Camiseta azul marinho, tamanho M" |
+| Decorativa (background) | Vazio: `alt=""` |
+| Funcional (botão com imagem) | Descreva a ação: "Fechar" |
+| Complexa (gráfico) | Descrição curta + link para versão detalhada |
+
+### Vídeo:
+- Legendas (captions) para surdos
+- Audiodescrição para cegos (quando relevante)
+- Controles de play/pause acessíveis
+
+---
+
+## CHECKLIST DE ACESSIBILIDADE (Quick Audit)
+
+### Visual:
+- [ ] Contraste de texto ≥ 4.5:1 (AA)?
+- [ ] Touch targets ≥ 44×44px?
+- [ ] Cor não é o único indicador?
+- [ ] Focus indicators visíveis em todos os interativos?
+- [ ] Texto mínimo 12px, body mínimo 16px?
+
+### Estrutura:
+- [ ] Heading hierarchy correta (h1 > h2 > h3)?
+- [ ] Labels visíveis em todos os inputs?
+- [ ] Tab order segue ordem visual?
+- [ ] Modais têm focus trap?
+
+### Interação:
+- [ ] Todas as ações acessíveis por teclado?
+- [ ] Erros anunciados por screen reader?
+- [ ] Animações respeitam prefers-reduced-motion?
+- [ ] Nenhum flash > 3x por segundo?
+
+### Conteúdo:
+- [ ] Imagens informativas têm alt text?
+- [ ] Links têm texto descritivo (não "clique aqui")?
+- [ ] Linguagem clara e simples?

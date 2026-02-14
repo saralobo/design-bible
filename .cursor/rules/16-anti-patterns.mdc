@@ -1,0 +1,366 @@
+---
+alwaysApply: true
+---
+
+# Anti-Patterns — O Que NUNCA Fazer
+
+> Este é o documento mais importante para evitar erros recorrentes.
+> Cada anti-pattern aqui listado é um erro REAL que já foi cometido.
+> Se violar qualquer regra deste documento, PARE e corrija antes de continuar.
+
+---
+
+## ANTI-PATTERNS VISUAIS (UI)
+
+### AP-01: Botão "Cilíndrico" (O erro mais grave)
+```
+❌ ERRADO:
+┌────────────────────────┐
+│         Ícone           │  ← Auto-layout HUG com padding desigual
+└────────────────────────┘    = Formato oval/cilíndrico
+
+✅ CORRETO:
+    ┌───┐
+    │ + │                     ← FIXED 56×56, cornerRadius 28
+    └───┘
+```
+**Causa**: `primaryAxisSizingMode = 'AUTO'` ou `layoutSizingHorizontal = 'HUG'` em botão circular.
+**Correção**: FIXED width = FIXED height = tamanho desejado. cornerRadius = tamanho/2.
+
+---
+
+### AP-02: Sopa de Cores
+```
+❌ ERRADO:
+Botão 1: Azul #276EF1
+Botão 2: Verde #0E8345
+Botão 3: Roxo #7B2FFF
+Botão 4: Laranja #FF6B00
+→ Tela parece um arco-íris sem sentido
+
+✅ CORRETO:
+CTA Primário: Azul #276EF1 (ÚNICO elemento com esta cor)
+CTA Secundário: Outlined (borda azul, fundo transparente)
+CTA Terciário: Ghost (sem borda, texto azul)
+→ Hierarquia clara com uma cor accent
+```
+**Causa**: Usar cores diferentes para cada botão sem hierarquia.
+**Correção**: 1 cor accent para TODAS as ações primárias. Variações apenas por estilo (filled/outlined/ghost).
+
+---
+
+### AP-03: Padding Inconsistente
+```
+❌ ERRADO:
+Card 1: padding 24px
+Card 2: padding 16px
+Card 3: padding 12px top, 20px bottom
+→ Parece desalinhado e amador
+
+✅ CORRETO:
+Todos os cards: padding 16px (uniforme)
+Ou todos: padding 24px (uniforme)
+→ Consistência = profissionalismo
+```
+**Causa**: Valores arbitrários sem seguir o grid de 8px.
+**Correção**: Escolha 1 valor de padding e use em TODOS os cards do mesmo tipo.
+
+---
+
+### AP-04: Border-Radius Misto
+```
+❌ ERRADO:
+Card: cornerRadius 16px
+Botão: cornerRadius 8px
+Input: cornerRadius 4px
+Badge: cornerRadius 12px
+→ 4 valores diferentes, visual inconsistente
+
+✅ CORRETO:
+Card: cornerRadius 12px
+Botão: cornerRadius 12px (ou 8px se menor)
+Input: cornerRadius 8px
+Badge: cornerRadius full (height/2)
+→ No máximo 2 valores + pill
+```
+
+---
+
+### AP-05: Texto Ilegível
+```
+❌ ERRADO:
+- Texto cinza #CCCCCC sobre fundo branco #FFFFFF (ratio 1.6:1)
+- Texto 10px para body text
+- Font-weight 300 (Light) em 14px
+- Texto branco puro sobre preto puro
+
+✅ CORRETO:
+- Texto #333333 sobre #FFFFFF (ratio 12.63:1)
+- Body text mínimo 16px
+- Font-weight 400+ para tudo abaixo de 18px
+- Texto #E0E0E0 sobre #121212 (confortável)
+```
+
+---
+
+## ANTI-PATTERNS DE UX
+
+### AP-06: Dois CTAs Primários
+```
+❌ ERRADO:
+[ Enviar PIX ]    [ Cancelar ]
+  (azul filled)   (vermelho filled)
+→ O usuário não sabe qual é a ação principal
+
+✅ CORRETO:
+   Cancelar       [ Enviar PIX ]
+  (ghost/text)     (azul filled)
+→ 1 primário (filled), 1 secundário (ghost)
+```
+**Causa**: Dar o mesmo peso visual para ações de níveis diferentes.
+**Correção**: Apenas 1 botão filled por tela. Outros são outlined ou ghost.
+
+---
+
+### AP-07: CTA no Topo (Mobile)
+```
+❌ ERRADO:
+┌──────────────────────────┐
+│  [ Confirmar Pagamento ] │  ← CTA no topo = difícil de alcançar
+│                          │
+│  ... conteúdo ...        │
+│                          │
+│                          │
+└──────────────────────────┘
+
+✅ CORRETO:
+┌──────────────────────────┐
+│                          │
+│  ... conteúdo ...        │
+│                          │
+│                          │
+│  [ Confirmar Pagamento ] │  ← CTA no bottom = thumb zone
+└──────────────────────────┘
+```
+**Causa**: Não considerar a thumb zone no mobile.
+**Correção**: CTA principal sempre na metade inferior da tela.
+
+---
+
+### AP-08: Label Genérico
+```
+❌ ERRADO:
+[ OK ]
+[ Sim ]
+[ Confirmar ]
+[ Enviar ]
+[ Continuar ]
+
+✅ CORRETO:
+[ Enviar PIX de R$ 150,00 ]
+[ Excluir minha conta ]
+[ Ir para revisão ]
+[ Salvar rascunho ]
+[ Criar nova conta ]
+```
+**Causa**: Preguiça de escrever labels descritivos.
+**Correção**: Verbo + substantivo. O label descreve O QUE vai acontecer.
+
+---
+
+### AP-09: Sem Feedback de Loading
+```
+❌ ERRADO:
+Usuário clica "Enviar" → tela congela por 3 segundos → resultado aparece
+→ Usuário pensa que bugou e clica de novo
+
+✅ CORRETO:
+Usuário clica "Enviar" → botão mostra spinner → loading skeleton → resultado aparece
+→ Usuário sabe que o sistema está processando
+```
+**Causa**: Não implementar estados de loading.
+**Correção**: Feedback visual em < 100ms. Loading state se > 400ms.
+
+---
+
+### AP-10: Modal Sem Saída
+```
+❌ ERRADO:
+┌──────────────────────────┐
+│                          │
+│  Conteúdo do modal       │
+│                          │
+│  [ Confirmar ]           │  ← Sem X, sem overlay tap, sem gesture
+│                          │
+└──────────────────────────┘
+
+✅ CORRETO:
+┌──────────────────────────┐
+│  ×                       │  ← X para fechar
+│                          │
+│  Conteúdo do modal       │
+│                          │
+│ [ Cancelar ] [ Confirmar ] │  ← Duas opções claras
+└──────────────────────────┘
++ Tap no overlay fecha
++ Swipe down fecha (bottom sheet)
+```
+
+---
+
+### AP-11: Elementos Flutuando no Canvas
+```
+❌ ERRADO:
+Criar componentes soltos no canvas do Figma, sem parent
+
+✅ CORRETO:
+Criar Section → Frame → Componentes dentro
+Tudo organizado e hierárquico
+```
+
+---
+
+### AP-12: FILL em Elemento Fora de Auto-Layout
+```
+❌ ERRADO:
+const child = figma.createFrame();
+child.layoutSizingHorizontal = 'FILL';  // ERRO: parent não tem auto-layout
+parent.appendChild(child);
+
+✅ CORRETO:
+parent.layoutMode = 'VERTICAL';          // 1. Parent com auto-layout
+parent.appendChild(child);               // 2. Adicionar ao parent
+child.layoutSizingHorizontal = 'FILL';   // 3. DEPOIS setar FILL
+```
+
+---
+
+### AP-13: Mesma Cor para Tudo
+```
+❌ ERRADO:
+Fundo: #1A1A1A
+Card: #1A1A1A
+Botão: #1A1A1A
+→ Tudo se mistura, sem hierarquia
+
+✅ CORRETO (Dark Mode):
+Fundo: #121212
+Card: #1E1E1E (mais claro que fundo)
+Botão: #276EF1 (accent)
+→ Camadas de elevação claras
+```
+
+---
+
+### AP-14: Ícone Sem Label
+```
+❌ ERRADO:
+Bottom nav com 5 ícones sem texto
+→ Usuário novo não sabe o que cada um faz
+
+✅ CORRETO:
+Bottom nav com 5 ícones + labels
+🏠 Home   🔍 Buscar   ➕ Criar   🔔 Alertas   👤 Perfil
+```
+
+---
+
+### AP-15: Animação Excessiva
+```
+❌ ERRADO:
+Tudo bounce, tudo shake, tudo pulse
+Cada elemento entra com stagger de 100ms
+Transições de 800ms para cada tela
+→ App parece lento e irritante
+
+✅ CORRETO:
+Transições de 300ms, gentle
+Micro-interações apenas onde necessário
+Sem bounce em app financeiro/profissional
+→ Elegante e funcional
+```
+
+---
+
+### AP-16: Ignorar a Hierarquia de Informação
+```
+❌ ERRADO:
+Título: 16px Regular
+Subtítulo: 16px Regular
+Body: 16px Regular
+Caption: 16px Regular
+→ Tudo parece igual, sem hierarquia
+
+✅ CORRETO:
+Título: 24px SemiBold
+Subtítulo: 18px SemiBold
+Body: 16px Regular
+Caption: 12px Regular, neutral-600
+→ Hierarquia clara em um olhar
+```
+
+---
+
+### AP-17: Card com Informação Demais
+```
+❌ ERRADO:
+┌────────────────────────────────┐
+│ Avatar │ Nome Completo do User │
+│ Email do usuário               │
+│ Telefone do usuário            │
+│ Endereço completo do usuário   │
+│ CPF do usuário                 │
+│ Data de nascimento             │
+│ Status da conta                │
+│ Último login: 14/02/2026       │
+│ [ Editar ] [ Excluir ] [ Ver ] │
+└────────────────────────────────┘
+
+✅ CORRETO:
+┌────────────────────────────────┐
+│ Avatar │ João Silva            │
+│        │ joao@email.com        │
+│                    [ Ver →  ]  │
+└────────────────────────────────┘
+```
+
+---
+
+## RESUMO — TOP 5 ERROS MAIS COMUNS
+
+| # | Erro | Frequência | Severidade |
+|---|---|---|---|
+| 1 | Botão circular = oval (AP-01) | Alta | Catastrófico |
+| 2 | Múltiplos CTAs primários (AP-06) | Alta | Maior |
+| 3 | Cores inconsistentes (AP-02) | Alta | Maior |
+| 4 | CTA no topo do mobile (AP-07) | Média | Maior |
+| 5 | Sem loading feedback (AP-09) | Média | Maior |
+
+---
+
+## SELF-REVIEW CHECKLIST
+
+Antes de declarar qualquer tela como "pronta":
+
+### Visual:
+- [ ] Apenas 1 CTA primário (filled)?
+- [ ] Botões circulares são REALMENTE circulares?
+- [ ] Apenas 1 cor accent na tela?
+- [ ] Border-radius consistente em todos os elementos do mesmo tipo?
+- [ ] Padding uniforme em cards/containers?
+- [ ] Hierarquia tipográfica clara (≥ 3 tamanhos diferentes)?
+
+### Funcional:
+- [ ] CTA na thumb zone (metade inferior)?
+- [ ] Labels de botão são descritivos (verbo + substantivo)?
+- [ ] Todos os componentes têm feedback de press?
+- [ ] Loading states definidos para ações > 400ms?
+- [ ] Modais têm pelo menos 2 formas de fechar?
+- [ ] Back button em todas as sub-telas?
+
+### Técnico (Figma):
+- [ ] Tudo em auto-layout?
+- [ ] Nenhum elemento flutuando no canvas?
+- [ ] FILL aplicado DEPOIS de appendChild?
+- [ ] Fontes carregadas antes de usar?
+- [ ] Layers nomeados com convenção?

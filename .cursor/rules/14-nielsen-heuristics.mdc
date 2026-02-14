@@ -1,0 +1,295 @@
+---
+alwaysApply: true
+---
+
+# 10 Heurísticas de Nielsen — Avaliação de Usabilidade
+
+> Jakob Nielsen, 1994. Revisadas em 2024. As heurísticas mais citadas do mundo em UX.
+> Use como CHECKLIST antes de finalizar qualquer tela ou fluxo.
+
+---
+
+## 1. VISIBILIDADE DO STATUS DO SISTEMA
+
+**Definição**: O sistema deve sempre manter o usuário informado sobre o que está acontecendo, através de feedback apropriado em tempo razoável.
+
+### CHECKLIST:
+- [ ] Ações mostram loading/spinner quando processando?
+- [ ] Upload mostra barra de progresso com percentual?
+- [ ] O usuário sabe em qual passo está (stepper/breadcrumbs)?
+- [ ] Tab/item ativo está visualmente destacado?
+- [ ] Formulário mostra quais campos estão preenchidos?
+- [ ] Status de conexão é visível quando offline?
+- [ ] Contagem de itens é visível (3 de 10, carrinho com 5 itens)?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ "Enviando... 45%" (com barra de progresso)
+❌ (tela congelada sem feedback)
+
+✅ "Passo 2 de 4" com stepper visual
+❌ (sem indicação de onde está no fluxo)
+
+✅ Badge com número no ícone do carrinho
+❌ Ícone de carrinho sem indicação de quantidade
+```
+
+---
+
+## 2. CORRESPONDÊNCIA ENTRE SISTEMA E MUNDO REAL
+
+**Definição**: O sistema deve falar a linguagem do usuário, com palavras, frases e conceitos familiares, ao invés de termos técnicos do sistema.
+
+### CHECKLIST:
+- [ ] Linguagem é natural (não técnica)?
+- [ ] Ícones são reconhecíveis universalmente?
+- [ ] Metáforas fazem sentido (carrinho de compras, lixeira)?
+- [ ] Informações em ordem lógica natural?
+- [ ] Formato de dados é familiar (R$ 1.234,56, DD/MM/AAAA)?
+- [ ] Mensagens de erro são humanas (não códigos)?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ "Seu pagamento foi recusado. Tente outro cartão."
+❌ "Error 402: Payment declined. Code: INSUFFICIENT_FUNDS"
+
+✅ "Endereço de entrega"
+❌ "Shipping address object input"
+
+✅ Ícone de cadeado 🔒 para segurança
+❌ Ícone abstrato que ninguém reconhece
+```
+
+---
+
+## 3. CONTROLE E LIBERDADE DO USUÁRIO
+
+**Definição**: Usuários frequentemente escolhem funções por engano e precisam de uma "saída de emergência" claramente marcada.
+
+### CHECKLIST:
+- [ ] Toda tela tem botão back ou close?
+- [ ] Ação destrutiva tem undo (desfazer)?
+- [ ] Pode cancelar upload/download em andamento?
+- [ ] Pode editar informações já preenchidas?
+- [ ] Pode sair de um fluxo sem perder tudo?
+- [ ] Modal fecha ao clicar no overlay?
+- [ ] Formulário salva rascunho automaticamente?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ Toast "Item excluído" com botão [Desfazer]
+❌ Item excluído permanentemente sem aviso
+
+✅ ← Back button em toda sub-tela
+❌ Tela sem saída (precisa fechar o app)
+
+✅ "Tem certeza? [Cancelar] [Excluir]"
+❌ Exclui direto sem confirmação
+```
+
+---
+
+## 4. CONSISTÊNCIA E PADRÕES
+
+**Definição**: Usuários não deveriam ter que se perguntar se palavras, situações ou ações diferentes significam a mesma coisa.
+
+### CHECKLIST:
+- [ ] Mesma ação tem mesmo visual em todas as telas?
+- [ ] Botão primário é SEMPRE a mesma cor/estilo?
+- [ ] Ícones significam a mesma coisa em todo o app?
+- [ ] Terminologia é consistente (não "excluir" em uma tela e "deletar" em outra)?
+- [ ] Posição dos elementos é previsível tela a tela?
+- [ ] Header/footer são iguais em todas as telas do mesmo nível?
+- [ ] Border-radius é o mesmo em todos os cards?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ "Sair" em todas as telas
+❌ "Sair", "Logout", "Desconectar" em telas diferentes
+
+✅ CTA azul em TODAS as telas
+❌ CTA azul na Home, verde no checkout, roxo no perfil
+
+✅ Back button sempre no canto superior esquerdo
+❌ Back button esquerdo em uma tela, direito em outra
+```
+
+---
+
+## 5. PREVENÇÃO DE ERROS
+
+**Definição**: Melhor que boas mensagens de erro é um design cuidadoso que previne o erro em primeiro lugar.
+
+### CHECKLIST:
+- [ ] Campos com formato definido têm máscara (CPF, CEP, tel)?
+- [ ] Dropdown ao invés de campo livre quando há opções limitadas?
+- [ ] Confirmação antes de ações destrutivas?
+- [ ] Campos desabilitados quando não aplicáveis (não escondidos)?
+- [ ] Validação inline em tempo real?
+- [ ] Default values para campos quando possível?
+- [ ] Auto-save em formulários longos?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ Date picker visual ao invés de campo de texto livre
+❌ "Digite a data no formato DD/MM/AAAA" (usuário vai errar)
+
+✅ Botão "Excluir" cinza/disabled quando não há seleção
+❌ Botão "Excluir" ativo sem nada selecionado (erro ao clicar)
+
+✅ CEP com máscara XXXXX-XXX e lookup automático do endereço
+❌ Campo "Endereço completo" livre (cada um digita de um jeito)
+```
+
+---
+
+## 6. RECONHECIMENTO AO INVÉS DE MEMORIZAÇÃO
+
+**Definição**: Minimize a carga de memória do usuário tornando objetos, ações e opções visíveis.
+
+### CHECKLIST:
+- [ ] Labels visíveis (não só placeholders que somem)?
+- [ ] Ícones TÊM labels de texto?
+- [ ] Busca recente mostra histórico?
+- [ ] Endereços/pagamentos salvos são visíveis?
+- [ ] Help/tooltip disponível sem sair da tela?
+- [ ] Preview de ação mostra resultado antes de confirmar?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ Bottom nav com ícone + label "Home", "Buscar", "Perfil"
+❌ Bottom nav só com ícones (precisa memorizar o que cada um faz)
+
+✅ "Últimos destinatários" no topo do fluxo de PIX
+❌ Precisa digitar a chave toda vez do zero
+
+✅ Card de pagamento mostra "Visa •••• 1234" com ícone da bandeira
+❌ Apenas "Cartão principal" (qual cartão?)
+```
+
+---
+
+## 7. FLEXIBILIDADE E EFICIÊNCIA DE USO
+
+**Definição**: Aceleradores — invisíveis para novatos — podem acelerar a interação para especialistas.
+
+### CHECKLIST:
+- [ ] Atalhos para ações frequentes (favoritos, recentes)?
+- [ ] Gestos como atalho (swipe to delete, long press)?
+- [ ] Quick actions na home (transfer rápido)?
+- [ ] Personalização possível (reordenar, favoritar)?
+- [ ] Busca disponível em contextos relevantes?
+- [ ] Copy/paste funciona em campos de valor?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ "Repetir último PIX" na tela inicial
+✅ Swipe left para excluir (atalho para usuários avançados)
+✅ QR Code como atalho para transferência
+✅ Widget de saldo na home do celular
+
+❌ Obrigar todos os passos toda vez (sem atalhos)
+❌ Forçar tutorial toda vez que abre o app
+```
+
+---
+
+## 8. DESIGN ESTÉTICO E MINIMALISTA
+
+**Definição**: Interfaces não devem conter informação irrelevante ou raramente necessária. Cada unidade extra de informação compete com as unidades relevantes.
+
+### CHECKLIST:
+- [ ] Cada elemento na tela tem um PROPÓSITO?
+- [ ] Informação secundária está colapsada/escondida?
+- [ ] Há espaço de respiro suficiente?
+- [ ] Máximo 3-4 blocos de informação por tela?
+- [ ] Cores são limitadas (1 accent + neutras + status)?
+- [ ] Tipografia limitada (2 pesos por tela)?
+- [ ] Decoração que não comunica = remover?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ Tela de saldo: Valor grande + card clean + 3 ações rápidas
+❌ Tela de saldo: Valor + gráfico + 8 botões + banner + notificações
+
+✅ Card de transação: Logo + Nome + Valor + Data
+❌ Card de transação: Logo + Nome + Valor + Data + Categoria + ID + Hash + Status + Tipo
+
+✅ Espaço em branco generoso (32-48px entre seções)
+❌ Tudo colado, sem respiração visual
+```
+
+---
+
+## 9. AJUDAR USUÁRIOS A RECONHECER, DIAGNOSTICAR E RECUPERAR DE ERROS
+
+**Definição**: Mensagens de erro devem ser expressas em linguagem simples, indicar o problema precisamente e sugerir uma solução.
+
+### Fórmula de Error Message:
+```
+[O QUE aconteceu] + [POR QUE aconteceu] + [O QUE fazer]
+```
+
+### Exemplos:
+```
+✅ "CPF inválido. Verifique se digitou os 11 dígitos corretamente."
+❌ "Erro no campo CPF"
+
+✅ "Pagamento recusado. Seu banco não autorizou. Tente outro cartão ou entre em contato com seu banco."
+❌ "Payment failed"
+
+✅ "Sem conexão com a internet. Verifique seu Wi-Fi e tente novamente."
+❌ "Network error"
+```
+
+### CHECKLIST:
+- [ ] Mensagem em linguagem humana (não código)?
+- [ ] Indica O QUE deu errado?
+- [ ] Sugere COMO corrigir?
+- [ ] Tem ação de recuperação (botão retry, link de ajuda)?
+- [ ] Não culpa o usuário ("Você errou" → "O CPF parece inválido")?
+- [ ] Erro é posicionado próximo ao campo relevante?
+
+---
+
+## 10. AJUDA E DOCUMENTAÇÃO
+
+**Definição**: Mesmo que o sistema possa ser usado sem documentação, pode ser necessário fornecer ajuda.
+
+### CHECKLIST:
+- [ ] Tooltips para campos/ícones complexos?
+- [ ] Onboarding para features novas?
+- [ ] FAQ/Help acessível de dentro do app?
+- [ ] Coach marks para primeira experiência?
+- [ ] Contextual help (ajuda onde precisa, não em página separada)?
+- [ ] Chat/suporte acessível?
+
+### APLICAÇÃO PRÁTICA:
+```
+✅ Ícone (i) ao lado de "Chave PIX" que explica os tipos
+✅ Coach mark na primeira vez: "Toque aqui para enviar PIX"
+✅ Tooltip em campo complexo: "CVV são os 3 dígitos atrás do cartão"
+
+❌ Help page genérica sem busca
+❌ Manual PDF de 50 páginas
+❌ Nenhuma ajuda em lugar nenhum
+```
+
+---
+
+## COMO USAR ESTE CHECKLIST
+
+### Antes de finalizar qualquer tela:
+1. Passe por cada heurística (1-10)
+2. Responda cada pergunta do checklist
+3. Se alguma resposta for "NÃO" → corrija antes de entregar
+4. Peça para outra pessoa testar (se possível)
+
+### Escala de Severidade (quando encontrar problema):
+| Nível | Descrição | Ação |
+|---|---|---|
+| 0 | Não é usabilidade | Ignorar |
+| 1 | Cosmético | Corrigir se sobrar tempo |
+| 2 | Menor | Prioridade baixa |
+| 3 | Maior | Prioridade alta, corrigir antes de lançar |
+| 4 | Catastrófico | Corrigir IMEDIATAMENTE |

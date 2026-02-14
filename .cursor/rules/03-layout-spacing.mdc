@@ -1,0 +1,207 @@
+---
+alwaysApply: true
+---
+
+# Layout e Espaçamento — O Sistema de Grid e Respiração
+
+> Espaçamento é a diferença entre "amador" e "profissional". 
+> Um bom espaçamento faz o design parecer caro.
+
+---
+
+## SISTEMA DE 8px (The 8-Point Grid)
+
+**Por quê 8px?** Divisível por 2 e 4, funciona em todas as densidades de tela (1x, 1.5x, 2x, 3x). É o padrão da indústria (Google, Apple, IBM).
+
+### Escala de Espaçamento:
+| Token | Valor | Uso Típico |
+|---|---|---|
+| space-xxs | 2px | Ajuste fino (borda → ícone) |
+| space-xs | 4px | Label → Input, ícone → texto inline |
+| space-sm | 8px | Entre itens do mesmo grupo |
+| space-md | 12px | Padding interno de chip/badge |
+| space-base | 16px | Padding horizontal de botão, gap entre inputs |
+| space-lg | 24px | Padding interno de card, margem lateral da tela |
+| space-xl | 32px | Entre seções da tela |
+| space-2xl | 40px | Separação visual forte |
+| space-3xl | 48px | Entre grandes blocos de conteúdo |
+| space-4xl | 64px | Espaço hero, top padding de tela |
+
+### REGRA DE OURO:
+> Espaço ENTRE grupos ≥ 2× espaço DENTRO do grupo
+
+---
+
+## MARGENS DA TELA (Screen Margins)
+
+### Mobile (< 428px)
+- **Margem lateral**: 16px (mínimo) a 24px (confortável)
+- **Margem top**: 16px abaixo da status bar / header
+- **Margem bottom**: 16px acima do bottom nav / home indicator
+
+### Tablet (428px - 1024px)
+- **Margem lateral**: 24-32px
+- **Margem máxima de conteúdo**: 600px (centro) — não espalhe conteúdo na tela toda
+
+### Desktop (> 1024px)
+- **Max-width de conteúdo**: 1200px (centro)
+- **Margem lateral**: Auto (conteúdo centralizado)
+
+---
+
+## AUTO-LAYOUT NO FIGMA — BOAS PRÁTICAS
+
+### Regras Absolutas:
+1. **TUDO usa auto-layout** — Nenhum elemento posicionado manualmente (absolute) a não ser overlays
+2. **Frame da tela**: Auto-layout vertical, padding top/bottom + horizontal
+3. **Seções**: Auto-layout vertical, gap entre seções = 24-32px
+4. **Rows**: Auto-layout horizontal, gap entre itens = 8-16px
+5. **Cards**: Auto-layout vertical, padding uniforme (16-24px)
+
+### Sizing Mode:
+| Contexto | Horizontal | Vertical |
+|---|---|---|
+| Frame da tela | Fixed (390/393px) | Hug contents |
+| Container/Section | Fill container | Hug contents |
+| Card | Fill container | Hug contents |
+| Botão full-width | Fill container | Fixed (48px) |
+| Botão inline | Hug contents | Fixed (48px) |
+| Input | Fill container | Fixed (48-56px) |
+| Texto | Fill container | Hug contents |
+| Ícone | Fixed (24px) | Fixed (24px) |
+| Avatar | Fixed (40-48px) | Fixed (40-48px) |
+| Imagem hero | Fill container | Fixed (200-300px) |
+
+### REGRA CRÍTICA DE FILL:
+> `FILL` só funciona em filhos diretos de auto-layout frames.
+> NUNCA tente setar FILL antes de colocar o elemento dentro do auto-layout parent.
+
+---
+
+## PROPORÇÕES PADRÃO DE TELA MOBILE
+
+### Viewports Comuns:
+| Device | Width | Height |
+|---|---|---|
+| iPhone SE | 375px | 667px |
+| iPhone 14 | 390px | 844px |
+| iPhone 14 Pro Max | 393px | 852px |
+| iPhone 15 Pro | 393px | 852px |
+| Samsung Galaxy S24 | 360px | 780px |
+| Pixel 8 | 412px | 915px |
+
+### Viewport Padrão para Design:
+- **Usar: 393 × 852px** (cobre a maioria dos devices modernos)
+- Teste em 375px para garantir que nada quebra
+
+---
+
+## BREAKPOINTS DE LAYOUT
+
+| Nome | Min Width | Layout |
+|---|---|---|
+| Mobile S | 320px | 1 coluna, stacked |
+| Mobile M | 375px | 1 coluna, stacked |
+| Mobile L | 428px | 1 coluna, stacked |
+| Tablet | 768px | 2 colunas possíveis |
+| Laptop | 1024px | 2-3 colunas |
+| Desktop | 1440px | Container centralizado, 3-4 colunas |
+
+---
+
+## SAFE AREAS
+
+### iOS:
+- **Status bar**: 47px (Dynamic Island) / 44px (Notch) / 20px (sem notch)
+- **Home indicator**: 34px na parte inferior
+- **Navigation bar (header)**: 44px de altura
+
+### Android:
+- **Status bar**: 24dp
+- **Navigation bar**: 48dp (gesture) / 48dp (3-button)
+
+### REGRA:
+> NUNCA coloque elementos interativos na safe area. Conteúdo pode scrollar por trás da status bar, mas botões NÃO.
+
+---
+
+## PATTERNS DE LAYOUT MOBILE
+
+### 1. Full-Screen Stack (Mais Comum)
+```
+┌─────────────────┐
+│    Status Bar    │ ← Safe area
+├─────────────────┤
+│     Header       │ ← Fixed, 44-56px
+├─────────────────┤
+│                  │
+│   Scrollable     │ ← Flex/Fill
+│   Content        │
+│                  │
+├─────────────────┤
+│   Bottom CTA     │ ← Fixed, padding 16px
+├─────────────────┤
+│   Bottom Nav     │ ← Fixed, 56-83px
+└─────────────────┘
+```
+
+### 2. Modal / Bottom Sheet
+```
+┌─────────────────┐
+│                  │
+│   Overlay 50%    │ ← Tap to dismiss
+│                  │
+├──────────────────┤ ← border-radius top 16-24px
+│   Handle Bar     │ ← 40×4px, centered
+│   Sheet Title    │
+│   Sheet Content  │
+│   Action Button  │
+└─────────────────┘
+```
+
+### 3. Tab-Based Screen
+```
+┌─────────────────┐
+│     Header       │
+├─────────────────┤
+│  Tab 1 │ Tab 2  │ ← Sticky, border-bottom
+├─────────────────┤
+│                  │
+│   Tab Content    │ ← Scrollable
+│                  │
+├─────────────────┤
+│   Bottom Nav     │
+└─────────────────┘
+```
+
+---
+
+## NAMING CONVENTION NO FIGMA
+
+### Frames:
+- Tela principal: `Screen/NomeDaTela`
+- Seções: `Section/NomeDaSeção`
+- Rows: `Row/Descrição`
+- Cards: `Card/Tipo`
+
+### Componentes:
+- `Button/Primary/Large`
+- `Input/TextField/Default`
+- `Icon/24/NomeDoIcone`
+- `Avatar/Size-48`
+
+### Variantes:
+- `State=Default, Size=Large, HasIcon=True`
+
+---
+
+## CHECKLIST DE LAYOUT
+
+- [ ] Todos os frames usam auto-layout?
+- [ ] As margens laterais são consistentes (16px ou 24px)?
+- [ ] O espaço entre seções é ≥ 2× o espaço entre itens?
+- [ ] O viewport é 393×852px?
+- [ ] Elementos não invadem safe areas?
+- [ ] Conteúdo tem max-width em telas largas?
+- [ ] FILL só está em filhos de auto-layout?
+- [ ] Todos os frames estão nomeados com convenção clara?
