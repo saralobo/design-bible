@@ -2,229 +2,229 @@
 alwaysApply: true
 ---
 
-# Leis de UX — Fundamentação Científica para Decisões de Design
+# UX Laws — Scientific Foundation for Design Decisions
 
-> Baseado em lawsofux.com (Jon Yablonski), psicologia cognitiva e pesquisa de usabilidade.
-> Cada lei inclui: definição, explicação, e REGRA PRÁTICA para aplicação no Figma.
-
----
-
-## 1. LEI DE FITTS (Fitts's Law)
-
-**Definição**: O tempo para alcançar um alvo é uma função da distância até o alvo e do tamanho do alvo.
-
-**Fórmula**: T = a + b × log₂(2D/W)
-- T = tempo do movimento
-- D = distância até o alvo
-- W = largura/tamanho do alvo
-
-**Explicação**: Quanto maior e mais próximo o botão, mais rápido o usuário clica nele. Quanto menor e mais distante, mais tempo e mais erros.
-
-### REGRAS PRÁTICAS:
-- **CTA primário**: SEMPRE o maior botão da tela. Mínimo 48px de altura, preferencialmente full-width no mobile
-- **Ações destrutivas**: Menores e mais distantes do CTA principal (evitar clique acidental)
-- **FAB (Floating Action Button)**: 56×56px, posicionado na thumb zone (canto inferior direito)
-- **Botões em header**: Mínimo 44×44px touch target, mesmo que o ícone visual seja 24px
-- **Ações frequentes**: Perto do centro ou base da tela (zona do polegar)
-- **NUNCA**: Colocar ação primária no canto superior esquerdo do mobile (mais difícil de alcançar)
+> Based on lawsofux.com (Jon Yablonski), cognitive psychology, and usability research.
+> Each law includes: definition, explanation, and PRACTICAL RULE for Figma application.
 
 ---
 
-## 2. LEI DE HICK (Hick's Law)
+## 1. FITTS'S LAW
 
-**Definição**: O tempo para tomar uma decisão aumenta com o número e complexidade das escolhas.
+**Definition**: The time to reach a target is a function of the distance to the target and the size of the target.
 
-**Fórmula**: T = b × log₂(n + 1)
-- T = tempo de decisão
-- n = número de opções
+**Formula**: T = a + b × log₂(2D/W)
+- T = movement time
+- D = distance to target
+- W = width/size of target
 
-**Explicação**: Muitas opções = paralisia. Poucas opções = ação rápida.
+**Explanation**: The larger and closer the button, the faster the user clicks it. The smaller and farther, the more time and errors.
 
-### REGRAS PRÁTICAS:
-- **Navegação principal**: Máximo 5 itens (bottom nav: 3-5 itens)
-- **Menu de opções**: Se tem mais de 7 itens, agrupe em categorias
-- **Formulário**: Máximo 5-7 campos visíveis por vez. Use progressive disclosure para mais
-- **Onboarding**: Uma escolha por tela. NUNCA sobrecarregar na primeira experiência
-- **Dropdown/Select**: Se tem mais de 10 opções, use search/filter
-- **Ações por tela**: 1 primária + máximo 2 secundárias
-- **NUNCA**: Mostrar 10+ botões de ação numa mesma tela
-
----
-
-## 3. LEI DE JAKOB (Jakob's Law)
-
-**Definição**: Os usuários passam a maior parte do tempo em OUTROS sites/apps. Eles preferem que seu produto funcione igual aos que já conhecem.
-
-**Explicação**: Não reinvente a roda. Padrões familiares reduzem a carga cognitiva.
-
-### REGRAS PRÁTICAS:
-- **Bottom navigation**: Tab bar na parte inferior (não invente nav customizada)
-- **Back button**: Canto superior esquerdo com seta ← (não use X para navegação back)
-- **Pull to refresh**: Gesto padrão, não mude
-- **Swipe to delete**: Deslizar para a esquerda revela ação destrutiva (vermelho)
-- **Search**: Ícone de lupa 🔍, campo de busca no topo
-- **Settings**: Ícone de engrenagem ⚙️, acessível pelo perfil ou menu
-- **NUNCA**: Criar gestos customizados sem onboarding. O usuário não vai adivinhar
+### PRACTICAL RULES:
+- **Primary CTA**: ALWAYS the largest button on screen. Minimum 48px height, preferably full-width on mobile
+- **Destructive actions**: Smaller and farther from the main CTA (prevent accidental clicks)
+- **FAB (Floating Action Button)**: 56×56px, positioned in the thumb zone (bottom-right corner)
+- **Header buttons**: Minimum 44×44px touch target, even if the visual icon is 24px
+- **Frequent actions**: Near the center or bottom of the screen (thumb zone)
+- **NEVER**: Place primary action in the top-left corner on mobile (hardest to reach)
 
 ---
 
-## 4. LEI DE MILLER (Miller's Law)
+## 2. HICK'S LAW
 
-**Definição**: A pessoa média consegue manter 7 (±2) itens na memória de trabalho.
+**Definition**: The time to make a decision increases with the number and complexity of choices.
 
-**Explicação**: Agrupe informações em chunks (pedaços) de no máximo 4-5 itens para facilitar processamento.
+**Formula**: T = b × log₂(n + 1)
+- T = decision time
+- n = number of options
 
-### REGRAS PRÁTICAS:
-- **Número de telefone**: Agrupe em chunks: (11) 9 8765-4321, não 11987654321
-- **Número de cartão**: 4 grupos de 4 dígitos: 1234 5678 9012 3456
-- **Código PIN/OTP**: Campos separados por dígito (4-6 campos individuais)
-- **Lista de itens**: Se passar de 5-7 itens, agrupe com headers/seções
-- **Stepper/Wizard**: Máximo 5-7 passos visíveis no indicador de progresso
-- **Preço/Valor**: Use separadores de milhar: R$ 1.234,56 (não R$ 1234.56)
-- **NUNCA**: Mostrar mais de 7 itens sem categorização visual
+**Explanation**: Many options = paralysis. Few options = quick action.
 
----
-
-## 5. EFEITO VON RESTORFF (Isolation Effect)
-
-**Definição**: Quando múltiplos objetos similares estão presentes, aquele que difere mais dos outros é mais lembrado.
-
-**Explicação**: O item que "se destaca" é o que o usuário memoriza e age sobre.
-
-### REGRAS PRÁTICAS:
-- **CTA primário**: Cor sólida accent (único na tela com essa cor). Outros botões = outlined ou ghost
-- **Badge de notificação**: Vermelho com número branco — contrasta com qualquer fundo
-- **Preço promocional**: Cor diferente + tamanho maior que o preço original
-- **Estado ativo**: Tab/item selecionado deve ser VISIVELMENTE diferente dos demais
-- **Erro**: Vermelho + ícone. Nunca confie apenas na cor (daltonismo)
-- **NUNCA**: Usar a mesma cor/peso/tamanho para o CTA principal e ações secundárias
+### PRACTICAL RULES:
+- **Main navigation**: Maximum 5 items (bottom nav: 3-5 items)
+- **Options menu**: If more than 7 items, group into categories
+- **Form**: Maximum 5-7 visible fields at a time. Use progressive disclosure for more
+- **Onboarding**: One choice per screen. NEVER overload the first experience
+- **Dropdown/Select**: If more than 10 options, use search/filter
+- **Actions per screen**: 1 primary + maximum 2 secondary
+- **NEVER**: Show 10+ action buttons on the same screen
 
 ---
 
-## 6. EFEITO DE POSIÇÃO SERIAL (Serial Position Effect)
+## 3. JAKOB'S LAW
 
-**Definição**: As pessoas tendem a lembrar do primeiro (efeito primazia) e do último (efeito recência) item de uma série.
+**Definition**: Users spend most of their time on OTHER sites/apps. They prefer your product to work the same way as the ones they already know.
 
-**Explicação**: Coloque o mais importante no início OU no final. O meio é esquecido.
+**Explanation**: Don't reinvent the wheel. Familiar patterns reduce cognitive load.
 
-### REGRAS PRÁTICAS:
-- **Bottom navigation**: Ação principal no 1º ou último item (Home à esquerda, Perfil à direita)
-- **Lista de features**: A mais importante primeiro, a segunda mais importante por último
-- **Onboarding**: Primeira e última tela são as mais memoráveis
-- **Menu**: Itens mais usados no topo, menos usados no meio
-- **Form fields**: Campo mais crítico no topo (ex: email antes de preferências)
-- **NUNCA**: Colocar a ação mais importante no meio de uma lista de 5+ itens
-
----
-
-## 7. LIMIAR DE DOHERTY (Doherty Threshold)
-
-**Definição**: A produtividade dispara quando interações homem-computador acontecem em menos de 400 milissegundos.
-
-**Explicação**: Se o sistema demora mais de 400ms para responder, o usuário perde o fluxo mental.
-
-### REGRAS PRÁTICAS:
-- **Feedback de toque**: Resposta visual em < 100ms (ripple, highlight, scale)
-- **Transição de tela**: 200-500ms (300ms é o sweet spot)
-- **Loading state**: Se > 1 segundo, mostre skeleton/shimmer
-- **Progress indicator**: Se > 3 segundos, mostre barra de progresso com percentual
-- **Animação de micro-interação**: 150-300ms
-- **NUNCA**: Deixar o usuário sem feedback por mais de 400ms após uma ação
+### PRACTICAL RULES:
+- **Bottom navigation**: Tab bar at the bottom (don't invent custom nav)
+- **Back button**: Top-left corner with ← arrow (don't use X for back navigation)
+- **Pull to refresh**: Standard gesture, don't change it
+- **Swipe to delete**: Swipe left reveals destructive action (red)
+- **Search**: Magnifying glass icon 🔍, search field at the top
+- **Settings**: Gear icon ⚙️, accessible from profile or menu
+- **NEVER**: Create custom gestures without onboarding. The user won't guess
 
 ---
 
-## 8. EFEITO ESTÉTICO-USABILIDADE (Aesthetic-Usability Effect)
+## 4. MILLER'S LAW
 
-**Definição**: Designs esteticamente agradáveis são percebidos como mais fáceis de usar.
+**Definition**: The average person can hold 7 (±2) items in working memory.
 
-**Explicação**: Beleza gera confiança. Interfaces bonitas fazem o usuário tolerar mais pequenos problemas.
+**Explanation**: Group information into chunks of no more than 4-5 items for easier processing.
 
-### REGRAS PRÁTICAS:
-- **Espaçamento generoso**: Padding de 16-24px dentro de cards/containers
-- **Tipografia limpa**: Máximo 2 pesos por tela (regular + semibold/bold)
-- **Cores consistentes**: Máximo 3 cores principais + neutras
-- **Border radius consistente**: Escolha 1 valor (8px, 12px, ou 16px) e use em TUDO
-- **Sombras sutis**: Uma sombra leve (0 2px 8px rgba(0,0,0,0.08)) para elevação
-- **NUNCA**: Misturar border-radius diferentes (8px em um card, 16px em outro, 4px no terceiro)
-
----
-
-## 9. REGRA DO PICO-FIM (Peak-End Rule)
-
-**Definição**: As pessoas julgam uma experiência com base no momento mais intenso (pico) e no final, não na soma total.
-
-**Explicação**: O momento WOW e o encerramento definem como o usuário LEMBRA da experiência.
-
-### REGRAS PRÁTICAS:
-- **Tela de sucesso**: Invista design aqui! Animação, cor vibrante, check animado
-- **Onboarding**: Última tela deve ser memorável (não genérica)
-- **Checkout**: Confirmação de compra = celebração visual
-- **Error recovery**: Depois de um erro, a resolução deve ser suave e satisfatória
-- **Loading → Resultado**: O reveal do conteúdo após loading deve sentir-se recompensador
-- **NUNCA**: Terminar um fluxo com uma tela genérica sem emoção ("Concluído.")
+### PRACTICAL RULES:
+- **Phone number**: Group into chunks: (11) 9 8765-4321, not 11987654321
+- **Card number**: 4 groups of 4 digits: 1234 5678 9012 3456
+- **PIN/OTP code**: Separate fields per digit (4-6 individual fields)
+- **Item list**: If exceeding 5-7 items, group with headers/sections
+- **Stepper/Wizard**: Maximum 5-7 visible steps in the progress indicator
+- **Price/Value**: Use thousand separators: $1,234.56 (not $1234.56)
+- **NEVER**: Show more than 7 items without visual categorization
 
 ---
 
-## 10. EFEITO ZEIGARNIK (Zeigarnik Effect)
+## 5. VON RESTORFF EFFECT (Isolation Effect)
 
-**Definição**: As pessoas lembram mais de tarefas incompletas do que completas.
+**Definition**: When multiple similar objects are present, the one that differs most from the others is most remembered.
 
-**Explicação**: Uma barra de progresso em 80% cria urgência para completar.
+**Explanation**: The item that "stands out" is what the user memorizes and acts upon.
 
-### REGRAS PRÁTICAS:
-- **Progresso de perfil**: "Seu perfil está 70% completo" motiva a completar
-- **Stepper/Wizard**: Mostre claramente "Passo 2 de 4" com barra de progresso
-- **Onboarding**: Indicador de progresso visível (dots ou barra)
-- **Gamification**: Medalhas/badges parcialmente conquistadas motivam ação
-- **Forms longos**: Salve rascunho automaticamente, mostre progresso
-- **NUNCA**: Esconder o progresso em fluxos multi-step
-
----
-
-## 11. LEI DE TESLER (Conservation of Complexity)
-
-**Definição**: Toda aplicação tem uma quantidade inerente de complexidade que não pode ser removida. A pergunta é: quem lida com ela — o sistema ou o usuário?
-
-**Explicação**: Absorva a complexidade no design. O usuário não deve resolver problemas do sistema.
-
-### REGRAS PRÁTICAS:
-- **Autocompletar**: Preencha o máximo possível automaticamente (CEP → endereço)
-- **Defaults inteligentes**: Pré-selecione a opção mais comum
-- **Formatação automática**: CPF, telefone, CEP devem formatar enquanto digita
-- **Validação inline**: Valide campo por campo, não tudo no submit
-- **NUNCA**: Fazer o usuário digitar informações que o sistema pode inferir
+### PRACTICAL RULES:
+- **Primary CTA**: Solid accent color (the ONLY element with that color on screen). Other buttons = outlined or ghost
+- **Notification badge**: Red with white number — contrasts against any background
+- **Promotional price**: Different color + larger size than the original price
+- **Active state**: Selected tab/item must be VISIBLY different from the rest
+- **Error**: Red + icon. Never rely only on color (color blindness)
+- **NEVER**: Use the same color/weight/size for the main CTA and secondary actions
 
 ---
 
-## 12. LEI DE POSTEL (Robustness Principle)
+## 6. SERIAL POSITION EFFECT
 
-**Definição**: Seja conservador no que envia, liberal no que aceita.
+**Definition**: People tend to remember the first (primacy effect) and last (recency effect) items in a series.
 
-**Explicação**: Aceite vários formatos de input, mas sempre exiba no formato correto.
+**Explanation**: Place the most important at the beginning OR at the end. The middle is forgotten.
 
-### REGRAS PRÁTICAS:
-- **CPF**: Aceite com ou sem pontos/traço (12345678900 ou 123.456.789-00)
-- **Telefone**: Aceite com ou sem parênteses e hífen
+### PRACTICAL RULES:
+- **Bottom navigation**: Main action in the 1st or last item (Home on the left, Profile on the right)
+- **Feature list**: Most important first, second most important last
+- **Onboarding**: First and last screens are the most memorable
+- **Menu**: Most-used items at the top, least-used in the middle
+- **Form fields**: Most critical field at the top (e.g., email before preferences)
+- **NEVER**: Place the most important action in the middle of a 5+ item list
+
+---
+
+## 7. DOHERTY THRESHOLD
+
+**Definition**: Productivity soars when human-computer interactions occur in less than 400 milliseconds.
+
+**Explanation**: If the system takes more than 400ms to respond, the user loses their mental flow.
+
+### PRACTICAL RULES:
+- **Touch feedback**: Visual response in < 100ms (ripple, highlight, scale)
+- **Screen transition**: 200-500ms (300ms is the sweet spot)
+- **Loading state**: If > 1 second, show skeleton/shimmer
+- **Progress indicator**: If > 3 seconds, show progress bar with percentage
+- **Micro-interaction animation**: 150-300ms
+- **NEVER**: Leave the user without feedback for more than 400ms after an action
+
+---
+
+## 8. AESTHETIC-USABILITY EFFECT
+
+**Definition**: Aesthetically pleasing designs are perceived as easier to use.
+
+**Explanation**: Beauty builds trust. Beautiful interfaces make users tolerate more small issues.
+
+### PRACTICAL RULES:
+- **Generous spacing**: 16-24px padding inside cards/containers
+- **Clean typography**: Maximum 2 weights per screen (regular + semibold/bold)
+- **Consistent colors**: Maximum 3 main colors + neutrals
+- **Consistent border radius**: Choose 1 value (8px, 12px, or 16px) and use it for EVERYTHING
+- **Subtle shadows**: One light shadow (0 2px 8px rgba(0,0,0,0.08)) for elevation
+- **NEVER**: Mix different border-radius values (8px on one card, 16px on another, 4px on a third)
+
+---
+
+## 9. PEAK-END RULE
+
+**Definition**: People judge an experience based on the most intense moment (peak) and the ending, not the total sum.
+
+**Explanation**: The WOW moment and the conclusion define how the user REMEMBERS the experience.
+
+### PRACTICAL RULES:
+- **Success screen**: Invest design here! Animation, vibrant color, animated check
+- **Onboarding**: Last screen should be memorable (not generic)
+- **Checkout**: Purchase confirmation = visual celebration
+- **Error recovery**: After an error, the resolution should be smooth and satisfying
+- **Loading → Result**: The content reveal after loading should feel rewarding
+- **NEVER**: End a flow with a generic screen without emotion ("Done.")
+
+---
+
+## 10. ZEIGARNIK EFFECT
+
+**Definition**: People remember incomplete tasks better than completed ones.
+
+**Explanation**: A progress bar at 80% creates urgency to complete.
+
+### PRACTICAL RULES:
+- **Profile progress**: "Your profile is 70% complete" motivates completion
+- **Stepper/Wizard**: Clearly show "Step 2 of 4" with a progress bar
+- **Onboarding**: Visible progress indicator (dots or bar)
+- **Gamification**: Partially earned badges/medals motivate action
+- **Long forms**: Auto-save drafts, show progress
+- **NEVER**: Hide progress in multi-step flows
+
+---
+
+## 11. TESLER'S LAW (Conservation of Complexity)
+
+**Definition**: Every application has an inherent amount of complexity that cannot be removed. The question is: who deals with it — the system or the user?
+
+**Explanation**: Absorb complexity into the design. The user should not solve system problems.
+
+### PRACTICAL RULES:
+- **Autocomplete**: Fill in as much as possible automatically (ZIP → address)
+- **Smart defaults**: Pre-select the most common option
+- **Auto-formatting**: Phone, SSN, ZIP should format while typing
+- **Inline validation**: Validate field by field, not everything on submit
+- **NEVER**: Make the user type information the system can infer
+
+---
+
+## 12. POSTEL'S LAW (Robustness Principle)
+
+**Definition**: Be conservative in what you send, liberal in what you accept.
+
+**Explanation**: Accept various input formats, but always display in the correct format.
+
+### PRACTICAL RULES:
+- **Phone**: Accept with or without parentheses, dashes, country codes
 - **Email**: Case-insensitive, trim whitespace
-- **Busca**: Tolere typos, sugira correções
-- **Data**: Aceite vários formatos (01/01/2025, 1/1/25, 01-01-2025)
-- **NUNCA**: Rejeitar um input válido por causa de formatação
+- **Search**: Tolerate typos, suggest corrections
+- **Date**: Accept various formats (01/01/2025, 1/1/25, 01-01-2025, Jan 1 2025)
+- **Currency**: Accept with or without symbols and separators
+- **NEVER**: Reject a valid input because of formatting
 
 ---
 
-## RESUMO RÁPIDO — QUANDO USAR CADA LEI
+## QUICK REFERENCE — WHEN TO USE EACH LAW
 
-| Situação | Lei |
+| Situation | Law |
 |---|---|
-| Tamanho/posição de botões | Fitts |
-| Quantas opções mostrar | Hick |
-| Padrões de interação | Jakob |
-| Agrupamento de informação | Miller |
-| Destacar CTA principal | Von Restorff |
-| Ordem de itens em lista/nav | Posição Serial |
-| Velocidade de feedback | Doherty |
-| Acabamento visual | Estético-Usabilidade |
-| Telas de sucesso/conclusão | Pico-Fim |
-| Progresso/motivação | Zeigarnik |
-| Simplificar para o usuário | Tesler |
-| Aceitar inputs flexíveis | Postel |
+| Button size/position | Fitts |
+| How many options to show | Hick |
+| Interaction patterns | Jakob |
+| Information grouping | Miller |
+| Highlight primary CTA | Von Restorff |
+| Item order in list/nav | Serial Position |
+| Feedback speed | Doherty |
+| Visual polish | Aesthetic-Usability |
+| Success/completion screens | Peak-End |
+| Progress/motivation | Zeigarnik |
+| Simplify for the user | Tesler |
+| Accept flexible inputs | Postel |

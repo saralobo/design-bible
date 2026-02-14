@@ -2,39 +2,39 @@
 alwaysApply: true
 ---
 
-# Motion e Transições — Animação com Propósito
+# Motion & Transitions — Animation with Purpose
 
-> Animação sem propósito é decoração. Animação com propósito é comunicação.
-> Cada milissegundo deve ter uma razão.
-
----
-
-## PRINCÍPIOS FUNDAMENTAIS DE MOTION
-
-### 1. Funcional, Não Decorativo
-- Animação deve COMUNICAR algo: relação, hierarquia, estado, ou direção
-- Se tirar a animação e nada muda na compreensão → a animação é desnecessária
-
-### 2. Rápido e Suave
-- Percepção de velocidade > velocidade real
-- Animações devem COMEÇAR rápido e desacelerar (ease-out)
-- O usuário não deve ESPERAR pela animação
-
-### 3. Natural e Físico
-- Objetos não se teletransportam — eles se MOVEM
-- Objetos não param abruptamente — eles DESACELERAM
-- Objetos pesados se movem mais devagar que objetos leves
-
-### 4. Consistente
-- Mesmo tipo de transição para mesmo tipo de ação
-- Mesma duração para mesma categoria de animação
-- Easing curves consistentes em todo o app
+> Animation without purpose is decoration. Animation with purpose is communication.
+> Every millisecond must have a reason.
 
 ---
 
-## DURAÇÕES PADRÃO
+## FUNDAMENTAL MOTION PRINCIPLES
 
-| Categoria | Duração | Uso |
+### 1. Functional, Not Decorative
+- Animation must COMMUNICATE something: relationship, hierarchy, state, or direction
+- If you remove the animation and nothing changes in comprehension → the animation is unnecessary
+
+### 2. Fast and Smooth
+- Perception of speed > actual speed
+- Animations should START fast and decelerate (ease-out)
+- The user should not WAIT for the animation
+
+### 3. Natural and Physical
+- Objects don't teleport — they MOVE
+- Objects don't stop abruptly — they DECELERATE
+- Heavy objects move slower than light objects
+
+### 4. Consistent
+- Same type of transition for the same type of action
+- Same duration for the same category of animation
+- Consistent easing curves throughout the app
+
+---
+
+## STANDARD DURATIONS
+
+| Category | Duration | Use |
 |---|---|---|
 | **Micro** | 100-150ms | Hover, press, toggle, ripple |
 | **Small** | 150-250ms | Fade in/out, color change, tooltip |
@@ -42,122 +42,122 @@ alwaysApply: true
 | **Large** | 400-700ms | Page transition, complex animation |
 | **Emphasis** | 500-1000ms | Success animation, celebration |
 
-### REGRA DE OURO:
-> Se > 400ms para transição de tela, o usuário sente LENTIDÃO.
-> Se < 150ms para transição de tela, o usuário não PERCEBE a animação.
-> Sweet spot: **300-350ms** para a maioria das transições.
+### GOLDEN RULE:
+> If > 400ms for a screen transition, the user feels SLOWNESS.
+> If < 150ms for a screen transition, the user doesn't PERCEIVE the animation.
+> Sweet spot: **300-350ms** for most transitions.
 
 ---
 
-## EASING CURVES (Curvas de Aceleração)
+## EASING CURVES (Acceleration Curves)
 
-### Tipos de Easing:
+### Easing Types:
 
-| Curve | CSS | Uso | Sensação |
+| Curve | CSS | Use | Feel |
 |---|---|---|---|
-| **ease-out** | cubic-bezier(0, 0, 0.2, 1) | Elementos ENTRANDO | Rápido início, suave final |
-| **ease-in** | cubic-bezier(0.4, 0, 1, 1) | Elementos SAINDO | Suave início, rápido final |
-| **ease-in-out** | cubic-bezier(0.4, 0, 0.2, 1) | Elementos MUDANDO estado | Suave-rápido-suave |
-| **gentle** | Figma built-in | Transições elegantes | Muito suave, premium feel |
-| **linear** | linear | Progress bars, spinners | Velocidade constante (robótico) |
-| **spring** | Custom | Bouncy, playful UI | Overshoot e assentamento |
+| **ease-out** | cubic-bezier(0, 0, 0.2, 1) | Elements ENTERING | Fast start, smooth end |
+| **ease-in** | cubic-bezier(0.4, 0, 1, 1) | Elements EXITING | Smooth start, fast end |
+| **ease-in-out** | cubic-bezier(0.4, 0, 0.2, 1) | Elements CHANGING state | Smooth-fast-smooth |
+| **gentle** | Figma built-in | Elegant transitions | Very smooth, premium feel |
+| **linear** | linear | Progress bars, spinners | Constant speed (robotic) |
+| **spring** | Custom | Bouncy, playful UI | Overshoot and settling |
 
-### NO FIGMA:
+### IN FIGMA:
 ```javascript
-// Para prototyping:
-easing: { type: 'EASE_IN_AND_OUT' }     // Padrão universal
-easing: { type: 'GENTLE' }               // Premium, elegante
-easing: { type: 'EASE_OUT' }             // Elementos entrando
-easing: { type: 'EASE_IN' }              // Elementos saindo
+// For prototyping:
+easing: { type: 'EASE_IN_AND_OUT' }     // Universal default
+easing: { type: 'GENTLE' }               // Premium, elegant
+easing: { type: 'EASE_OUT' }             // Elements entering
+easing: { type: 'EASE_IN' }              // Elements exiting
 easing: { type: 'LINEAR' }               // Progress, spinners
 easing: { type: 'CUSTOM_SPRING', stiffness: 300, damping: 25 }  // Spring
 ```
 
-### QUANDO USAR CADA CURVE:
-| Ação | Curve |
+### WHEN TO USE EACH CURVE:
+| Action | Curve |
 |---|---|
-| Tela aparecendo | ease-out (chega rápido, assenta suave) |
-| Tela saindo | ease-in (sai acelerando) |
-| Modal abrindo | ease-out ou gentle |
-| Modal fechando | ease-in |
+| Screen appearing | ease-out (arrives fast, settles smooth) |
+| Screen exiting | ease-in (accelerates out) |
+| Modal opening | ease-out or gentle |
+| Modal closing | ease-in |
 | Toggle/Switch | ease-in-out |
 | Fade in | ease-out |
 | Fade out | ease-in |
-| Transição de valor (contador) | ease-in-out |
-| Spinner rotação | linear |
+| Value transition (counter) | ease-in-out |
+| Spinner rotation | linear |
 
 ---
 
-## TRANSIÇÕES DE TELA
+## SCREEN TRANSITIONS
 
 ### Stack Navigation (Forward / Push):
 ```
-Tela A → Tela B
-[Tela A slide out left] + [Tela B slide in from right]
+Screen A → Screen B
+[Screen A slides out left] + [Screen B slides in from right]
 ```
-- Tipo: SLIDE_IN, direction: LEFT
-- Duração: 300-350ms
-- Easing: gentle ou ease-in-out
+- Type: SLIDE_IN, direction: LEFT
+- Duration: 300-350ms
+- Easing: gentle or ease-in-out
 
 ### Stack Navigation (Back / Pop):
 ```
-Tela B → Tela A
-[Tela B slide out right] + [Tela A slide in from left]
+Screen B → Screen A
+[Screen B slides out right] + [Screen A slides in from left]
 ```
-- Tipo: SLIDE_OUT, direction: RIGHT
-- Duração: 300-350ms
-- Easing: gentle ou ease-in-out
+- Type: SLIDE_OUT, direction: RIGHT
+- Duration: 300-350ms
+- Easing: gentle or ease-in-out
 
 ### Modal (Open):
 ```
-[Overlay fade in] + [Sheet slide up from bottom]
+[Overlay fades in] + [Sheet slides up from bottom]
 ```
-- Tipo: SLIDE_IN, direction: BOTTOM
-- Duração: 350-400ms
-- Easing: ease-out ou gentle
+- Type: SLIDE_IN, direction: BOTTOM
+- Duration: 350-400ms
+- Easing: ease-out or gentle
 
 ### Modal (Close):
 ```
-[Sheet slide down] + [Overlay fade out]
+[Sheet slides down] + [Overlay fades out]
 ```
-- Tipo: SLIDE_OUT, direction: BOTTOM
-- Duração: 250-300ms
+- Type: SLIDE_OUT, direction: BOTTOM
+- Duration: 250-300ms
 - Easing: ease-in
 
 ### Tab Switch:
 ```
-[Tab A fade out] + [Tab B fade in]
+[Tab A fades out] + [Tab B fades in]
 ```
-- Tipo: DISSOLVE ou SMART_ANIMATE
-- Duração: 200-250ms
+- Type: DISSOLVE or SMART_ANIMATE
+- Duration: 200-250ms
 - Easing: ease-in-out
 
 ---
 
-## SMART ANIMATE NO FIGMA
+## SMART ANIMATE IN FIGMA
 
-### Quando usar:
-- Elementos que mudam de tamanho, posição, cor, ou opacidade entre frames
-- Micro-interações dentro da mesma tela (expandir card, mover item)
-- Transições complexas com múltiplos elementos mudando
+### When to use:
+- Elements that change size, position, color, or opacity between frames
+- Micro-interactions within the same screen (expand card, move item)
+- Complex transitions with multiple changing elements
 
-### Requisitos:
-- **Nomes iguais**: Layers com o MESMO nome em ambos os frames são animados
-- **Propriedades que animam**: x, y, width, height, rotation, opacity, fills
-- **Propriedades que NÃO animam**: text content, effects (precisa de workaround)
+### Requirements:
+- **Same names**: Layers with the SAME name in both frames are animated
+- **Properties that animate**: x, y, width, height, rotation, opacity, fills
+- **Properties that DON'T animate**: text content, effects (needs workaround)
 
-### DICA:
-> Para criar uma micro-interação com SMART_ANIMATE:
-> 1. Duplique o frame (estado A)
-> 2. Modifique os elementos desejados no frame duplicado (estado B)
-> 3. Conecte A → B com SMART_ANIMATE + ON_CLICK ou ON_HOVER
+### TIP:
+> To create a micro-interaction with SMART_ANIMATE:
+> 1. Duplicate the frame (state A)
+> 2. Modify the desired elements in the duplicate (state B)
+> 3. Connect A → B with SMART_ANIMATE + ON_CLICK or ON_HOVER
 
 ---
 
 ## MOTION VALUES (Material Design 3 Reference)
 
 ### Duration Tokens:
-| Token | Valor | Uso |
+| Token | Value | Use |
 |---|---|---|
 | duration-short1 | 50ms | Micro-ripple |
 | duration-short2 | 100ms | Press feedback |
@@ -176,9 +176,9 @@ Tela B → Tela A
 
 ---
 
-## HIERARQUIA DE MOTION
+## MOTION HIERARCHY
 
-### Elementos entram em sequência (stagger):
+### Elements enter in sequence (stagger):
 ```
 Header:     [====]           ← 0ms delay
 Title:       [====]          ← 50ms delay
@@ -187,39 +187,39 @@ Content:       [====]        ← 150ms delay
 CTA:            [====]       ← 200ms delay
 ```
 
-- Stagger delay: 30-60ms entre elementos
-- Cada elemento: 200-300ms fade + slide up
-- Easing: ease-out para cada elemento
+- Stagger delay: 30-60ms between elements
+- Each element: 200-300ms fade + slide up
+- Easing: ease-out for each element
 
-### REGRA:
-> Stagger é SUTIL. Se o delay total > 400ms, o usuário sente lentidão.
-> Máximo 4-5 elementos em stagger. Mais que isso → tudo junto.
+### RULE:
+> Stagger is SUBTLE. If total delay > 400ms, the user feels slowness.
+> Maximum 4-5 elements in stagger. More than that → all together.
 
 ---
 
-## ANTI-PADRÕES DE MOTION
+## MOTION ANTI-PATTERNS
 
-| ❌ Errado | ✅ Correto |
+| ❌ Wrong | ✅ Correct |
 |---|---|
-| Animação > 700ms para transição | 300-350ms para maioria |
-| Bounce/overshoot em app sério | Gentle/ease-in-out para apps profissionais |
-| Elementos entrando de todas as direções | Direção consistente (esquerda→direita para forward) |
-| Easing linear para tudo | Easing curves apropriadas por tipo |
-| Animação de loading bloqueando interação | Loading não-bloqueante (skeleton) |
-| Animação em todo canto sem propósito | Animação apenas onde comunica algo |
-| Delay antes de começar a animar | Início imediato (0ms delay) |
+| Animation > 700ms for transition | 300-350ms for most |
+| Bounce/overshoot in serious app | Gentle/ease-in-out for professional apps |
+| Elements entering from all directions | Consistent direction (left→right for forward) |
+| Linear easing for everything | Appropriate easing curves by type |
+| Loading animation blocking interaction | Non-blocking loading (skeleton) |
+| Animation everywhere without purpose | Animation only where it communicates something |
+| Delay before starting to animate | Immediate start (0ms delay) |
 
 ---
 
-## CHECKLIST DE MOTION
+## MOTION CHECKLIST
 
-- [ ] Cada animação tem um PROPÓSITO claro?
-- [ ] Duração de transição de tela: 300-350ms?
-- [ ] Easing curve é gentle ou ease-in-out (não linear)?
-- [ ] Elementos entrando usam ease-out?
-- [ ] Elementos saindo usam ease-in?
-- [ ] Smart Animate tem layers com nomes iguais?
-- [ ] Stagger total não excede 400ms?
-- [ ] Loading animations são non-blocking?
-- [ ] Transições de tela são consistentes em todo o app?
-- [ ] Celebrações (success) são mais longas e elaboradas?
+- [ ] Does each animation have a CLEAR purpose?
+- [ ] Screen transition duration: 300-350ms?
+- [ ] Easing curve is gentle or ease-in-out (not linear)?
+- [ ] Entering elements use ease-out?
+- [ ] Exiting elements use ease-in?
+- [ ] Smart Animate has layers with matching names?
+- [ ] Total stagger doesn't exceed 400ms?
+- [ ] Loading animations are non-blocking?
+- [ ] Screen transitions are consistent across the entire app?
+- [ ] Celebrations (success) are longer and more elaborate?

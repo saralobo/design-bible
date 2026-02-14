@@ -2,108 +2,108 @@
 alwaysApply: true
 ---
 
-# Regras de Execução no Figma — Como Construir Corretamente
+# Figma Execution Rules — How to Build Correctly
 
-> Este documento contém regras TÉCNICAS específicas para construção de telas no Figma
-> usando a API do Figma via MCP. Erros comuns e suas correções.
+> This document contains TECHNICAL rules specific to building screens in Figma
+> using the Figma API via MCP. Common errors and their fixes.
 
 ---
 
-## ANTES DE CRIAR QUALQUER COISA
+## BEFORE CREATING ANYTHING
 
-### 1. Verificar/Criar Container
+### 1. Check/Create Container
 ```javascript
-// SEMPRE verifique se existe uma Section ou Frame
+// ALWAYS check if a Section or Frame exists
 let section = figma.currentPage.findOne(n => n.type === 'SECTION');
 if (!section) {
   section = figma.createSection();
   section.name = 'Design Components';
 }
-// Crie seus elementos DENTRO da section
+// Create your elements INSIDE the section
 ```
 
-### 2. Usar figma.getNodeByIdAsync (NÃO getNodeById)
+### 2. Use figma.getNodeByIdAsync (NOT getNodeById)
 ```javascript
-// ❌ ERRADO (com documentAccess: dynamic-page)
+// ❌ WRONG (with documentAccess: dynamic-page)
 const node = figma.getNodeById('123:456');
 
-// ✅ CORRETO
+// ✅ CORRECT
 const node = await figma.getNodeByIdAsync('123:456');
 ```
 
-### 3. Usar setReactionsAsync (NÃO set_reactions)
+### 3. Use setReactionsAsync (NOT set_reactions)
 ```javascript
-// ❌ ERRADO
+// ❌ WRONG
 node.reactions = [...];
 
-// ✅ CORRETO
+// ✅ CORRECT
 await node.setReactionsAsync([...]);
 ```
 
 ---
 
-## AUTO-LAYOUT — ORDEM DE OPERAÇÕES
+## AUTO-LAYOUT — ORDER OF OPERATIONS
 
-### REGRA CRÍTICA:
-> Adicione o elemento ao parent auto-layout ANTES de setar `layoutSizingHorizontal = 'FILL'`.
-> `FILL` só funciona em filhos diretos de auto-layout frames.
+### CRITICAL RULE:
+> Add the element to the auto-layout parent BEFORE setting `layoutSizingHorizontal = 'FILL'`.
+> `FILL` only works on direct children of auto-layout frames.
 
 ```javascript
-// ✅ CORRETO — Ordem correta
+// ✅ CORRECT — Proper order
 const parent = figma.createFrame();
 parent.layoutMode = 'VERTICAL';
 parent.resize(393, 852);
 
 const child = figma.createFrame();
-parent.appendChild(child);              // 1. Adicionar ao parent PRIMEIRO
-child.layoutSizingHorizontal = 'FILL';  // 2. Depois setar FILL
+parent.appendChild(child);              // 1. Add to parent FIRST
+child.layoutSizingHorizontal = 'FILL';  // 2. Then set FILL
 child.layoutSizingVertical = 'HUG';
 
-// ❌ ERRADO — Vai dar erro
+// ❌ WRONG — Will throw an error
 const child2 = figma.createFrame();
-child2.layoutSizingHorizontal = 'FILL'; // ERRO: não está em auto-layout parent
+child2.layoutSizingHorizontal = 'FILL'; // ERROR: not inside an auto-layout parent
 parent.appendChild(child2);
 ```
 
 ---
 
-## BOTÃO CIRCULAR — IMPLEMENTAÇÃO CORRETA
+## CIRCULAR BUTTON — CORRECT IMPLEMENTATION
 
 ```javascript
-// ✅ CORRETO — Botão perfeitamente circular
+// ✅ CORRECT — Perfectly circular button
 const btn = figma.createFrame();
-const SIZE = 56;  // ou 44, 48, etc.
+const SIZE = 56;  // or 44, 48, etc.
 btn.resize(SIZE, SIZE);
-btn.cornerRadius = SIZE / 2;  // METADE EXATA
+btn.cornerRadius = SIZE / 2;  // EXACT HALF
 
-// Auto-layout para centralizar ícone
+// Auto-layout to center the icon
 btn.layoutMode = 'HORIZONTAL';
 btn.primaryAxisAlignItems = 'CENTER';
 btn.counterAxisAlignItems = 'CENTER';
 
-// CRÍTICO: FIXED em AMBOS os eixos
+// CRITICAL: FIXED on BOTH axes
 btn.primaryAxisSizingMode = 'FIXED';
 btn.counterAxisSizingMode = 'FIXED';
 
-// NÃO FAÇA:
-// btn.primaryAxisSizingMode = 'AUTO';  ← Vai alongar com conteúdo!
-// btn.layoutSizingHorizontal = 'HUG'; ← Mesmo problema!
+// DO NOT:
+// btn.primaryAxisSizingMode = 'AUTO';  ← Will stretch with content!
+// btn.layoutSizingHorizontal = 'HUG'; ← Same problem!
 ```
 
-### Regra: Para QUALQUER elemento que deve ser circular
-1. `width` DEVE ser IGUAL a `height`
+### Rule: For ANY element that must be circular
+1. `width` MUST equal `height`
 2. `cornerRadius` = `width / 2`
-3. Sizing mode = `FIXED` em ambos os eixos
-4. NUNCA usar HUG ou AUTO que pode distorcer
+3. Sizing mode = `FIXED` on both axes
+4. NEVER use HUG or AUTO which can distort the shape
 
 ---
 
-## CORES — FORMATO CORRETO
+## COLORS — CORRECT FORMAT
 
 ```javascript
-// No Figma API, cores são RGB normalizado (0-1), NÃO hex
+// In Figma API, colors are normalized RGB (0-1), NOT hex
 
-// ✅ CORRETO — Converter hex para RGB normalizado
+// ✅ CORRECT — Convert hex to normalized RGB
 function hexToFigmaRGB(hex) {
   hex = hex.replace('#', '');
   return {
@@ -113,22 +113,22 @@ function hexToFigmaRGB(hex) {
   };
 }
 
-// Aplicar fill
+// Apply fill
 frame.fills = [{
   type: 'SOLID',
   color: hexToFigmaRGB('#276EF1')
 }];
 
-// ❌ ERRADO — hex direto não funciona
+// ❌ WRONG — hex directly does not work
 frame.fills = [{ type: 'SOLID', color: '#276EF1' }];
 ```
 
 ---
 
-## TEXTO — CARREGAR FONTE ANTES
+## TEXT — LOAD FONT FIRST
 
 ```javascript
-// ✅ CORRETO — Carregar fonte ANTES de criar/modificar texto
+// ✅ CORRECT — Load font BEFORE creating/modifying text
 await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 await figma.loadFontAsync({ family: 'Inter', style: 'Semi Bold' });
 await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
@@ -138,164 +138,164 @@ text.fontName = { family: 'Inter', style: 'Semi Bold' };
 text.characters = 'Hello World';
 text.fontSize = 16;
 
-// ❌ ERRADO — Sem carregar a fonte
+// ❌ WRONG — Without loading the font
 const text2 = figma.createText();
-text2.characters = 'Vai dar erro';  // ERRO: fonte não carregada
+text2.characters = 'Will throw error';  // ERROR: font not loaded
 ```
 
 ---
 
-## PROTOTYPING — FORMATO CORRETO DE REACTIONS
+## PROTOTYPING — CORRECT REACTIONS FORMAT
 
 ```javascript
-// ✅ CORRETO — Formato completo de reactions
+// ✅ CORRECT — Complete reactions format
 await sourceNode.setReactionsAsync([{
   trigger: { type: 'ON_CLICK' },
-  actions: [{                          // PLURAL: actions (não action)
+  actions: [{                          // PLURAL: actions (not action)
     type: 'NODE',
     destinationId: targetNode.id,
     navigation: 'NAVIGATE',
     transition: {
-      type: 'SLIDE_IN',               // ou SLIDE_OUT, DISSOLVE, SMART_ANIMATE
+      type: 'SLIDE_IN',               // or SLIDE_OUT, DISSOLVE, SMART_ANIMATE
       direction: 'LEFT',              // LEFT, RIGHT, TOP, BOTTOM
       matchLayers: false,
-      duration: 0.35,                 // em SEGUNDOS (não ms!)
-      easing: { type: 'GENTLE' }     // ou EASE_IN_AND_OUT, EASE_OUT, etc.
+      duration: 0.35,                 // in SECONDS (not ms!)
+      easing: { type: 'GENTLE' }     // or EASE_IN_AND_OUT, EASE_OUT, etc.
     },
     preserveScrollPosition: false
   }]
 }]);
 
-// ❌ ERRADO — action singular
+// ❌ WRONG — singular action
 await node.setReactionsAsync([{
   trigger: { type: 'ON_CLICK' },
-  action: { ... }  // ERRADO: use actions (plural)
+  action: { ... }  // WRONG: use actions (plural)
 }]);
 ```
 
 ---
 
-## OVERFLOW E SCROLL
+## OVERFLOW AND SCROLL
 
 ```javascript
-// ✅ CORRETO — Scroll horizontal
-frame.overflowDirection = 'HORIZONTAL';  // Enum correto
+// ✅ CORRECT — Horizontal scroll
+frame.overflowDirection = 'HORIZONTAL';  // Correct enum
 frame.clipsContent = true;
 
-// Para que funcione, o conteúdo interno deve ser MAIS LARGO que o frame
-// Use primaryAxisSizingMode = 'AUTO' para que o conteúdo interno expanda
+// For this to work, the inner content must be WIDER than the frame
+// Use primaryAxisSizingMode = 'AUTO' so the inner content expands
 
-// ❌ ERRADO
-frame.overflowDirection = 'HORIZONTAL_SCROLLING';  // Enum inválido!
+// ❌ WRONG
+frame.overflowDirection = 'HORIZONTAL_SCROLLING';  // Invalid enum!
 ```
 
-### Valores válidos para overflowDirection:
-- `'NONE'` — sem scroll
-- `'HORIZONTAL'` — scroll horizontal
-- `'VERTICAL'` — scroll vertical
-- `'BOTH'` — scroll em ambas direções
+### Valid values for overflowDirection:
+- `'NONE'` — no scroll
+- `'HORIZONTAL'` — horizontal scroll
+- `'VERTICAL'` — vertical scroll
+- `'BOTH'` — scroll in both directions
 
 ---
 
 ## FLOW STARTING POINTS
 
 ```javascript
-// ✅ CORRETO — Definir ponto inicial do flow
+// ✅ CORRECT — Define flow starting point
 figma.currentPage.flowStartingPoints = [{
   nodeId: startFrame.id,
-  name: 'Nome do Flow'
+  name: 'Flow Name'
 }];
 
-// ❌ ERRADO — Setar no node diretamente
-startFrame.flowStartingPoints = [...];  // Não funciona
+// ❌ WRONG — Setting on the node directly
+startFrame.flowStartingPoints = [...];  // Does not work
 ```
 
 ---
 
-## COMPONENTES E VARIANTES
+## COMPONENTS AND VARIANTS
 
 ```javascript
-// Criar componente
+// Create component
 const component = figma.createComponent();
 
-// Criar component set (variantes)
+// Create component set (variants)
 const variant1 = figma.createComponent();
 variant1.name = 'State=Default';
 
 const variant2 = figma.createComponent();
 variant2.name = 'State=Hover';
 
-// Combinar em set
+// Combine into set
 const componentSet = figma.combineAsVariants([variant1, variant2], figma.currentPage);
 componentSet.name = 'Button';
 ```
 
 ---
 
-## CHECKLIST PRÉ-EXECUÇÃO
+## PRE-EXECUTION CHECKLIST
 
-Antes de executar código no Figma:
+Before executing code in Figma:
 
-- [ ] Container/Section existe ou será criado?
-- [ ] Fontes serão carregadas com `loadFontAsync` ANTES de usar?
-- [ ] Cores estão em formato RGB normalizado (0-1), não hex?
-- [ ] Auto-layout parent existe ANTES de setar FILL nos filhos?
-- [ ] Botões circulares têm FIXED size em ambos os eixos?
-- [ ] Prototyping usa `actions` (plural) e `setReactionsAsync`?
-- [ ] Durations em reactions são em SEGUNDOS (0.35), não ms (350)?
-- [ ] `getNodeByIdAsync` (não `getNodeById`)?
-- [ ] `overflowDirection` usa enum correto ('HORIZONTAL', não 'HORIZONTAL_SCROLLING')?
+- [ ] Does the container/Section exist or will it be created?
+- [ ] Will fonts be loaded with `loadFontAsync` BEFORE use?
+- [ ] Are colors in normalized RGB format (0-1), not hex?
+- [ ] Does the auto-layout parent exist BEFORE setting FILL on children?
+- [ ] Do circular buttons have FIXED size on both axes?
+- [ ] Does prototyping use `actions` (plural) and `setReactionsAsync`?
+- [ ] Are durations in reactions in SECONDS (0.35), not ms (350)?
+- [ ] Using `getNodeByIdAsync` (not `getNodeById`)?
+- [ ] Does `overflowDirection` use the correct enum ('HORIZONTAL', not 'HORIZONTAL_SCROLLING')?
 
 ---
 
 ## NAMING CONVENTION
 
-### Layers no Figma:
+### Layers in Figma:
 ```
-Screen/HomePage                    ← Tela principal
-├── Section/Header                 ← Seção
-│   ├── Row/TopBar                 ← Row horizontal
-│   │   ├── Icon/Back              ← Ícone
-│   │   ├── Text/ScreenTitle       ← Texto
-│   │   └── Icon/Settings          ← Ícone
+Screen/HomePage                    ← Main screen
+├── Section/Header                 ← Section
+│   ├── Row/TopBar                 ← Horizontal row
+│   │   ├── Icon/Back              ← Icon
+│   │   ├── Text/ScreenTitle       ← Text
+│   │   └── Icon/Settings          ← Icon
 │   └── Row/BalanceCard            ← Card
-├── Section/Content                ← Seção
-│   ├── Text/SectionTitle          ← Título de seção
-│   ├── Card/Transaction           ← Card individual
-│   └── Card/Transaction           ← Card individual
-└── Section/BottomNav              ← Navegação
-    ├── NavItem/Home               ← Item de nav
-    ├── NavItem/Search             ← Item de nav
-    └── NavItem/Profile            ← Item de nav
+├── Section/Content                ← Section
+│   ├── Text/SectionTitle          ← Section title
+│   ├── Card/Transaction           ← Individual card
+│   └── Card/Transaction           ← Individual card
+└── Section/BottomNav              ← Navigation
+    ├── NavItem/Home               ← Nav item
+    ├── NavItem/Search             ← Nav item
+    └── NavItem/Profile            ← Nav item
 ```
 
-### Regra: Prefixo indica o tipo:
-| Prefixo | Tipo |
+### Rule: Prefix indicates the type:
+| Prefix | Type |
 |---|---|
-| Screen/ | Frame de tela completa |
-| Section/ | Seção da tela |
-| Row/ | Layout horizontal |
+| Screen/ | Full screen frame |
+| Section/ | Screen section |
+| Row/ | Horizontal layout |
 | Card/ | Card container |
-| Text/ | Nó de texto |
-| Icon/ | Ícone |
-| Button/ | Botão |
-| Input/ | Campo de entrada |
-| NavItem/ | Item de navegação |
-| Badge/ | Badge/indicador |
-| Avatar/ | Avatar/foto |
-| Divider/ | Linha separadora |
+| Text/ | Text node |
+| Icon/ | Icon |
+| Button/ | Button |
+| Input/ | Input field |
+| NavItem/ | Navigation item |
+| Badge/ | Badge/indicator |
+| Avatar/ | Avatar/photo |
+| Divider/ | Separator line |
 
 ---
 
-## TAMANHOS PADRÃO PARA REFERENCIAR
+## STANDARD SIZES FOR REFERENCE
 
-| Elemento | Width | Height |
+| Element | Width | Height |
 |---|---|---|
-| Tela mobile | 393px | 852px |
+| Mobile screen | 393px | 852px |
 | Header | Fill | 56px |
 | Bottom nav | Fill | 56px + safe area |
-| Botão large | Fill | 48-56px |
-| Botão medium | Hug | 44px |
+| Button large | Fill | 48-56px |
+| Button medium | Hug | 44px |
 | Input | Fill | 48-56px |
 | Card | Fill | Hug |
 | Avatar small | 32px | 32px |

@@ -2,18 +2,18 @@
 alwaysApply: true
 ---
 
-# Cards e Listas — Patterns para Exibição de Conteúdo
+# Cards & Lists — Patterns for Content Display
 
-> Cards e listas são os containers mais usados em interfaces mobile.
-> Um card bem projetado comunica informação, hierarquia e ação em um olhar.
+> Cards and lists are the most used containers in mobile interfaces.
+> A well-designed card communicates information, hierarchy, and action at a glance.
 
 ---
 
-## ANATOMIA DE UM CARD
+## CARD ANATOMY
 
 ```
 ┌──────────────────────────────┐  ← border-radius: 12-16px
-│  ┌────────────────────────┐  │  ← Imagem (opcional): aspect ratio 16:9 ou 4:3
+│  ┌────────────────────────┐  │  ← Image (optional): aspect ratio 16:9 or 4:3
 │  │       Thumbnail         │  │
 │  └────────────────────────┘  │
 │                              │
@@ -24,85 +24,85 @@ alwaysApply: true
 │                              │
 │  Tag   ·   Meta info         │  ← body-sm (12px), chips/badges
 │                              │
-│  [ Action ]                  │  ← Botão ou link (opcional)
+│  [ Action ]                  │  ← Button or link (optional)
 └──────────────────────────────┘
 ```
 
-### Espaçamentos:
-| Propriedade | Valor |
+### Spacing:
+| Property | Value |
 |---|---|
-| Padding interno | 16-24px (uniforme) |
-| Gap entre elementos | 8-12px |
+| Internal padding | 16-24px (uniform) |
+| Gap between elements | 8-12px |
 | Border-radius | 12-16px |
-| Sombra (light mode) | 0 2px 8px rgba(0,0,0,0.08) |
-| Sombra (dark mode) | Nenhuma (usar background mais claro) |
-| Borda (alternativa) | 1px neutral-200 (se sem sombra) |
+| Shadow (light mode) | 0 2px 8px rgba(0,0,0,0.08) |
+| Shadow (dark mode) | None (use lighter background) |
+| Border (alternative) | 1px neutral-200 (if no shadow) |
 
 ---
 
-## TIPOS DE CARD
+## CARD TYPES
 
 ### 1. Content Card (Feed/Blog)
-- Imagem no topo (full-width dentro do card)
-- Título + descrição + metadata
-- Ação: tap no card inteiro (navigates)
+- Image at the top (full-width inside the card)
+- Title + description + metadata
+- Action: tap on the entire card (navigates)
 
 ### 2. Data Card (Dashboard/Finance)
-- Ícone/avatar pequeno + texto
-- Valor numérico grande
-- Trend indicator (↑ verde, ↓ vermelho)
-- Background: pode ser colorido
+- Small icon/avatar + text
+- Large numeric value
+- Trend indicator (↑ green, ↓ red)
+- Background: can be colored
 
 ### 3. Action Card (Quick Actions)
-- Ícone centralizado + label abaixo
-- Tap executa ação
-- Tamanho: 80-100px width, quadrado ou levemente retangular
-- Grid: 3-4 colunas
+- Centered icon + label below
+- Tap executes action
+- Size: 80-100px width, square or slightly rectangular
+- Grid: 3-4 columns
 
 ### 4. Profile Card
-- Avatar + Nome + Status
-- Ações: Message, Follow, etc.
+- Avatar + Name + Status
+- Actions: Message, Follow, etc.
 
 ### 5. Transaction Card (Finance)
-- Ícone/logo à esquerda (40-48px)
-- Nome + descrição à esquerda
-- Valor + timestamp à direita
+- Icon/logo on the left (40-48px)
+- Name + description on the left
+- Value + timestamp on the right
 - Swipe actions (delete, archive)
 
 ---
 
-## REGRAS PARA CARDS
+## CARD RULES
 
-### Consistência:
-- Todos os cards de uma mesma lista devem ter o MESMO:
+### Consistency:
+- All cards in the same list must have the SAME:
   - Border-radius
   - Padding
-  - Sombra/borda
-  - Espaçamento entre eles
-- Gap entre cards: 12-16px (vertical), 12-16px (horizontal grid)
+  - Shadow/border
+  - Spacing between them
+- Gap between cards: 12-16px (vertical), 12-16px (horizontal grid)
 
-### Responsividade:
-- Cards em lista vertical: FILL container width
-- Cards em grid: Calcular largura baseado em colunas
-  - 2 colunas: (container - gap - margins) / 2
-  - 3 colunas: (container - 2×gap - margins) / 3
-- Cards em carrossel: Width fixo (280-320px), overflow hidden no container
+### Responsiveness:
+- Cards in a vertical list: FILL container width
+- Cards in a grid: Calculate width based on columns
+  - 2 columns: (container - gap - margins) / 2
+  - 3 columns: (container - 2×gap - margins) / 3
+- Cards in a carousel: Fixed width (280-320px), overflow hidden on the container
 
 ### Tap Target:
-- Se o card inteiro é clicável, o touch target é o card inteiro
-- Se tem botões internos, os botões devem ter pelo menos 44×44px touch target
-- Feedback de press: Scale 0.98 + opacity 0.9 no card inteiro
+- If the entire card is clickable, the touch target is the entire card
+- If there are internal buttons, buttons must have at least 44×44px touch target
+- Press feedback: Scale 0.98 + opacity 0.9 on the entire card
 
-### ANTI-PADRÕES DE CARDS:
-- ❌ Padding diferente em cards da mesma lista
-- ❌ Border-radius 8px em um card, 16px no card ao lado
-- ❌ Card sem feedback visual ao tocar (parece estático)
-- ❌ Informação demais num card — máximo 3-4 linhas de texto
-- ❌ Card com mais de 2 ações (1 primária + 1 secundária máx)
+### CARD ANTI-PATTERNS:
+- ❌ Different padding on cards in the same list
+- ❌ Border-radius 8px on one card, 16px on the next
+- ❌ Card without visual feedback on tap (looks static)
+- ❌ Too much information in a card — maximum 3-4 lines of text
+- ❌ Card with more than 2 actions (1 primary + 1 secondary max)
 
 ---
 
-## ANATOMIA DE UMA LISTA
+## LIST ANATOMY
 
 ```
 ┌──────────────────────────────────────┐
@@ -117,50 +117,50 @@ alwaysApply: true
 └──────────────────────────────────────┘
 ```
 
-### Elementos de List Item:
-| Posição | Elemento | Tamanho |
+### List Item Elements:
+| Position | Element | Size |
 |---|---|---|
 | Leading | Avatar/Icon/Thumbnail | 40-48px (avatar), 24px (icon) |
 | Center (primary) | Title | 16px SemiBold |
 | Center (secondary) | Subtitle | 14px Regular, neutral-600 |
 | Trailing | Value/Time/Chevron/Badge | 14px, neutral-600 + indicator |
 
-### Espaçamentos:
-| Propriedade | Valor |
+### Spacing:
+| Property | Value |
 |---|---|
-| Height por item | 56px (1 linha), 72px (2 linhas) |
-| Padding horizontal | 16px |
-| Gap entre leading e center | 12-16px |
-| Gap entre center e trailing | 8-16px |
-| Divider | 1px, inset 56-72px da esquerda (alinha com texto) |
+| Height per item | 56px (1 line), 72px (2 lines) |
+| Horizontal padding | 16px |
+| Gap between leading and center | 12-16px |
+| Gap between center and trailing | 8-16px |
+| Divider | 1px, inset 56-72px from left (aligns with text) |
 
 ---
 
-## TIPOS DE LISTA
+## LIST TYPES
 
 ### 1. Simple List (Settings style)
-- Ícone + Label + Chevron ›
-- Tap navega para sub-tela
-- Dividers entre todos os items
+- Icon + Label + Chevron ›
+- Tap navigates to sub-screen
+- Dividers between all items
 
 ### 2. Feed List (Social style)
 - Avatar + Name + Time + Content preview
-- Sem dividers ou com dividers sutis
-- Swipe actions possíveis
+- No dividers or subtle dividers
+- Swipe actions possible
 
 ### 3. Selection List
-- Checkbox/Radio à esquerda ou direita
-- Highlight de seleção (accent 8% bg)
-- Ação "Selecionar todos" no header
+- Checkbox/Radio on left or right
+- Selection highlight (accent 8% bg)
+- "Select all" action in the header
 
 ### 4. Transaction List (Finance)
-- Ícone/Logo + Nome + Descrição
-- Valor à direita (positivo = verde, negativo = neutro ou vermelho)
-- Agrupamento por data (headers de seção)
+- Icon/Logo + Name + Description
+- Value on the right (positive = green, negative = neutral or red)
+- Grouping by date (section headers)
 
 ---
 
-## AGRUPAMENTO DE LISTAS
+## LIST GROUPING
 
 ### Section Headers:
 ```
@@ -175,44 +175,44 @@ YESTERDAY
 ```
 
 - Header: UPPERCASE 12px Medium, neutral-600, padding top 24px
-- Sticky headers (opcionalmente colam no topo ao scrollar)
+- Sticky headers (optionally stick to the top when scrolling)
 
 ---
 
 ## EMPTY STATES
 
-Quando uma lista ou grid está vazio:
+When a list or grid is empty:
 
 ```
 ┌──────────────────────────────┐
 │                              │
-│         [Ilustração]         │  ← Ícone ou ilustração, 120-160px
+│         [Illustration]       │  ← Icon or illustration, 120-160px
 │                              │
-│     Nenhum resultado         │  ← heading-md, neutral-900
-│   Tente buscar por outro     │  ← body-md, neutral-600
-│        termo                 │
+│       No results found       │  ← heading-md, neutral-900
+│     Try searching with a     │  ← body-md, neutral-600
+│       different term         │
 │                              │
-│     [ Tentar novamente ]     │  ← CTA secundário (opcional)
+│     [ Try again ]            │  ← Secondary CTA (optional)
 │                              │
 └──────────────────────────────┘
 ```
 
-### Regras:
-- Centralizado vertical e horizontalmente
-- Ilustração > ícone (mais humano)
-- Título descritivo (não "404" ou "Erro")
-- Subtítulo com sugestão de ação
-- CTA opcional para ação corretiva
+### Rules:
+- Centered vertically and horizontally
+- Illustration > icon (more human)
+- Descriptive title (not "404" or "Error")
+- Subtitle with action suggestion
+- Optional CTA for corrective action
 
 ---
 
 ## LOADING STATES (SKELETON)
 
-### Enquanto o conteúdo carrega:
+### While content is loading:
 
 ```
 ┌──────────────────────────────┐
-│  ████████████████████████    │  ← Retângulo cinza animado (shimmer)
+│  ████████████████████████    │  ← Animated gray rectangle (shimmer)
 │  ██████████                  │
 │  █████████████████           │
 │                              │
@@ -221,47 +221,47 @@ Quando uma lista ou grid está vazio:
 └──────────────────────────────┘
 ```
 
-### Regras de Skeleton:
-- Formato deve ESPELHAR o layout real (mesma posição, tamanho similar)
-- Border-radius do skeleton = border-radius do elemento real
-- Cor: neutral-200 (base), neutral-100 (shimmer animation)
-- Animação: Shimmer da esquerda para direita, 1.5-2s loop
-- NUNCA: Spinner sozinho no centro da tela. Skeleton > Spinner SEMPRE.
+### Skeleton Rules:
+- Shape must MIRROR the real layout (same position, similar size)
+- Skeleton border-radius = real element's border-radius
+- Color: neutral-200 (base), neutral-100 (shimmer animation)
+- Animation: Shimmer from left to right, 1.5-2s loop
+- NEVER: Spinner alone in the center of the screen. Skeleton > Spinner ALWAYS.
 
 ---
 
-## SWIPE ACTIONS EM LISTA
+## SWIPE ACTIONS IN LISTS
 
-### Swipe Left (Ação Destrutiva):
+### Swipe Left (Destructive Action):
 ```
 ┌──────────────────────────────────┐
-│  [Content]            │ 🗑 Delete │  ← Background vermelho
+│  [Content]            │ 🗑 Delete │  ← Red background
 └──────────────────────────────────┘
 ```
 
-### Swipe Right (Ação Positiva):
+### Swipe Right (Positive Action):
 ```
 ┌──────────────────────────────────┐
-│ ✓ Archive │           [Content]  │  ← Background verde/azul
+│ ✓ Archive │           [Content]  │  ← Green/blue background
 └──────────────────────────────────┘
 ```
 
-### Regras:
-- Máximo 2 ações por direção (1 recomendado)
-- Cores indicam intenção (vermelho = destrutivo, verde = positivo)
-- Ícone + label curto (1 palavra)
-- Threshold para ação: 30-40% da largura
-- Full swipe = ação automática (opcional, com confirmação)
+### Rules:
+- Maximum 2 actions per direction (1 recommended)
+- Colors indicate intent (red = destructive, green = positive)
+- Icon + short label (1 word)
+- Threshold for action: 30-40% of the width
+- Full swipe = automatic action (optional, with confirmation)
 
 ---
 
-## CHECKLIST DE CARDS E LISTAS
+## CARDS & LISTS CHECKLIST
 
-- [ ] Todos os cards da mesma lista têm estilo consistente?
-- [ ] Cards têm feedback visual ao tocar (scale/opacity)?
-- [ ] Padding interno é uniforme (não 16px top, 12px bottom)?
-- [ ] Listas usam skeleton loading, não spinner?
-- [ ] Empty states têm ilustração + texto descritivo?
-- [ ] Dividers são inset (alinhados com texto, não full-width)?
-- [ ] Transaction lists agrupam por data?
-- [ ] Cards não têm informação demais (máx 3-4 linhas de texto)?
+- [ ] Do all cards in the same list have consistent styling?
+- [ ] Do cards have visual feedback on tap (scale/opacity)?
+- [ ] Is internal padding uniform (not 16px top, 12px bottom)?
+- [ ] Do lists use skeleton loading, not spinner?
+- [ ] Do empty states have illustration + descriptive text?
+- [ ] Are dividers inset (aligned with text, not full-width)?
+- [ ] Do transaction lists group by date?
+- [ ] Do cards not have too much information (max 3-4 lines of text)?

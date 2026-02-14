@@ -2,49 +2,49 @@
 alwaysApply: true
 ---
 
-# Navegação — Patterns e Regras para Fluxo do Usuário
+# Navigation — Patterns and Rules for User Flow
 
-> Navegação ruim = app confuso. O usuário SEMPRE deve saber onde está,
-> como chegou, e como voltar. Sem exceção.
+> Bad navigation = confusing app. The user must ALWAYS know where they are,
+> how they got there, and how to go back. No exceptions.
 
 ---
 
-## TIPOS DE NAVEGAÇÃO MOBILE
+## MOBILE NAVIGATION TYPES
 
 ### 1. Bottom Navigation (Tab Bar)
 
-**Quando usar**: App com 3-5 seções principais de mesmo nível hierárquico.
+**When to use**: App with 3-5 main sections at the same hierarchical level.
 
-| Regra | Valor |
+| Rule | Value |
 |---|---|
-| Número de itens | 3 a 5 (NUNCA mais de 5) |
-| Altura | 56-83px (incluindo safe area) |
-| Ícone | 24px, centralizado |
-| Label | 10-12px, abaixo do ícone |
-| Item ativo | Ícone filled + label accent + indicator (pill/dot) |
-| Item inativo | Ícone outline + label neutral-600 |
-| Touch target | 48×48px mínimo por item |
+| Number of items | 3 to 5 (NEVER more than 5) |
+| Height | 56-83px (including safe area) |
+| Icon | 24px, centered |
+| Label | 10-12px, below the icon |
+| Active item | Filled icon + accent label + indicator (pill/dot) |
+| Inactive item | Outline icon + neutral-600 label |
+| Touch target | 48×48px minimum per item |
 
-**Padrões familiares (Lei de Jakob)**:
-| Posição | Item Típico |
+**Familiar patterns (Jakob's Law)**:
+| Position | Typical Item |
 |---|---|
-| 1 (esquerda) | Home |
+| 1 (left) | Home |
 | 2 | Search / Explore |
-| 3 (centro) | Ação principal (ou FAB overlay) |
+| 3 (center) | Main action (or FAB overlay) |
 | 4 | Activity / Notifications |
-| 5 (direita) | Profile / Settings |
+| 5 (right) | Profile / Settings |
 
-**ANTI-PADRÕES**:
-- ❌ 6+ itens na bottom nav (use drawer ou tabs internas)
-- ❌ Labels genéricos ("Mais", "Outro")
-- ❌ Ícones sem label (acessibilidade zero)
-- ❌ Bottom nav em telas modais ou sub-fluxos
+**ANTI-PATTERNS**:
+- ❌ 6+ items in bottom nav (use drawer or internal tabs)
+- ❌ Generic labels ("More", "Other")
+- ❌ Icons without labels (zero accessibility)
+- ❌ Bottom nav on modal or sub-flow screens
 
 ---
 
 ### 2. Top Navigation (Header/App Bar)
 
-**Quando usar**: Toda tela que não é root (tem parent).
+**When to use**: Every screen that isn't root (has a parent).
 
 ```
 ┌──────────────────────────────────┐
@@ -52,148 +52,148 @@ alwaysApply: true
 └──────────────────────────────────┘
 ```
 
-| Elemento | Regra |
+| Element | Rule |
 |---|---|
-| Altura | 44-56px |
-| Back button | Seta ← à esquerda, touch target 44×44px |
-| Título | Centralizado ou à esquerda (escolha UM padrão) |
-| Ações | Máximo 2 ícones à direita |
-| Font do título | 18-20px SemiBold |
+| Height | 44-56px |
+| Back button | ← arrow on the left, 44×44px touch target |
+| Title | Centered or left-aligned (choose ONE pattern) |
+| Actions | Maximum 2 icons on the right |
+| Title font | 18-20px SemiBold |
 
-**REGRAS**:
-- Tela root (Home, tabs): Título grande à esquerda (Large Title style)
-- Sub-tela: ← Back + título centralizado
-- Modal: X (close) à esquerda ou direita + título centralizado
-- NUNCA: Back button + Close button na mesma tela (confuso)
+**RULES**:
+- Root screen (Home, tabs): Large title on the left (Large Title style)
+- Sub-screen: ← Back + centered title
+- Modal: X (close) on left or right + centered title
+- NEVER: Back button + Close button on the same screen (confusing)
 
 ---
 
 ### 3. Tabs (Segmented Navigation)
 
-**Quando usar**: Conteúdo do mesmo nível dentro de uma seção.
+**When to use**: Same-level content within a section.
 
-| Regra | Valor |
+| Rule | Value |
 |---|---|
-| Posição | Abaixo do header, sticky |
-| Número de tabs | 2 a 5 |
-| Indicador ativo | Linha 2-3px accent abaixo da tab |
-| Font ativo | SemiBold, accent ou neutral-900 |
-| Font inativo | Regular, neutral-600 |
-| Swipe | Tab content pode ter swipe horizontal |
-| Scroll | Se >4 tabs, horizontal scroll |
+| Position | Below the header, sticky |
+| Number of tabs | 2 to 5 |
+| Active indicator | 2-3px accent line below the tab |
+| Active font | SemiBold, accent or neutral-900 |
+| Inactive font | Regular, neutral-600 |
+| Swipe | Tab content can have horizontal swipe |
+| Scroll | If >4 tabs, horizontal scroll |
 
 ---
 
 ### 4. Drawer / Side Menu
 
-**Quando usar**: App com muitas seções (>5) ou configurações complexas.
+**When to use**: App with many sections (>5) or complex settings.
 
-| Regra | Valor |
+| Rule | Value |
 |---|---|
-| Largura | 80% da tela (máx 320px) |
+| Width | 80% of the screen (max 320px) |
 | Overlay | 50-60% opacity background |
-| Abrir | Swipe da borda esquerda ou ícone hamburger ☰ |
-| Fechar | Swipe para esquerda, tap no overlay, ou X |
-| Items | Ícone 24px + label 16px, height 48px por item |
-| Separadores | Dividers entre grupos de itens |
+| Open | Swipe from left edge or hamburger icon ☰ |
+| Close | Swipe left, tap on overlay, or X |
+| Items | 24px icon + 16px label, 48px height per item |
+| Separators | Dividers between item groups |
 
 ---
 
-## PADRÕES DE NAVEGAÇÃO
+## NAVIGATION PATTERNS
 
 ### Stack Navigation (Push/Pop):
 ```
-Home → Lista → Detalhe → Editar
+Home → List → Detail → Edit
  ←      ←       ←        ←
 ```
-- Cada tela é "empilhada" sobre a anterior
-- Back retorna à tela anterior
-- Transição: Slide in from right (push), slide out to right (pop)
+- Each screen is "stacked" on top of the previous one
+- Back returns to the previous screen
+- Transition: Slide in from right (push), slide out to right (pop)
 
 ### Modal Navigation:
 ```
-Tela A → [Modal B] → Tela A (voltou)
+Screen A → [Modal B] → Screen A (returned)
 ```
-- Modal "flutua" sobre a tela atual
-- Close (X) ou swipe down para fechar
-- Transição: Slide up (abrir), slide down (fechar)
-- Background fica com overlay escuro
+- Modal "floats" above the current screen
+- Close (X) or swipe down to dismiss
+- Transition: Slide up (open), slide down (close)
+- Background gets a dark overlay
 
 ### Tab Navigation:
 ```
 Tab 1 ↔ Tab 2 ↔ Tab 3
 ```
-- Tabs são paralelas, mesmo nível
-- Cada tab pode ter seu próprio stack de navegação
-- Transição: Cross-fade ou swipe horizontal
+- Tabs are parallel, same level
+- Each tab can have its own navigation stack
+- Transition: Cross-fade or horizontal swipe
 
 ---
 
 ## BREADCRUMBS
 
-**Quando usar**: Hierarquias profundas (>3 níveis), principalmente web/tablet.
+**When to use**: Deep hierarchies (>3 levels), mainly web/tablet.
 
 ```
-Home > Categoria > Subcategoria > Produto
+Home > Category > Subcategory > Product
 ```
 
-### Regras:
-- Separador: ">" ou "/" (12px, neutral-400)
-- Items clicáveis: accent, underline on hover
-- Item atual: neutral-900, não clicável
-- Mobile: Mostre apenas o nível anterior (← Subcategoria)
+### Rules:
+- Separator: ">" or "/" (12px, neutral-400)
+- Clickable items: accent, underline on hover
+- Current item: neutral-900, not clickable
+- Mobile: Show only the previous level (← Subcategory)
 
 ---
 
-## GESTOS DE NAVEGAÇÃO
+## NAVIGATION GESTURES
 
-| Gesto | Ação | Onde |
+| Gesture | Action | Where |
 |---|---|---|
-| Swipe right from edge | Back (voltar) | iOS, telas de stack |
-| Swipe down | Fechar modal/bottom sheet | Modais, sheets |
-| Swipe horizontal | Trocar tab, próximo item | Tabs, carrosséis |
-| Swipe left on item | Revelar ações (delete, archive) | Listas |
-| Long press | Menu contextual | Items de lista, imagens |
-| Pull down | Refresh | Listas, feeds |
-| Pinch | Zoom | Imagens, mapas |
+| Swipe right from edge | Back (return) | iOS, stack screens |
+| Swipe down | Close modal/bottom sheet | Modals, sheets |
+| Horizontal swipe | Switch tab, next item | Tabs, carousels |
+| Swipe left on item | Reveal actions (delete, archive) | Lists |
+| Long press | Context menu | List items, images |
+| Pull down | Refresh | Lists, feeds |
+| Pinch | Zoom | Images, maps |
 
-### REGRA:
-> Gestos são ATALHOS, não o único modo de interação.
-> Toda ação acessível por gesto DEVE ter um botão alternativo.
-
----
-
-## DEEP LINKING E WAYFINDING
-
-### O usuário SEMPRE deve saber:
-1. **Onde está**: Título da tela, tab ativa, breadcrumbs
-2. **De onde veio**: Back button funcional
-3. **Para onde pode ir**: CTAs claros, itens de nav visíveis
-4. **Como voltar ao início**: Home na bottom nav, logo clicável
-
-### Indicators de Estado:
-- Badge com número: Notificações pendentes
-- Dot vermelho: Conteúdo novo
-- Highlight/Bold: Item não lido
-- Checkmark: Item concluído
+### RULE:
+> Gestures are SHORTCUTS, not the only way to interact.
+> Every gesture-accessible action MUST have a button alternative.
 
 ---
 
-## TRANSIÇÕES DE NAVEGAÇÃO
+## DEEP LINKING AND WAYFINDING
 
-| Tipo | Duração | Easing | Uso |
+### The user must ALWAYS know:
+1. **Where they are**: Screen title, active tab, breadcrumbs
+2. **Where they came from**: Functional back button
+3. **Where they can go**: Clear CTAs, visible nav items
+4. **How to get back to the start**: Home in bottom nav, clickable logo
+
+### State Indicators:
+- Badge with number: Pending notifications
+- Red dot: New content
+- Highlight/Bold: Unread item
+- Checkmark: Completed item
+
+---
+
+## NAVIGATION TRANSITIONS
+
+| Type | Duration | Easing | Use |
 |---|---|---|---|
 | Push (→) | 300-350ms | ease-in-out / gentle | Stack forward |
 | Pop (←) | 300-350ms | ease-in-out / gentle | Stack back |
-| Modal up (↑) | 300-400ms | ease-out | Abrir modal |
-| Modal down (↓) | 250-300ms | ease-in | Fechar modal |
+| Modal up (↑) | 300-400ms | ease-out | Open modal |
+| Modal down (↓) | 250-300ms | ease-in | Close modal |
 | Fade | 200-250ms | ease-in-out | Tab switch |
-| None | 0ms | — | Tabs (se sem animação) |
+| None | 0ms | — | Tabs (if no animation) |
 
-### NO FIGMA (Prototyping):
+### IN FIGMA (Prototyping):
 ```javascript
 // Stack navigation
-transition: 'SLIDE_IN'    // ou SLIDE_OUT para back
+transition: 'SLIDE_IN'    // or SLIDE_OUT for back
 direction: 'LEFT'         // push forward = slide in from right (LEFT direction)
 duration: 0.35            // 350ms
 easing: { type: 'GENTLE' }
@@ -207,7 +207,7 @@ easing: { type: 'EASE_IN_AND_OUT' }
 
 ---
 
-## FLUXOS COMUNS
+## COMMON FLOWS
 
 ### Login/Register:
 ```
@@ -234,13 +234,13 @@ Tab: Feed | Search | Create | Activity | Profile
 
 ---
 
-## CHECKLIST DE NAVEGAÇÃO
+## NAVIGATION CHECKLIST
 
-- [ ] O usuário sabe onde está em qualquer tela?
-- [ ] Todas as telas (exceto root) têm back button?
-- [ ] Bottom nav tem 3-5 itens com ícones + labels?
-- [ ] Gestos têm alternativa de botão?
-- [ ] Transições são consistentes (mesmo tipo e duração)?
-- [ ] Modais fecham com X E com gesto?
-- [ ] Sub-fluxos não mostram bottom nav principal?
-- [ ] Tabs indicam claramente qual está ativa?
+- [ ] Does the user know where they are on every screen?
+- [ ] Do all screens (except root) have a back button?
+- [ ] Does bottom nav have 3-5 items with icons + labels?
+- [ ] Do gestures have a button alternative?
+- [ ] Are transitions consistent (same type and duration)?
+- [ ] Do modals close with X AND with gesture?
+- [ ] Do sub-flows hide the main bottom nav?
+- [ ] Do tabs clearly indicate which one is active?

@@ -2,224 +2,224 @@
 alwaysApply: true
 ---
 
-# Feedback e Estados — Comunicação Sistema ↔ Usuário
+# Feedback & States — System ↔ User Communication
 
-> Todo clique, toda ação, toda espera precisa de feedback visual.
-> Silêncio do sistema = insegurança do usuário.
-
----
-
-## PRINCÍPIO FUNDAMENTAL
-
-> **O sistema NUNCA fica em silêncio.** Cada ação do usuário recebe resposta visual em < 100ms.
-> Se algo demora > 400ms, mostre loading. Se algo deu certo, celebre. Se deu errado, explique.
+> Every click, every action, every wait needs visual feedback.
+> System silence = user insecurity.
 
 ---
 
-## ESTADOS DE COMPONENTES
+## FUNDAMENTAL PRINCIPLE
 
-Todo componente interativo DEVE ter estes estados visuais:
+> **The system NEVER goes silent.** Every user action receives a visual response in < 100ms.
+> If something takes > 400ms, show loading. If it succeeded, celebrate. If it failed, explain.
 
-| Estado | Trigger | Visual | Duração |
+---
+
+## COMPONENT STATES
+
+Every interactive component MUST have these visual states:
+
+| State | Trigger | Visual | Duration |
 |---|---|---|---|
-| **Default** | Nenhum | Normal | — |
-| **Hover** | Mouse over (desktop) | Bg levemente mais escuro, cursor pointer | Instant |
-| **Pressed/Active** | Touch/Click down | Bg mais escuro, scale 0.97-0.98 | < 100ms |
-| **Focused** | Tab/Keyboard | Ring 2px accent com 2px offset | Instant |
+| **Default** | None | Normal | — |
+| **Hover** | Mouse over (desktop) | Slightly darker bg, cursor pointer | Instant |
+| **Pressed/Active** | Touch/Click down | Darker bg, scale 0.97-0.98 | < 100ms |
+| **Focused** | Tab/Keyboard | 2px accent ring with 2px offset | Instant |
 | **Disabled** | isDisabled=true | Opacity 40%, cursor not-allowed | — |
-| **Loading** | Ação em progresso | Spinner/skeleton, mantém tamanho | Até completar |
-| **Error** | Validação falhou | Borda vermelha + ícone + msg | Até corrigir |
-| **Success** | Ação concluída | Check verde temporário | 2-3s |
-| **Selected** | Item selecionado | Bg accent 8%, ícone check | Até desselecionar |
+| **Loading** | Action in progress | Spinner/skeleton, maintains size | Until complete |
+| **Error** | Validation failed | Red border + icon + message | Until corrected |
+| **Success** | Action completed | Temporary green check | 2-3s |
+| **Selected** | Item selected | Accent bg 8%, check icon | Until deselected |
 
 ---
 
-## FEEDBACK POR TIPO DE AÇÃO
+## FEEDBACK BY ACTION TYPE
 
-### 1. Ação Instantânea (< 300ms)
-**Exemplos**: Toggle, checkbox, tab switch, like
-- **Feedback**: Mudança visual imediata (cor, ícone, estado)
-- **Não precisa**: Loading, toast, ou mensagem
+### 1. Instant Action (< 300ms)
+**Examples**: Toggle, checkbox, tab switch, like
+- **Feedback**: Immediate visual change (color, icon, state)
+- **Not needed**: Loading, toast, or message
 
-### 2. Ação Rápida (300ms — 2s)
-**Exemplos**: Salvar rascunho, enviar mensagem curta
-- **Feedback**: Spinner inline no botão OU skeleton
-- **Ao completar**: Check momentâneo (2s) ou toast sutil
+### 2. Quick Action (300ms — 2s)
+**Examples**: Save draft, send short message
+- **Feedback**: Inline spinner in the button OR skeleton
+- **On completion**: Momentary check (2s) or subtle toast
 
-### 3. Ação Demorada (2s — 10s)
-**Exemplos**: Upload de arquivo, processamento de pagamento
-- **Feedback**: Progress bar com percentual OU spinner com texto descritivo
-- **Texto**: "Processando pagamento..." (descreva O QUE está acontecendo)
-- **Ao completar**: Tela de sucesso dedicada
+### 3. Slow Action (2s — 10s)
+**Examples**: File upload, payment processing
+- **Feedback**: Progress bar with percentage OR spinner with descriptive text
+- **Text**: "Processing payment..." (describe WHAT is happening)
+- **On completion**: Dedicated success screen
 
-### 4. Ação Muito Longa (> 10s)
-**Exemplos**: Processamento em background, geração de relatório
-- **Feedback**: Progress bar + tempo estimado + opção de "Notificar quando pronto"
-- **Permita**: Que o usuário faça outras coisas enquanto espera
+### 4. Very Long Action (> 10s)
+**Examples**: Background processing, report generation
+- **Feedback**: Progress bar + estimated time + "Notify when ready" option
+- **Allow**: The user to do other things while waiting
 
 ---
 
-## TOASTS E SNACKBARS
+## TOASTS AND SNACKBARS
 
-### Anatomia:
+### Anatomy:
 ```
 ┌──────────────────────────────────────┐
-│  ✓  Mensagem de sucesso    [ Desfazer ] │
+│  ✓  Success message        [ Undo ] │
 └──────────────────────────────────────┘
 ```
 
-### Regras:
-| Propriedade | Valor |
+### Rules:
+| Property | Value |
 |---|---|
-| Posição | Bottom (acima do bottom nav), 16px margin |
-| Largura | Full-width - 32px (16px cada lado) |
-| Altura | 48-56px |
+| Position | Bottom (above bottom nav), 16px margin |
+| Width | Full-width - 32px (16px each side) |
+| Height | 48-56px |
 | Border-radius | 8-12px |
-| Duração | 3-5 segundos (auto-dismiss) |
-| Max chars | ~60 caracteres (1 linha) |
-| Ação | Máximo 1 botão (ex: "Desfazer") |
-| Cor success | Background positive com texto branco |
-| Cor error | Background negative com texto branco |
-| Cor info | Background neutral-800 com texto branco |
+| Duration | 3-5 seconds (auto-dismiss) |
+| Max chars | ~60 characters (1 line) |
+| Action | Maximum 1 button (e.g., "Undo") |
+| Success color | Positive background with white text |
+| Error color | Negative background with white text |
+| Info color | Neutral-800 background with white text |
 
-### Tipos de Toast:
-| Tipo | Ícone | Cor | Uso |
+### Toast Types:
+| Type | Icon | Color | Use |
 |---|---|---|---|
-| Success | ✓ check | Green | Ação completada |
-| Error | ✕ cross | Red | Ação falhou |
-| Warning | ⚠ triangle | Yellow/Orange | Atenção necessária |
-| Info | ℹ circle | Blue/Neutral | Informação |
+| Success | ✓ check | Green | Action completed |
+| Error | ✕ cross | Red | Action failed |
+| Warning | ⚠ triangle | Yellow/Orange | Attention needed |
+| Info | ℹ circle | Blue/Neutral | Information |
 
-### ANTI-PADRÕES:
-- ❌ Toast sobrepondo CTA ou bottom nav
-- ❌ Toast que não some (bloqueia a tela)
-- ❌ Mais de 1 toast ao mesmo tempo (stack cuidadosamente)
-- ❌ Toast para erro crítico (use modal ou inline error)
+### ANTI-PATTERNS:
+- ❌ Toast overlapping CTA or bottom nav
+- ❌ Toast that doesn't disappear (blocks the screen)
+- ❌ More than 1 toast at the same time (stack carefully)
+- ❌ Toast for critical error (use modal or inline error)
 
 ---
 
-## BANNERS E ALERTS
+## BANNERS AND ALERTS
 
-### Inline Banner (dentro da tela):
+### Inline Banner (within the screen):
 ```
 ┌──────────────────────────────────────┐
-│  ⚠️  Sua assinatura expira em 3 dias  │
-│      Renovar agora →                  │
+│  ⚠️  Your subscription expires in 3d │
+│      Renew now →                     │
 │                                  × │
 └──────────────────────────────────────┘
 ```
 
-### Regras:
-- Posição: Topo da tela, abaixo do header
-- Dismissable: X para fechar (se não-crítico)
-- Non-dismissable: Erros críticos (conta bloqueada, etc.)
-- Ação: Link ou botão inline
-- Cores: Mesmo padrão semântico (success/error/warning/info)
+### Rules:
+- Position: Top of the screen, below the header
+- Dismissable: X to close (if non-critical)
+- Non-dismissable: Critical errors (account locked, etc.)
+- Action: Inline link or button
+- Colors: Same semantic pattern (success/error/warning/info)
 
 ---
 
-## MODAIS DE CONFIRMAÇÃO
+## CONFIRMATION MODALS
 
-### Quando usar:
-- Ações destrutivas (deletar, sair sem salvar)
-- Ações irreversíveis (enviar pagamento)
-- Ações com consequências significativas
+### When to use:
+- Destructive actions (delete, exit without saving)
+- Irreversible actions (send payment)
+- Actions with significant consequences
 
-### Anatomia:
+### Anatomy:
 ```
 ┌──────────────────────────────────────┐
 │                                      │
-│  ⚠️ Confirmar exclusão?              │  ← Ícone + Título
+│  ⚠️ Confirm deletion?               │  ← Icon + Title
 │                                      │
-│  Esta ação não pode ser desfeita.    │  ← Descrição clara
-│  Todos os dados serão perdidos       │
-│  permanentemente.                    │
+│  This action cannot be undone.       │  ← Clear description
+│  All data will be permanently        │
+│  lost.                               │
 │                                      │
-│     [ Cancelar ]    [ Excluir ]      │  ← Ghost + Destrutivo (vermelho)
+│     [ Cancel ]      [ Delete ]       │  ← Ghost + Destructive (red)
 │                                      │
 └──────────────────────────────────────┘
 ```
 
-### Regras:
+### Rules:
 - Overlay: 50-60% opacity black
 - Padding: 24px
 - Border-radius: 16-20px
-- Título: Pergunta clara ("Excluir este item?")
-- Descrição: Consequência ("Não pode ser desfeito")
-- Botão cancel: Ghost/secondary (esquerda)
-- Botão confirm destrutivo: Red filled (direita)
-- Botão confirm normal: Accent filled (direita)
-- NUNCA: "Sim" / "Não" como labels (seja específico)
+- Title: Clear question ("Delete this item?")
+- Description: Consequence ("Cannot be undone")
+- Cancel button: Ghost/secondary (left)
+- Destructive confirm button: Red filled (right)
+- Normal confirm button: Accent filled (right)
+- NEVER: "Yes" / "No" as labels (be specific)
 
 ---
 
-## TELAS DE SUCESSO
+## SUCCESS SCREENS
 
-### A regra do Peak-End (Pico-Fim):
-> A tela de sucesso é o ÚLTIMO ponto do fluxo. O usuário LEMBRA dela.
-> Invista design, emoção e qualidade aqui.
+### The Peak-End Rule:
+> The success screen is the LAST point in the flow. The user REMEMBERS it.
+> Invest design, emotion, and quality here.
 
-### Anatomia:
+### Anatomy:
 ```
 ┌──────────────────────────────────────┐
 │                                      │
 │                                      │
-│            ✓ (animado)               │  ← Check com animação (scale + fade)
+│            ✓ (animated)              │  ← Check with animation (scale + fade)
 │                                      │
-│       PIX Enviado!                   │  ← heading-xl, positive ou accent
+│       Payment Sent!                  │  ← heading-xl, positive or accent
 │                                      │
-│       R$ 150,00                      │  ← display-lg, bold
-│       para João Silva                │  ← body-lg, neutral-600
+│       $150.00                        │  ← display-lg, bold
+│       to John Smith                  │  ← body-lg, neutral-600
 │                                      │
 │                                      │
 │  ┌────────────────────────────────┐  │
-│  │  Detalhes da transação...      │  │  ← Card com detalhes (opcional)
+│  │  Transaction details...       │  │  ← Card with details (optional)
 │  └────────────────────────────────┘  │
 │                                      │
-│  [ Compartilhar ]  [ Voltar ]        │  ← Ações pós-sucesso
+│  [ Share ]        [ Go Home ]        │  ← Post-success actions
 │                                      │
 └──────────────────────────────────────┘
 ```
 
-### Regras:
-- Check animado: Scale de 0 → 1.2 → 1.0, 400-600ms
-- Confetti/Celebration: Opcional para marcos grandes (primeira compra, meta atingida)
-- Informação resumida: Mostre o essencial (valor, destinatário)
-- CTAs pós-sucesso: "Compartilhar", "Ver comprovante", "Voltar ao início"
-- Background: Pode ter cor accent leve ou manter o padrão da tela
+### Rules:
+- Animated check: Scale from 0 → 1.2 → 1.0, 400-600ms
+- Confetti/Celebration: Optional for big milestones (first purchase, goal reached)
+- Summary information: Show the essentials (amount, recipient)
+- Post-success CTAs: "Share", "View receipt", "Back to home"
+- Background: Can have a light accent color or keep the screen standard
 
 ---
 
-## TELAS DE ERRO
+## ERROR SCREENS
 
-### Erro Recuperável:
+### Recoverable Error:
 ```
 ┌──────────────────────────────────────┐
 │                                      │
-│         [Ilustração de erro]         │
+│         [Error illustration]         │
 │                                      │
-│    Falha na conexão                  │  ← heading-lg
-│    Verifique sua internet            │  ← body-lg, neutral-600
-│    e tente novamente.                │
+│    Connection failed                 │  ← heading-lg
+│    Check your internet               │  ← body-lg, neutral-600
+│    and try again.                    │
 │                                      │
-│    [ Tentar novamente ]              │  ← CTA primário
+│    [ Try again ]                     │  ← Primary CTA
 │                                      │
 └──────────────────────────────────────┘
 ```
 
-### Erro Irrecuperável:
+### Irrecoverable Error:
 ```
 ┌──────────────────────────────────────┐
 │                                      │
-│         [Ilustração de erro]         │
+│         [Error illustration]         │
 │                                      │
-│    Pagamento recusado                │  ← heading-lg, negative
-│    Seu banco recusou a transação.    │  ← body-lg
-│    Entre em contato com seu banco    │
-│    ou tente outro método.            │
+│    Payment declined                  │  ← heading-lg, negative
+│    Your bank declined the            │  ← body-lg
+│    transaction. Contact your bank    │
+│    or try another method.            │
 │                                      │
-│    [ Tentar outro método ]           │  ← CTA alternativo
-│    [ Voltar ao início ]              │  ← Link secundário
+│    [ Try another method ]            │  ← Alternative CTA
+│    [ Back to home ]                  │  ← Secondary link
 │                                      │
 └──────────────────────────────────────┘
 ```
@@ -229,34 +229,34 @@ Todo componente interativo DEVE ter estes estados visuais:
 ## LOADING PATTERNS
 
 ### Spinner:
-- Uso: Ações rápidas, botões, inline loading
-- Tamanho: 20px (botão), 24px (inline), 40px (full page)
-- Cor: Accent ou white (se sobre accent bg)
-- NUNCA: Spinner sozinho numa tela sem texto
+- Use: Quick actions, buttons, inline loading
+- Size: 20px (button), 24px (inline), 40px (full page)
+- Color: Accent or white (if on accent bg)
+- NEVER: Spinner alone on a screen without text
 
 ### Skeleton / Shimmer:
-- Uso: Loading de conteúdo (listas, cards, páginas)
-- Formato: Espelha o layout real do conteúdo
-- Animação: Shimmer left → right, 1.5-2s loop
-- PREFERÍVEL ao spinner para loading de páginas
+- Use: Content loading (lists, cards, pages)
+- Shape: Mirrors the real content layout
+- Animation: Shimmer left → right, 1.5-2s loop
+- PREFERABLE to spinner for page loading
 
 ### Progress Bar:
-- Uso: Uploads, downloads, processos com progresso conhecido
-- Altura: 4-8px
+- Use: Uploads, downloads, processes with known progress
+- Height: 4-8px
 - Border-radius: height/2 (pill)
-- Cor: Accent (progresso) sobre neutral-200 (track)
-- Com percentual se > 5 segundos
+- Color: Accent (progress) on neutral-200 (track)
+- With percentage if > 5 seconds
 
 ---
 
-## CHECKLIST DE FEEDBACK
+## FEEDBACK CHECKLIST
 
-- [ ] Todo botão tem visual feedback ao pressionar (< 100ms)?
-- [ ] Loading aparece em < 400ms para ações demoradas?
-- [ ] Toasts estão posicionados acima do bottom nav?
-- [ ] Toasts auto-dismiss em 3-5 segundos?
-- [ ] Ações destrutivas têm confirmação modal?
-- [ ] Tela de sucesso tem animação/emoção?
-- [ ] Telas de erro oferecem ação corretiva?
-- [ ] Skeleton espelha o layout real do conteúdo?
-- [ ] Disabled states mantêm o tamanho original?
+- [ ] Does every button have visual feedback on press (< 100ms)?
+- [ ] Does loading appear within < 400ms for slow actions?
+- [ ] Are toasts positioned above the bottom nav?
+- [ ] Do toasts auto-dismiss in 3-5 seconds?
+- [ ] Do destructive actions have confirmation modals?
+- [ ] Does the success screen have animation/emotion?
+- [ ] Do error screens offer corrective action?
+- [ ] Does skeleton mirror the real content layout?
+- [ ] Do disabled states maintain original size?

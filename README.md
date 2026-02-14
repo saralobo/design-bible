@@ -1,139 +1,138 @@
 # Design Bible 📖
 
-> Regras absolutas de UI/UX para IAs que criam interfaces no Figma.
-> Feito para ser usado com **Cursor IDE** como Cursor Rules (`.mdc`).
+> Absolute UI/UX rules for AIs that create interfaces in Figma.
+> Made to be used with **Cursor IDE** as Cursor Rules (`.mdc`).
 
 ---
 
-## O que é isso?
+## What is this?
 
-Um repositório de regras de design que funciona como a **"bíblia"** de uma IA assistente de design. Quando estas regras estão ativas no Cursor, a IA segue princípios fundamentais de UI/UX antes de criar qualquer tela.
+A repository of design rules that works as the **"bible"** for an AI design assistant. When these rules are active in Cursor, the AI follows fundamental UI/UX principles before creating any screen.
 
-### O problema que resolve:
-IAs conseguem criar interfaces no Figma, mas sem fundamento de design — botões ovais quando deviam ser circulares, cores inconsistentes, CTAs competindo entre si. Este repositório "treina" a IA com regras concretas e verificáveis.
+### The problem it solves:
+AIs can create interfaces in Figma, but without a design foundation — oval buttons when they should be circular, inconsistent colors, competing CTAs. This repository "trains" the AI with concrete, verifiable rules.
 
 ---
 
-## 📁 Estrutura
+## 📁 Structure
 
 ```
 design-bible/
 ├── .cursor/
 │   └── rules/
-│       ├── 00-core-principles.mdc      ← Hierarquia, contraste, alinhamento
+│       ├── 00-core-principles.mdc      ← Hierarchy, contrast, alignment
 │       ├── 01-ux-laws.mdc              ← Fitts, Hick, Jakob, Miller, etc.
-│       ├── 02-gestalt.mdc              ← Proximidade, similaridade, closure
-│       ├── 03-layout-spacing.mdc       ← Grid 8px, auto-layout, safe areas
-│       ├── 04-typography.mdc           ← Type scale, pesos, formatação
-│       ├── 05-colors.mdc              ← Paleta, contraste, dark mode
-│       ├── 06-buttons-cta.mdc         ← Hierarquia, tamanhos, circular
-│       ├── 07-forms-inputs.mdc        ← Estados, validação, labels
-│       ├── 08-navigation.mdc          ← Bottom nav, tabs, gestos
-│       ├── 09-cards-lists.mdc         ← Cards, listas, empty states
-│       ├── 10-feedback-states.mdc     ← Toasts, modais, loading
-│       ├── 11-motion-transitions.mdc  ← Easing, durações, transições
-│       ├── 12-micro-interactions.mdc  ← Framework Dan Saffer, catálogo
-│       ├── 13-accessibility.mdc       ← WCAG 2.2, contraste, daltonismo
-│       ├── 14-nielsen-heuristics.mdc  ← 10 heurísticas de usabilidade
-│       ├── 15-figma-execution.mdc     ← Regras técnicas de API Figma
-│       └── 16-anti-patterns.mdc       ← O que NUNCA fazer (erros reais)
-├── references/                         ← Screenshots de referência (adicione os seus!)
+│       ├── 02-gestalt.mdc              ← Proximity, similarity, closure
+│       ├── 03-layout-spacing.mdc       ← 8px grid, auto-layout, safe areas
+│       ├── 04-typography.mdc           ← Type scale, weights, formatting
+│       ├── 05-colors.mdc              ← Palette, contrast, dark mode
+│       ├── 06-buttons-cta.mdc         ← Hierarchy, sizes, circular
+│       ├── 07-forms-inputs.mdc        ← States, validation, labels
+│       ├── 08-navigation.mdc          ← Bottom nav, tabs, gestures
+│       ├── 09-cards-lists.mdc         ← Cards, lists, empty states
+│       ├── 10-feedback-states.mdc     ← Toasts, modals, loading
+│       ├── 11-motion-transitions.mdc  ← Easing, durations, transitions
+│       ├── 12-micro-interactions.mdc  ← Dan Saffer framework, catalog
+│       ├── 13-accessibility.mdc       ← WCAG 2.2, contrast, color blindness
+│       ├── 14-nielsen-heuristics.mdc  ← 10 usability heuristics
+│       ├── 15-figma-execution.mdc     ← Figma API technical rules
+│       └── 16-anti-patterns.mdc       ← What to NEVER do (real errors)
+├── references/                         ← Reference screenshots (add yours!)
 └── README.md
 ```
 
 ---
 
-## 🚀 Como Usar
+## 🚀 How to Use
 
-### Opção 1: Copiar para seu projeto
-1. Clone ou baixe este repositório
-2. Copie a pasta `.cursor/rules/` para dentro do seu projeto
-3. Abra o projeto no Cursor IDE
-4. A IA automaticamente lê as regras antes de cada resposta
+### Option 1: Copy to your project
+1. Clone or download this repository
+2. Copy the `.cursor/rules/` folder into your project
+3. Open the project in Cursor IDE
+4. The AI automatically reads the rules before each response
 
-### Opção 2: Regras globais do Cursor
-1. Clone ou baixe este repositório
-2. Copie os arquivos `.mdc` para `~/.cursor/rules/` (pasta global)
-3. As regras se aplicam a TODOS os projetos no Cursor
+### Option 2: Cursor global rules
+1. Clone or download this repository
+2. Copy the `.mdc` files to `~/.cursor/rules/` (global folder)
+3. The rules apply to ALL projects in Cursor
 
-### Opção 3: Referência manual
-1. Abra qualquer arquivo `.mdc` e leia as regras
-2. Use como checklist antes de criar telas no Figma
-3. Compartilhe com seu time
+### Option 3: Manual reference
+1. Open any `.mdc` file and read the rules
+2. Use as a checklist before creating screens in Figma
+3. Share with your team
 
 ---
 
-## 📚 Fontes e Referências
+## 📚 Sources and References
 
-### Livros:
+### Books:
 - "Don't Make Me Think" — Steve Krug
 - "The Design of Everyday Things" — Don Norman
 - "Microinteractions" — Dan Saffer
 - "Refactoring UI" — Adam Wathan & Steve Schoger
 - "About Face" — Alan Cooper
 
-### Sites:
+### Websites:
 - [Laws of UX](https://lawsofux.com) — Jon Yablonski
 - [Nielsen Norman Group](https://nngroup.com) — Jakob Nielsen
 - [Material Design 3](https://m3.material.io) — Google
 - [Apple HIG](https://developer.apple.com/design/human-interface-guidelines)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [Mobbin](https://mobbin.com) — Referências de apps reais
+- [Mobbin](https://mobbin.com) — Real app references
 
 ---
 
-## 🤝 Como Contribuir
+## 🤝 How to Contribute
 
-1. **Fork** este repositório
-2. Crie uma **branch** com sua melhoria: `git checkout -b minha-melhoria`
-3. Faça suas alterações nos arquivos `.mdc`
-4. **Commit**: `git commit -m "Adiciona regra de X"`
-5. **Push**: `git push origin minha-melhoria`
-6. Abra um **Pull Request**
+1. **Fork** this repository
+2. Create a **branch** with your improvement: `git checkout -b my-improvement`
+3. Make your changes in the `.mdc` files
+4. **Commit**: `git commit -m "Add rule for X"`
+5. **Push**: `git push origin my-improvement`
+6. Open a **Pull Request**
 
-### O que pode contribuir:
-- ✅ Novas regras com fundamentação (cite a fonte)
-- ✅ Correções de valores/medidas
-- ✅ Screenshots de referência na pasta `references/`
-- ✅ Traduções
-- ✅ Novos módulos (ex: `17-data-visualization.mdc`)
-- ❌ Opiniões sem fundamentação
-- ❌ Regras específicas de uma empresa (mantenha genérico)
+### What you can contribute:
+- ✅ New rules with foundation (cite the source)
+- ✅ Corrections to values/measurements
+- ✅ Reference screenshots in the `references/` folder
+- ✅ Translations
+- ✅ New modules (e.g., `17-data-visualization.mdc`)
+- ❌ Opinions without foundation
+- ❌ Company-specific rules (keep it generic)
 
 ---
 
-## 📊 Conteúdo por Módulo
+## 📊 Content by Module
 
-| Módulo | Linhas | Tópicos |
+| Module | Lines | Topics |
 |---|---|---|
-| 00 Core Principles | ~120 | 4 pilares, mobile rules, checklist |
-| 01 UX Laws | ~250 | 12 leis com fórmulas e regras |
-| 02 Gestalt | ~220 | 8 princípios com exemplos |
-| 03 Layout | ~200 | Grid 8px, auto-layout, viewports |
-| 04 Typography | ~200 | Type scale, pesos, formatação |
-| 05 Colors | ~200 | Paleta, contraste, dark mode |
-| 06 Buttons | ~200 | Hierarquia, circular, estados |
-| 07 Forms | ~250 | Inputs, validação, stepper |
-| 08 Navigation | ~200 | Bottom nav, tabs, gestos |
-| 09 Cards & Lists | ~220 | Cards, listas, skeleton |
-| 10 Feedback | ~200 | Toasts, modais, success |
-| 11 Motion | ~200 | Easing, durações, Smart Animate |
-| 12 Micro-interactions | ~280 | Framework Dan Saffer, 12 patterns |
-| 13 Accessibility | ~200 | WCAG 2.2, contraste, focus |
-| 14 Nielsen | ~220 | 10 heurísticas com checklists |
-| 15 Figma Execution | ~180 | API rules, código correto |
-| 16 Anti-Patterns | ~220 | 17 erros documentados |
-| **Total** | **~3,560** | **17 módulos** |
+| 00 Core Principles | ~120 | 4 pillars, mobile rules, checklist |
+| 01 UX Laws | ~250 | 12 laws with formulas and rules |
+| 02 Gestalt | ~220 | 8 principles with examples |
+| 03 Layout | ~200 | 8px grid, auto-layout, viewports |
+| 04 Typography | ~200 | Type scale, weights, formatting |
+| 05 Colors | ~200 | Palette, contrast, dark mode |
+| 06 Buttons | ~200 | Hierarchy, circular, states |
+| 07 Forms | ~250 | Inputs, validation, stepper |
+| 08 Navigation | ~200 | Bottom nav, tabs, gestures |
+| 09 Cards & Lists | ~220 | Cards, lists, skeleton |
+| 10 Feedback | ~200 | Toasts, modals, success |
+| 11 Motion | ~200 | Easing, durations, Smart Animate |
+| 12 Micro-interactions | ~280 | Dan Saffer framework, 12 patterns |
+| 13 Accessibility | ~200 | WCAG 2.2, contrast, focus |
+| 14 Nielsen | ~220 | 10 heuristics with checklists |
+| 15 Figma Execution | ~180 | API rules, correct code |
+| 16 Anti-Patterns | ~220 | 17 documented errors |
+| **Total** | **~3,560** | **17 modules** |
 
 ---
 
-## 📝 Licença
+## 📝 License
 
-MIT — Use, modifique, distribua livremente. Credite se puder.
+MIT — Use, modify, distribute freely. Credit if you can.
 
 ---
 
-## ⭐ Se este repositório te ajudou, deixe uma estrela!
+## ⭐ If this repository helped you, leave a star!
 
-Feito com 💜 para designers e IAs que querem criar interfaces melhores.
-
+Made with 💜 for designers and AIs that want to create better interfaces.

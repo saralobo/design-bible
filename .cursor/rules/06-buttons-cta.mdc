@@ -2,52 +2,52 @@
 alwaysApply: true
 ---
 
-# Botões e CTAs — Regras Absolutas para Ações
+# Buttons & CTAs — Absolute Rules for Actions
 
-> Botões são a interface entre a intenção do usuário e a ação do sistema.
-> Um botão mal projetado = fluxo perdido. Um CTA bem feito = conversão.
+> Buttons are the interface between user intent and system action.
+> A poorly designed button = lost flow. A well-designed CTA = conversion.
 
 ---
 
-## HIERARQUIA DE BOTÕES (Obrigatória)
+## BUTTON HIERARCHY (Mandatory)
 
-Toda tela deve ter NO MÁXIMO 3 níveis de ação:
+Every screen must have AT MOST 3 action levels:
 
-| Nível | Tipo | Estilo Visual | Quantidade por Tela |
+| Level | Type | Visual Style | Per Screen |
 |---|---|---|---|
-| **Primário** | CTA principal | Filled (cor sólida accent) | **MÁXIMO 1** |
-| **Secundário** | Ação alternativa | Outlined (borda accent, fundo transparente) | Máximo 2 |
-| **Terciário** | Ação auxiliar | Ghost/Text (sem borda, sem fundo) | Quantos necessários |
+| **Primary** | Main CTA | Filled (solid accent color) | **MAXIMUM 1** |
+| **Secondary** | Alternative action | Outlined (accent border, transparent bg) | Maximum 2 |
+| **Tertiary** | Auxiliary action | Ghost/Text (no border, no background) | As many as needed |
 
-### REGRA DE OURO:
-> **1 ação primária por tela. SEMPRE. SEM EXCEÇÃO.**
-> Se há 2 botões filled com a mesma cor numa tela, a hierarquia está ERRADA.
+### GOLDEN RULE:
+> **1 primary action per screen. ALWAYS. NO EXCEPTIONS.**
+> If there are 2 filled buttons with the same color on a screen, the hierarchy is WRONG.
 
 ---
 
-## TAMANHOS DE BOTÃO
+## BUTTON SIZES
 
-| Size | Altura | Padding H | Font Size | Uso |
+| Size | Height | H Padding | Font Size | Use |
 |---|---|---|---|---|
 | **XSmall** | 32px | 12px | 12px | Inline actions, tags |
 | **Small** | 36px | 16px | 14px | Secondary actions, cards |
-| **Medium** | 44px | 20px | 14-16px | Default para maioria |
-| **Large** | 48-56px | 24px | 16px | CTA principal, bottom actions |
+| **Medium** | 44px | 20px | 14-16px | Default for most cases |
+| **Large** | 48-56px | 24px | 16px | Primary CTA, bottom actions |
 
 ### TOUCH TARGET:
-- **Mínimo absoluto**: 44×44px (mesmo se o botão visual é menor)
-- O touch target pode ser maior que o visual (padding invisível)
+- **Absolute minimum**: 44×44px (even if the visual button is smaller)
+- The touch target can be larger than the visual (invisible padding)
 
 ---
 
-## BOTÃO CIRCULAR (Icon Button / FAB)
+## CIRCULAR BUTTON (Icon Button / FAB)
 
-### A REGRA MAIS IMPORTANTE:
-> **width DEVE ser IGUAL a height. SEMPRE.**
-> **cornerRadius = width / 2 (metade exata)**
+### THE MOST IMPORTANT RULE:
+> **width MUST be EQUAL to height. ALWAYS.**
+> **cornerRadius = width / 2 (exact half)**
 
-### Tamanhos:
-| Tipo | Size | CornerRadius |
+### Sizes:
+| Type | Size | CornerRadius |
 |---|---|---|
 | Icon Button Small | 36×36px | 18px |
 | Icon Button Medium | 44×44px | 22px |
@@ -56,153 +56,155 @@ Toda tela deve ter NO MÁXIMO 3 níveis de ação:
 | FAB Small | 40×40px | 20px |
 | FAB Extended | auto×56px | 28px (pill shape) |
 
-### NO FIGMA:
+### IN FIGMA:
 ```javascript
-// CORRETO — Botão circular
+// CORRECT — Perfectly circular button
 const btn = figma.createFrame();
-btn.resize(56, 56);                    // width === height
-btn.cornerRadius = 28;                 // metade exata
+const SIZE = 56;  // or 44, 48, etc.
+btn.resize(SIZE, SIZE);
+btn.cornerRadius = SIZE / 2;  // EXACT HALF
 btn.layoutMode = 'HORIZONTAL';
 btn.primaryAxisAlignItems = 'CENTER';
 btn.counterAxisAlignItems = 'CENTER';
-// NÃO use primaryAxisSizingMode = 'AUTO' — isso pode alongar o botão!
+
+// CRITICAL: FIXED on BOTH axes
 btn.primaryAxisSizingMode = 'FIXED';
 btn.counterAxisSizingMode = 'FIXED';
 
-// ERRADO — Isso cria um cilindro oval:
-btn.primaryAxisSizingMode = 'AUTO';    // ❌ Vai expandir com o conteúdo
+// DO NOT:
+// btn.primaryAxisSizingMode = 'AUTO';  ← Will stretch with content!
 ```
 
-### ANTI-PADRÃO FATAL:
-- ❌ Auto-layout com `HUG` em ambos os eixos + padding diferente = OVAL, não círculo
+### FATAL ANTI-PATTERN:
+- ❌ Auto-layout with `HUG` on both axes + uneven padding = OVAL, not circle
 - ❌ width = 56, height = 48 = OVAL
-- ❌ cornerRadius = 999 com dimensões diferentes = OVAL
-- ✅ FIXED width = FIXED height + cornerRadius = size/2 = CÍRCULO perfeito
+- ❌ cornerRadius = 999 with different dimensions = OVAL
+- ✅ FIXED width = FIXED height + cornerRadius = size/2 = PERFECT CIRCLE
 
 ---
 
-## BOTÃO FULL-WIDTH (Mobile CTA)
+## FULL-WIDTH BUTTON (Mobile CTA)
 
-### Quando usar:
-- CTA principal no bottom de formulários
-- Ação principal em bottom sheets
-- Botão de confirmação em flows
+### When to use:
+- Primary CTA at the bottom of forms
+- Main action in bottom sheets
+- Confirmation button in flows
 
-### Implementação:
+### Implementation:
 ```
-Parent: auto-layout vertical, padding horizontal 16-24px
+Parent: vertical auto-layout, horizontal padding 16-24px
   └── Button: layoutSizingHorizontal = 'FILL'
               height = 48-56px (FIXED)
               cornerRadius = 8-12px
 ```
 
-### REGRA:
-> O botão FILL herda a largura do parent minus padding.
-> O parent DEVE ter auto-layout ANTES de setar FILL no filho.
+### RULE:
+> The FILL button inherits the parent's width minus padding.
+> The parent MUST have auto-layout BEFORE setting FILL on the child.
 
 ---
 
-## ESTADOS DE BOTÃO
+## BUTTON STATES
 
-Cada botão DEVE ter estes estados definidos:
+Every button MUST have these states defined:
 
-| Estado | Visual Change |
+| State | Visual Change |
 |---|---|
-| **Default** | Cor normal |
-| **Hover** | Background levemente mais escuro (desktop) |
-| **Pressed** | Background mais escuro, scale 0.98 |
-| **Focused** | Ring/outline de 2px com offset de 2px (accent) |
-| **Disabled** | Opacity 40%, cursor not-allowed |
-| **Loading** | Spinner substituindo texto, largura mantida |
+| **Default** | Normal color |
+| **Hover** | Slightly darker background (desktop) |
+| **Pressed** | Darker background, scale 0.98 |
+| **Focused** | 2px ring/outline with 2px offset (accent) |
+| **Disabled** | 40% opacity, cursor not-allowed |
+| **Loading** | Spinner replacing text, width maintained |
 
-### REGRA DE DISABLED:
-> Botão disabled NUNCA muda de tamanho.
-> NUNCA esconda o botão — mostre disabled com explanation tooltip.
-> O texto do botão disabled deve ser o MESMO do estado normal.
+### DISABLED RULE:
+> A disabled button NEVER changes size.
+> NEVER hide the button — show it as disabled with an explanation tooltip.
+> The disabled button text must be the SAME as the normal state.
 
 ---
 
-## POSICIONAMENTO DE CTA
+## CTA POSITIONING
 
-### Em Formulários:
+### In Forms:
 ```
 ┌──────────────────────────────┐
 │   Form Fields                │
 │   ...                        │
 │                              │
 │                              │
-├──────────────────────────────┤ ← Espaço/Divider
-│  [  CTA Primário (FILL)  ]   │ ← Bottom, fixed
-│  [  Link terciário       ]   │ ← Opcional, abaixo
+├──────────────────────────────┤ ← Space/Divider
+│  [  Primary CTA (FILL)   ]   │ ← Bottom, fixed
+│  [  Tertiary link        ]   │ ← Optional, below
 └──────────────────────────────┘
 ```
 
-### Em Diálogos/Modais:
+### In Dialogs/Modals:
 ```
 ┌──────────────────────────────┐
-│  Título do Modal             │
-│  Descrição...                │
+│  Modal Title                 │
+│  Description...              │
 │                              │
-│     [ Cancelar ]  [ Confirmar ]  │ ← Direita, primário à direita
+│     [ Cancel ]  [ Confirm ]  │ ← Right-aligned, primary on right
 └──────────────────────────────┘
 ```
 
-### REGRA DE POSIÇÃO:
-- **Mobile**: CTA primário na metade inferior (thumb zone)
-- **Ação destrutiva**: NUNCA à esquerda. Sempre à direita ou no final
-- **Cancelar + Confirmar**: Cancelar (ghost) à esquerda, Confirmar (filled) à direita
-- **NUNCA**: CTA primário no topo da tela em mobile
+### POSITIONING RULE:
+- **Mobile**: Primary CTA in the bottom half (thumb zone)
+- **Destructive action**: NEVER on the left. Always on the right or at the end
+- **Cancel + Confirm**: Cancel (ghost) on the left, Confirm (filled) on the right
+- **NEVER**: Primary CTA at the top of the screen on mobile
 
 ---
 
-## LABELS DE BOTÃO
+## BUTTON LABELS
 
-### Boas Práticas:
-| ❌ Genérico | ✅ Específico |
+### Best Practices:
+| ❌ Generic | ✅ Specific |
 |---|---|
-| "OK" | "Confirmar pagamento" |
-| "Sim" | "Excluir conta" |
-| "Enviar" | "Enviar PIX" |
-| "Continuar" | "Ir para revisão" |
-| "Submit" | "Criar conta" |
-| "Cancel" | "Voltar ao início" |
+| "OK" | "Confirm payment" |
+| "Yes" | "Delete account" |
+| "Send" | "Send payment" |
+| "Continue" | "Go to review" |
+| "Submit" | "Create account" |
+| "Cancel" | "Back to home" |
 
-### REGRA:
-> O label do botão deve descrever O QUE VAI ACONTECER, não apenas confirmar.
-> Use verbo + substantivo: "Enviar PIX", "Salvar rascunho", "Excluir conta"
-> Máximo 3-4 palavras no label.
+### RULE:
+> The button label must describe WHAT WILL HAPPEN, not just confirm.
+> Use verb + noun: "Send Payment", "Save Draft", "Delete Account"
+> Maximum 3-4 words in the label.
 
 ---
 
-## BOTÕES COM ÍCONE
+## BUTTONS WITH ICONS
 
-### Posicionamento do Ícone:
-- **Ícone à ESQUERDA**: Reforça o significado (ex: 🔒 Pagamento seguro)
-- **Ícone à DIREITA**: Indica direção/progressão (ex: Continuar →)
-- **Apenas ícone**: Somente para ações universalmente reconhecidas (←, X, +, 🔍)
+### Icon Positioning:
+- **Icon on the LEFT**: Reinforces meaning (e.g., 🔒 Secure Payment)
+- **Icon on the RIGHT**: Indicates direction/progression (e.g., Continue →)
+- **Icon only**: Only for universally recognized actions (←, X, +, 🔍)
 
-### Tamanho do Ícone no Botão:
-| Tamanho do Botão | Tamanho do Ícone | Gap |
+### Icon Size in Buttons:
+| Button Size | Icon Size | Gap |
 |---|---|---|
 | Small (36px) | 16px | 4px |
 | Medium (44px) | 20px | 8px |
 | Large (48-56px) | 24px | 8px |
 
-### Propriedade Booleana:
-> No design system, todo botão deve ter uma propriedade `hasIcon` (Boolean).
-> Quando `hasIcon = false`, o ícone some e o padding se ajusta automaticamente.
+### Boolean Property:
+> In the design system, every button should have a `hasIcon` (Boolean) property.
+> When `hasIcon = false`, the icon disappears and padding adjusts automatically.
 
 ---
 
-## CHECKLIST DE BOTÕES
+## BUTTON CHECKLIST
 
-- [ ] Máximo 1 CTA primário por tela?
-- [ ] Primário = filled, secundário = outlined, terciário = ghost?
-- [ ] Touch target mínimo de 44×44px?
-- [ ] Botões circulares têm width === height?
-- [ ] CornerRadius de circular = size/2?
-- [ ] Label descritivo (verbo + substantivo)?
-- [ ] Todos os estados definidos (default, hover, pressed, disabled, loading)?
-- [ ] CTA posicionado na thumb zone (mobile)?
-- [ ] Disabled mantém o mesmo tamanho?
-- [ ] Ícones têm propriedade booleana hasIcon?
+- [ ] Maximum 1 primary CTA per screen?
+- [ ] Primary = filled, secondary = outlined, tertiary = ghost?
+- [ ] Minimum touch target of 44×44px?
+- [ ] Circular buttons have width === height?
+- [ ] CornerRadius of circular = size/2?
+- [ ] Descriptive label (verb + noun)?
+- [ ] All states defined (default, hover, pressed, disabled, loading)?
+- [ ] CTA positioned in the thumb zone (mobile)?
+- [ ] Disabled state maintains the same size?
+- [ ] Icons have a hasIcon boolean property?

@@ -2,14 +2,14 @@
 alwaysApply: true
 ---
 
-# Formulários e Inputs — Regras para Campos de Entrada
+# Forms & Inputs — Rules for Input Fields
 
-> Formulários são onde o dinheiro é feito ou perdido.
-> Um formulário bem projetado = conversão. Um formulário ruim = abandono.
+> Forms are where money is made or lost.
+> A well-designed form = conversion. A bad form = abandonment.
 
 ---
 
-## ANATOMIA DE UM CAMPO DE INPUT
+## INPUT FIELD ANATOMY
 
 ```
 ┌──────────────────────────────────┐
@@ -21,33 +21,33 @@ alwaysApply: true
 └──────────────────────────────────┘
 ```
 
-### Espaçamentos:
-| Gap | Valor |
+### Spacing:
+| Gap | Value |
 |---|---|
 | Label → Input | 4-8px |
 | Input → Helper text | 4px |
-| Campo → Campo (mesmo grupo) | 16-20px |
-| Grupo → Grupo (seções) | 32px |
+| Field → Field (same group) | 16-20px |
+| Group → Group (sections) | 32px |
 
 ---
 
-## TAMANHOS DE INPUT
+## INPUT SIZES
 
-| Tamanho | Altura | Uso |
+| Size | Height | Use |
 |---|---|---|
-| Small | 40px | Filtros inline, table cells |
-| Medium | 48px | Padrão para formulários |
-| Large | 56px | Campos principais, landing pages |
+| Small | 40px | Inline filters, table cells |
+| Medium | 48px | Default for forms |
+| Large | 56px | Main fields, landing pages |
 
-### REGRA:
-> Escolha 1 tamanho para o formulário inteiro. NUNCA misture tamanhos no mesmo form.
-> **Recomendado: 48px** (equilibra touch target e espaço)
+### RULE:
+> Choose 1 size for the entire form. NEVER mix sizes in the same form.
+> **Recommended: 48px** (balances touch target and space)
 
 ---
 
-## ESTADOS DO INPUT
+## INPUT STATES
 
-| Estado | Borda | Background | Label | Ícone |
+| State | Border | Background | Label | Icon |
 |---|---|---|---|---|
 | **Default** | 1px neutral-300 | White/transparent | neutral-600 | neutral-400 |
 | **Hover** | 1px neutral-800 | White | neutral-600 | neutral-600 |
@@ -55,165 +55,164 @@ alwaysApply: true
 | **Filled** | 1px neutral-300 | White | neutral-600 (shrunk) | neutral-800 |
 | **Error** | 2px negative (red) | red 4% bg | negative | negative |
 | **Disabled** | 1px neutral-200 | neutral-100 | neutral-400 | neutral-300 |
-| **Read-only** | None ou 1px dashed | neutral-50 | neutral-600 | — |
+| **Read-only** | None or 1px dashed | neutral-50 | neutral-600 | — |
 
-### REGRA DE ERROR:
-> Erro = borda vermelha + ícone ⚠️ + mensagem de erro abaixo do campo
-> NUNCA confie apenas na cor vermelha (daltonismo)
-> Mensagem de erro substitui o helper text, mesma posição
-> Mensagem de erro: específica ("CPF inválido, verifique os dígitos") não genérica ("Erro")
+### ERROR RULE:
+> Error = red border + ⚠️ icon + error message below the field
+> NEVER rely only on red color (color blindness)
+> Error message replaces helper text, same position
+> Error message: specific ("Invalid ID, check the digits") not generic ("Error")
 
 ---
 
-## TIPOS DE INPUT
+## INPUT TYPES
 
 ### Text Field:
-- Altura: 48-56px
-- Padding horizontal: 16px
-- Font size: 16px (MÍNIMO — evita zoom automático no iOS)
-- Placeholder: tom mais claro que o texto real
+- Height: 48-56px
+- Horizontal padding: 16px
+- Font size: 16px (MINIMUM — prevents auto-zoom on iOS)
+- Placeholder: lighter tone than actual text
 - Border-radius: 8px
 
 ### Text Area:
-- Altura mínima: 88-120px (3-4 linhas)
-- Resize: vertical only (no mobile, fixo)
-- Character counter: "0/280" no canto inferior direito
-- Mesmo estilo de borda que text field
+- Minimum height: 88-120px (3-4 lines)
+- Resize: vertical only (on mobile, fixed)
+- Character counter: "0/280" in the bottom-right corner
+- Same border style as text field
 
 ### Select/Dropdown:
-- Visual idêntico ao text field + chevron ▼ à direita
+- Visual identical to text field + chevron ▼ on the right
 - Chevron: 20px, neutral-600
-- Options list: Dropdown com sombra nível 2
+- Options list: Dropdown with level 2 shadow
 - Selected option: Background accent 8% opacity
-- Máximo 6-8 opções visíveis, depois scroll
+- Maximum 6-8 visible options, then scroll
 
 ### Search:
-- Ícone 🔍 à esquerda (leading)
-- Botão X (clear) à direita quando há texto
-- Pode ter border-radius pill (height/2) ou padrão (8px)
-- Sugira resultados em dropdown conforme digita
+- 🔍 icon on the left (leading)
+- X button (clear) on the right when there's text
+- Can have pill border-radius (height/2) or standard (8px)
+- Suggest results in dropdown as user types
 
 ### Password:
-- Ícone 👁 toggle à direita (show/hide)
-- NUNCA autocomplete off em campos de senha
-- Indicador de força: barra colorida abaixo (red → yellow → green)
-- Requisitos de senha: lista de checkbox abaixo do campo
+- 👁 toggle icon on the right (show/hide)
+- NEVER autocomplete off on password fields
+- Strength indicator: colored bar below (red → yellow → green)
+- Password requirements: checkbox list below the field
 
 ### PIN / OTP:
-- Campos individuais separados (1 dígito por campo)
-- 4-6 campos em row horizontal
-- Auto-focus no próximo campo após digitação
-- Tamanho: 48×56px cada campo
-- Gap: 8-12px entre campos
-- Teclado numérico automático (inputmode="numeric")
+- Individual separated fields (1 digit per field)
+- 4-6 fields in a horizontal row
+- Auto-focus on the next field after typing
+- Size: 48×56px per field
+- Gap: 8-12px between fields
+- Automatic numeric keyboard (inputmode="numeric")
 
 ---
 
-## LABELS E PLACEHOLDERS
+## LABELS AND PLACEHOLDERS
 
 ### Label:
-- SEMPRE visível (não desaparece quando digita)
-- Posição: ACIMA do campo (não dentro)
-- Floating label: Aceitável se bem implementado (label anima para cima ao focar)
-- Required indicator: asterisco vermelho * após o label
-- Optional indicator: "(opcional)" em cinza após o label
+- ALWAYS visible (doesn't disappear when typing)
+- Position: ABOVE the field (not inside)
+- Floating label: Acceptable if well implemented (label animates up on focus)
+- Required indicator: red asterisk * after the label
+- Optional indicator: "(optional)" in gray after the label
 
 ### Placeholder:
-- NÃO é substituto para label. É EXEMPLO de formato.
-- Ex: Label "CPF" → Placeholder "000.000.000-00"
-- Ex: Label "Email" → Placeholder "seu@email.com"
-- Cor: neutral-400 (50% do texto normal)
-- Desaparece ao focar ou digitar
+- NOT a substitute for a label. It's a FORMAT EXAMPLE.
+- Ex: Label "SSN" → Placeholder "000-00-0000"
+- Ex: Label "Email" → Placeholder "you@email.com"
+- Color: neutral-400 (50% of normal text)
+- Disappears on focus or typing
 
-### ANTI-PADRÃO:
-- ❌ Placeholder como label (some e o usuário esquece o campo)
-- ❌ Label dentro do campo sem float (confusão entre valor e label)
-- ❌ Label abaixo do campo (não é natural)
-- ❌ Sem label (acessibilidade zero)
+### ANTI-PATTERNS:
+- ❌ Placeholder as label (disappears and user forgets the field)
+- ❌ Label inside the field without float (confusion between value and label)
+- ❌ Label below the field (not natural)
+- ❌ No label (zero accessibility)
 
 ---
 
-## VALIDAÇÃO
+## VALIDATION
 
-### Princípios:
-1. **Inline, em tempo real**: Valide campo por campo quando o usuário sai do campo (onBlur)
-2. **Não valide enquanto digita** (exceto: senha, busca)
-3. **Mensagem clara**: "CPF deve ter 11 dígitos" não "Campo inválido"
-4. **Persistente**: Erro visível até ser corrigido
-5. **Scroll to error**: Em forms longos, scroll automático para o primeiro erro
+### Principles:
+1. **Inline, real-time**: Validate field by field when the user leaves the field (onBlur)
+2. **Don't validate while typing** (except: password, search)
+3. **Clear message**: "SSN must have 9 digits" not "Invalid field"
+4. **Persistent**: Error visible until corrected
+5. **Scroll to error**: In long forms, auto-scroll to the first error
 
-### Timing de Validação:
-| Momento | Quando Usar |
+### Validation Timing:
+| Moment | When to Use |
 |---|---|
-| onBlur (sai do campo) | Campos com formato (CPF, email, tel) |
-| onChange (enquanto digita) | Senha (força), busca (autocomplete) |
-| onSubmit (ao enviar) | Validação final de todos os campos |
+| onBlur (leaves the field) | Fields with format (SSN, email, phone) |
+| onChange (while typing) | Password (strength), search (autocomplete) |
+| onSubmit (on submit) | Final validation of all fields |
 
-### Formatação Automática:
-- CPF: Adicionar pontos e traço enquanto digita
-- Telefone: (XX) X XXXX-XXXX automático
-- Cartão: Separar em 4 grupos de 4 dígitos
-- CEP: XXXXX-XXX automático
-- Moeda: R$ X.XXX,XX com separadores
+### Auto-Formatting:
+- Phone: Add formatting automatically while typing
+- Card: Separate into 4 groups of 4 digits
+- ZIP code: Auto-format with dash/space
+- Currency: $X,XXX.XX with separators
 
 ---
 
-## FORMULÁRIOS LONGOS
+## LONG FORMS
 
 ### Progressive Disclosure:
-- Divida em steps (wizard) com indicador de progresso
-- Máximo 5-7 campos por step
-- Salve automaticamente entre steps
+- Break into steps (wizard) with progress indicator
+- Maximum 5-7 fields per step
+- Auto-save between steps
 
 ### Stepper/Wizard:
 ```
   ● ─── ● ─── ○ ─── ○
- Dados  Endereço  Revisão  Pagamento
+ Data   Address  Review   Payment
 ```
-- Step ativo: filled circle, accent color
-- Step completo: filled circle + check ✓, positive color
-- Step futuro: outlined circle, neutral color
-- Linha conectora: 2px, neutral-300 (futuro), accent (completo)
+- Active step: filled circle, accent color
+- Completed step: filled circle + check ✓, positive color
+- Future step: outlined circle, neutral color
+- Connecting line: 2px, neutral-300 (future), accent (completed)
 
 ---
 
-## AGRUPAMENTO DE CAMPOS
+## FIELD GROUPING
 
-### Quando Agrupar:
-- Campos do mesmo assunto: Nome + Sobrenome
-- Campos de endereço: CEP + Rua + Número + Complemento
-- Campos de pagamento: Número + Validade + CVV
+### When to Group:
+- Fields about the same topic: First Name + Last Name
+- Address fields: ZIP + Street + Number + Apt
+- Payment fields: Card Number + Expiry + CVV
 
-### Como Agrupar:
-- **Horizontal row**: Nome [50%] + Sobrenome [50%] (gap 12-16px)
-- **Section com título**: "Endereço de entrega" → campos abaixo
-- **Card/container**: Background sutil para delimitar grupo
+### How to Group:
+- **Horizontal row**: First Name [50%] + Last Name [50%] (gap 12-16px)
+- **Section with title**: "Shipping Address" → fields below
+- **Card/container**: Subtle background to delimit group
 
-### REGRA:
-> Campos em row horizontal SOMENTE quando são relacionados E curtos.
-> NUNCA coloque email + senha na mesma row (campos longos).
-
----
-
-## ACESSIBILIDADE EM FORMS
-
-- Cada input DEVE ter um label associado (para screen readers)
-- Tab order deve seguir ordem visual (top → bottom, left → right)
-- Error messages devem ser anunciadas por screen readers (aria-live)
-- Required fields devem ser marcados com asterisco + aria-required
-- Autocomplete attributes corretos (name, email, tel, etc.)
+### RULE:
+> Fields in a horizontal row ONLY when they are related AND short.
+> NEVER put email + password in the same row (long fields).
 
 ---
 
-## CHECKLIST DE FORMULÁRIOS
+## FORM ACCESSIBILITY
 
-- [ ] Todos os campos têm label visível?
-- [ ] Font size do input é ≥ 16px (evitar zoom iOS)?
-- [ ] Altura do input é consistente no form inteiro?
-- [ ] Todos os estados estão definidos (default, focused, error, disabled)?
-- [ ] Erro mostra ícone + texto descritivo + cor?
-- [ ] Validação é inline (não apenas no submit)?
-- [ ] Campos relacionados estão agrupados?
-- [ ] Form longo usa stepper com salve automático?
-- [ ] Formatação automática para CPF/tel/CEP?
-- [ ] Placeholder é exemplo, não label?
+- Every input MUST have an associated label (for screen readers)
+- Tab order must follow visual order (top → bottom, left → right)
+- Error messages must be announced by screen readers (aria-live)
+- Required fields must be marked with asterisk + aria-required
+- Correct autocomplete attributes (name, email, tel, etc.)
+
+---
+
+## FORM CHECKLIST
+
+- [ ] Do all fields have a visible label?
+- [ ] Is input font size ≥ 16px (prevent iOS zoom)?
+- [ ] Is input height consistent across the entire form?
+- [ ] Are all states defined (default, focused, error, disabled)?
+- [ ] Does error show icon + descriptive text + color?
+- [ ] Is validation inline (not only on submit)?
+- [ ] Are related fields grouped?
+- [ ] Do long forms use stepper with auto-save?
+- [ ] Is auto-formatting applied for phone/card/ZIP?
+- [ ] Is placeholder an example, not a label?
