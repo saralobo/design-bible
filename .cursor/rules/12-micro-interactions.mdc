@@ -344,6 +344,255 @@ If the answers are NO, YES, YES → keep it.
 
 ---
 
+## DEFAULT PROTOTYPING PARAMETERS
+
+### The Default Animation Curve
+
+> **When the user does NOT specify an animation curve or duration,
+> ALWAYS use Figma's GENTLE curve at 350ms as the default.**
+
+This is the universal default for ALL prototyping in this Design Bible:
+
+```javascript
+// ✅ DEFAULT — Use this when user hasn't specified animation preferences
+{
+  transition: { type: 'SMART_ANIMATE', easing: { type: 'GENTLE' }, duration: 0.35 },
+}
+// GENTLE at 350ms — premium, smooth, professional feel
+```
+
+### When to ask the user:
+> Before building a prototype, the AI SHOULD ask the user:
+> "Do you have a preferred animation curve and duration, or should I use
+> the default (Figma's Gentle curve at 350ms)?"
+>
+> If the user doesn't answer or says "use whatever is best" → use GENTLE 350ms.
+> If the user specifies a curve → use EXACTLY what they asked.
+
+### Why GENTLE 350ms?
+- **GENTLE** is Figma's premium built-in easing — it feels elegant and smooth
+- **350ms** is in the sweet spot: fast enough to not feel slow, slow enough to be perceived
+- It works for BOTH micro-interactions and screen transitions
+- It matches the Material Design 3 `duration-medium3` token
+
+---
+
+## FLOW TRANSITIONS — Screen Navigation Rules
+
+### THE RULE:
+> **All screen-to-screen transitions (CTA forward, Back button) MUST use
+> SLIDE_IN with Figma's GENTLE curve at 350ms — unless the user
+> explicitly requests a different transition.**
+
+### Forward Navigation (CTA → Next Screen):
+```javascript
+// ✅ CORRECT — Advancing to the next screen via a CTA button
+{
+  trigger: { type: 'ON_CLICK' },
+  actions: [{
+    type: 'NODE',
+    destinationId: 'NEXT_SCREEN_ID',
+    navigation: 'NAVIGATE',
+    transition: {
+      type: 'SLIDE_IN',
+      direction: 'LEFT',            // New screen slides in from the right
+      easing: { type: 'GENTLE' },
+      duration: 0.35                 // 350ms
+    }
+  }]
+}
+```
+
+### Back Navigation (Back Button → Previous Screen):
+```javascript
+// ✅ CORRECT — Going back to the previous screen
+{
+  trigger: { type: 'ON_CLICK' },
+  actions: [{
+    type: 'NODE',
+    destinationId: 'PREVIOUS_SCREEN_ID',
+    navigation: 'NAVIGATE',
+    transition: {
+      type: 'SLIDE_IN',
+      direction: 'RIGHT',           // Previous screen slides in from the left
+      easing: { type: 'GENTLE' },
+      duration: 0.35                 // 350ms
+    }
+  }]
+}
+```
+
+### Modal / Bottom Sheet Transitions:
+```javascript
+// ✅ CORRECT — Opening a modal or bottom sheet
+{
+  trigger: { type: 'ON_CLICK' },
+  actions: [{
+    type: 'NODE',
+    destinationId: 'MODAL_SCREEN_ID',
+    navigation: 'OVERLAY',         // Overlay, not navigate
+    transition: {
+      type: 'SLIDE_IN',
+      direction: 'BOTTOM',         // Slides up from bottom
+      easing: { type: 'GENTLE' },
+      duration: 0.35
+    }
+  }]
+}
+```
+
+### Tab Switches / Same-Level Navigation:
+```javascript
+// ✅ CORRECT — Switching between tabs (no depth change)
+{
+  trigger: { type: 'ON_CLICK' },
+  actions: [{
+    type: 'NODE',
+    destinationId: 'TAB_SCREEN_ID',
+    navigation: 'NAVIGATE',
+    transition: {
+      type: 'DISSOLVE',             // Dissolve for lateral movement
+      easing: { type: 'GENTLE' },
+      duration: 0.25                 // Slightly faster for tabs
+    }
+  }]
+}
+```
+
+### Transition Type Decision Table:
+
+| Navigation Type | Transition | Direction | Duration | Easing |
+|---|---|---|---|---|
+| **CTA → Next screen** | SLIDE_IN | LEFT | 350ms | GENTLE |
+| **Back → Previous screen** | SLIDE_IN | RIGHT | 350ms | GENTLE |
+| **Open Modal/Bottom Sheet** | SLIDE_IN | BOTTOM | 350ms | GENTLE |
+| **Close Modal/Bottom Sheet** | SLIDE_IN | BOTTOM (reverse) | 300ms | GENTLE |
+| **Tab switch** | DISSOLVE | — | 250ms | GENTLE |
+| **Success → auto-redirect** | DISSOLVE | — | 400ms | GENTLE |
+| **Micro-interaction (same screen)** | SMART_ANIMATE | — | 300ms | GENTLE |
+
+---
+
+## PROTOTYPE VALIDATION PROTOCOL (Mandatory)
+
+### THE RULE:
+> **After building ANY prototype, the AI MUST test and validate the ENTIRE
+> flow before presenting it to the user.** This means verifying every
+> connection, every transition, and every interactive element.
+
+### Step 1: Map All Interactive Elements
+Before building, create a mental (or written) inventory of EVERY element
+that should be interactive on EACH screen:
+
+```
+Screen: Home
+  ├── Header back button → goes to: [previous screen]
+  ├── Header action icon → goes to: [settings/more]
+  ├── Quick action: Pay → goes to: [Pay screen]
+  ├── Quick action: Transfer → goes to: [Transfer screen]
+  ├── Quick action: Statement → goes to: [Statement screen]
+  ├── Quick action: Settings → goes to: [Settings screen]
+  ├── Transaction item 1 → goes to: [Transaction detail]
+  ├── Transaction item 2 → goes to: [Transaction detail]
+  ├── CTA "View All" → goes to: [Full transaction list]
+  └── Bottom nav items → goes to: [respective screens]
+```
+
+### Step 2: Verify Forward Navigation (CRUD — Create/Read Paths)
+For every CTA, button, and interactive element:
+- [ ] Does it have a `setReactionsAsync` connection?
+- [ ] Does it point to the CORRECT destination screen?
+- [ ] Does it use the correct transition (SLIDE_IN LEFT for forward)?
+- [ ] Does the transition use GENTLE 350ms?
+
+### Step 3: Verify Back Navigation (Return Paths)
+For every screen that the user can navigate TO:
+- [ ] Is there a back button/gesture that returns to the previous screen?
+- [ ] Does the back navigation use SLIDE_IN RIGHT?
+- [ ] Is the back destination the CORRECT previous screen (not a random screen)?
+- [ ] Can the user go back from EVERY screen they reached?
+
+### Step 4: Verify Flow Completeness (Full CRUD)
+For every user flow (e.g., "pay a bill", "view statement"):
+```
+FORWARD PATH:  Screen A → Screen B → Screen C → Success
+RETURN PATH:   Success → Screen A (or auto-redirect)
+CANCEL PATH:   Screen B → Screen A (back button mid-flow)
+ERROR PATH:    Screen C → Error state → Retry or Back
+```
+
+- [ ] Can the user complete the FULL flow from start to finish?
+- [ ] Can the user CANCEL at any point and return to the start?
+- [ ] Is there a success/confirmation at the end?
+- [ ] Does the success screen redirect back appropriately?
+
+### Step 5: Verify Micro-Interaction Coverage
+For each screen, check if ALL micro-interaction OPPORTUNITIES have been addressed:
+
+```
+BUTTON STATES:
+  - [ ] Do buttons have hover/press states? (if applicable)
+  - [ ] Do CTA buttons have loading states for async actions?
+
+TOGGLE/SWITCH:
+  - [ ] Do toggles animate between ON/OFF?
+
+LISTS:
+  - [ ] Do list items have tap feedback?
+  - [ ] Is swipe-to-delete implemented (if applicable)?
+
+INPUTS:
+  - [ ] Do input fields have focus animations?
+  - [ ] Do error states animate in?
+
+TRANSITIONS:
+  - [ ] Do modals/bottom sheets have open AND close animations?
+  - [ ] Do screen transitions match the Transition Type Decision Table?
+
+LOADING:
+  - [ ] Are skeleton screens used during loading?
+  - [ ] Does content fade in after skeleton?
+```
+
+### Step 6: End-to-End Test (The Walk-Through)
+> **Simulate being a user.** Mentally walk through every possible path:
+
+1. Start at the first screen (flow starting point)
+2. Tap every interactive element — does it go somewhere?
+3. On each new screen, tap the back button — does it return correctly?
+4. Complete the main flow — does it reach success?
+5. After success — can the user return to the beginning?
+6. Try edge cases — what if the user taps something unexpected?
+
+### Step 7: Report to User
+After validation, present a summary:
+
+```
+✅ PROTOTYPE VALIDATION REPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Screens: 5
+Connections: 12
+Transitions: All using SLIDE_IN + GENTLE 350ms
+
+Flow coverage:
+  ✅ Forward: Home → Detail → Confirm → Success
+  ✅ Back: Every screen has return navigation
+  ✅ Cancel: Mid-flow back returns to Home
+  ✅ Success: Auto-redirects to Home after 2s
+
+Micro-interactions:
+  ✅ Button press states
+  ✅ Card tap feedback
+  ✅ Modal open/close animation
+  ⚠️ Missing: Swipe-to-delete on transaction list
+
+Notes:
+  - Swipe-to-delete was not implemented (not requested)
+  - All transitions use GENTLE 350ms (default)
+```
+
+---
+
 ## MICRO-INTERACTIONS CHECKLIST
 
 - [ ] Does the micro-interaction have a functional purpose (not just decoration)?
@@ -356,3 +605,8 @@ If the answers are NO, YES, YES → keep it.
 - [ ] Does Smart Animate have layers with matching names in both frames?
 - [ ] Would the interaction be tolerable on the 100th repetition?
 - [ ] Is there alternative feedback for accessibility (visual + text)?
+- [ ] Is the default animation curve GENTLE at 350ms (if user didn't specify)?
+- [ ] Do all flow transitions use SLIDE_IN (forward LEFT, back RIGHT)?
+- [ ] Has the entire prototype been tested for forward AND back navigation?
+- [ ] Have ALL buttons and interactive elements been checked for connections?
+- [ ] Has a Prototype Validation Report been generated?
