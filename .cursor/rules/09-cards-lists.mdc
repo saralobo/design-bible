@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Cards, lists, tiles, content containers, transaction lists, grid layouts. Use when displaying collections of data, product listings, transaction history, or card-based layouts."
 ---
 
 # Cards & Lists — Patterns for Content Display

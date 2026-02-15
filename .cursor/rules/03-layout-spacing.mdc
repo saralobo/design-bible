@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Layout, spacing, grid system, margins, padding, breathing room. Use when building any screen structure, defining spacing between elements, or setting up page layout."
 ---
 
 # Layout & Spacing — The Grid System and Breathing Room

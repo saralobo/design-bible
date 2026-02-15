@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Micro-interactions, hover effects, press feedback, scroll animations, prototype validation. Use when adding interactive details, prototyping flows, or polishing UI interactions."
 ---
 
 # Micro-interactions — The Soul of the Interface

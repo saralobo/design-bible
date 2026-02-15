@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Responsiveness, constraints, auto-layout sizing (FILL/HUG/FIXED), min/max dimensions, adaptive components. Use when building responsive screens, setting constraints, or making components adapt to different screen sizes."
 ---
 
 # Responsiveness & Constraints — Adaptive Components and Screens

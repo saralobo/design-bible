@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "UX Laws (Fitts, Hick, Miller, Jakob, Doherty). Use when designing interactions, deciding layout positions, simplifying choices, or evaluating usability decisions."
 ---
 
 # UX Laws — Scientific Foundation for Design Decisions

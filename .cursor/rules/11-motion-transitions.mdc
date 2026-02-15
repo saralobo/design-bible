@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Motion, transitions, animations, easing curves, duration tokens, M3 motion system. Use when adding prototyping, screen transitions, animated interactions, or any motion design."
 ---
 
 # Motion & Transitions — Material Design 3 Motion System

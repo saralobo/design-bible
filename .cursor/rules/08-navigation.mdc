@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Navigation patterns, bottom nav, tabs, drawers, headers, app bars, breadcrumbs. Use when designing navigation structure, screen flow, or wayfinding elements."
 ---
 
 # Navigation — Patterns and Rules for User Flow

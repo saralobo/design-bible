@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Forms, input fields, text fields, selects, validation, error states. Use when building forms, login screens, registration flows, search bars, or any data input interface."
 ---
 
 # Forms & Inputs — Rules for Input Fields

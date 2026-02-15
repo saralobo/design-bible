@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Visual references from world-class apps (Nubank, Revolut, Cash App, Airbnb, Instagram, Uber). Use when seeking design inspiration, analyzing best practices, or building screens that need to match top-tier app quality."
 ---
 
 # Visual References — Deconstructing World-Class App Design

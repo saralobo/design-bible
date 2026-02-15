@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Icons, Material Symbols, icon sizing, icon containers, optical alignment, Google Icons library. Use when adding icons to screens, working with icon buttons, or building any UI with icons."
 ---
 
 # Icons — Consistency, Sizing, and Optical Alignment

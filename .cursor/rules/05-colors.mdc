@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Color system, palettes, semantic colors, contrast, dark/light mode. Use when choosing colors, defining color tokens, setting backgrounds, or working with themes."
 ---
 
 # Colors — Color System for Interfaces

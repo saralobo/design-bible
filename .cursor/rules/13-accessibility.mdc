@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Accessibility, WCAG 2.2, contrast ratios, touch targets, screen readers, inclusive design. Use when reviewing accessibility compliance or ensuring designs are inclusive."
 ---
 
 # Accessibility — Inclusive Design (WCAG 2.2)

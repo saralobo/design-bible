@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Buttons, CTAs, button hierarchy, sizes, states, filled/outlined/text variants. Use when creating buttons, call-to-action elements, or interactive action components."
 ---
 
 # Buttons & CTAs — Absolute Rules for Actions

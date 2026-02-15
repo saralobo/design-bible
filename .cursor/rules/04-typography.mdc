@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Typography system, font sizes, weights, line height, text hierarchy. Use when adding text elements, defining headings, body text, labels, or creating typographic hierarchy."
 ---
 
 # Typography — The Typographic System for Interfaces

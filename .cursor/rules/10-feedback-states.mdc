@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Feedback states, loading, empty states, error states, success messages, toasts, snackbars. Use when handling system feedback, loading indicators, or communicating status to users."
 ---
 
 # Feedback & States — System ↔ User Communication

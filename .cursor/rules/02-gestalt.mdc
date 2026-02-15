@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
+description: "Gestalt Principles (proximity, similarity, continuity, closure, figure-ground). Use when grouping elements, organizing visual hierarchy, or structuring layouts."
 ---
 
 # Gestalt Principles — How the Brain Organizes Visual Information
