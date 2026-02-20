@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A design rules repository ("bible") for AI assistants creating interfaces in Figma. No build system, no tests, no application code -- the content IS the product. All files are Markdown.
+A design rules repository ("bible") for AI assistants creating interfaces in Figma, combined with a design engineering workflow plugin. No build system, no tests, no application code -- the content IS the product. All files are Markdown.
 
 ## Architecture: Dual Format
 
@@ -12,12 +12,13 @@ Content exists in two parallel formats that must stay in sync:
 
 | Format | Location | Structure |
 |---|---|---|
-| **Claude Code** | `.claude/skills/` | 21 on-demand skills (invoked via `/slash-command`) |
-| **Cursor IDE** | `.cursor/rules/` | 21 `.mdc` files (numbered 00-20) |
+| **Agent Skills** | `.claude/skills/` | 24 on-demand skills (invoked via `/slash-command`) -- [open standard](https://agentskills.io), works across compatible agents |
+| **Cursor Rules** | `.cursor/rules/` | 21 `.mdc` files (numbered 00-20) -- legacy Cursor-specific format |
 
 ### Claude Code structure
-- **All 21 skills** live in `.claude/skills/*/SKILL.md` -- nothing is preloaded
-- Skills are loaded on-demand when relevant to the design task, or invoked directly via slash command
+- **All 24 skills** live in `.claude/skills/*/SKILL.md` -- nothing is preloaded
+- 21 design quality skills are loaded on-demand when relevant to the design task, or invoked directly via slash command
+- 3 process workflow skills (`problem-definition`, `design-context`, `design-engineering`) orchestrate how to approach design work
 
 ### Cursor structure
 - `.cursor/rules/*.mdc` -- numbered 00-20, frontmatter has `alwaysApply: true/false`
@@ -47,11 +48,14 @@ Content exists in two parallel formats that must stay in sync:
 | `19-visual-references` | `/visual-references` |
 | `20-design-judgment` | `/design-judgment` |
 
+**Note:** The 3 process skills (`problem-definition`, `design-context`, `design-engineering`) have no `.mdc` equivalent -- they live only in `.claude/skills/`. Cursor can read them directly from there via its skills support.
+
 ## When Editing Rules
 
 - If you modify a Claude skill, the corresponding Cursor `.mdc` file likely needs the same update (and vice versa)
 - Cursor `.mdc` files use YAML frontmatter (`alwaysApply: true/false`); Claude skills use SKILL.md with name/description frontmatter
 - Keep rules concrete and verifiable -- every rule should be checkable against a screenshot
+- The 3 process skills (problem-definition, design-context, design-engineering) have no `.mdc` equivalent -- Cursor reads them directly from `.claude/skills/`
 
 ## Available Skills
 
@@ -78,3 +82,25 @@ Content exists in two parallel formats that must stay in sync:
 | `/icons` | Adding icons, icon buttons, Material Symbols |
 | `/responsiveness` | Responsive screens, constraints, adaptive components |
 | `/visual-references` | Design inspiration, best practices from top-tier apps |
+| `/problem-definition` | Raw client input, meeting notes, defining problems before designing |
+| `/design-context` | Auditing codebase design context, generating DESIGN.md, onboarding to repos |
+| `/design-engineering` | Full design engineering framework, project audit, Double Diamond, design QA |
+
+## Design Engineering Workflow
+
+The 3 process skills form a pipeline for approaching design work end-to-end:
+
+```
+/problem-definition     /design-context       /design-engineering
+(Diamond 1: Problem)    (Audit existing)      (Diamond 2: Solution)
+       |                      |                       |
+  Raw client input     Scan repo + MCPs        Brand -> Tokens -> Assets
+  -> Problem statements  -> DESIGN.md           -> IA -> Design -> Build
+  -> Design Brief        -> Context gaps         -> Heuristic QA
+```
+
+- **`/problem-definition`** -- Start here with raw client notes. Produces a design brief.
+- **`/design-context`** -- Run when landing in any existing codebase. Scans repo + Figma/Notion/Linear MCPs.
+- **`/design-engineering`** -- The full framework. Takes the brief and context as inputs, guides through all phases.
+
+The `hooks/hooks.json` file contains a forced-evaluation hook that ensures these 3 process skills are considered before every task. The 21 Design Bible skills are handled automatically by Claude's native skill matching.

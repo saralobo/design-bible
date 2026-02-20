@@ -1,0 +1,10 @@
+{
+  "description": "Forces Claude to evaluate design engineering skills before proceeding with any task. Based on Scott Spence's forced eval pattern (84% activation vs 20% baseline).",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "prompt": "MANDATORY SKILL EVALUATION — Complete before ANY implementation.\n\nStep 1 — EVALUATE each skill against this prompt:\n\n  problem-definition: Does this involve raw client input, meeting notes, call feedback, figuring out what the problem is, reframing, or \"help me understand what we're solving\"? User pasting notes from a call?\n  -> YES / NO (reason)\n\n  design-context: Does this involve a new/unfamiliar codebase, missing design documentation, understanding existing design decisions, generating a DESIGN.md, or bridging design context gaps?\n  -> YES / NO (reason)\n\n  design-engineering: Does this involve starting a project, auditing UI/UX, design tokens, design systems, visual assets, information architecture, navigation structure, component architecture, interaction design, states and transitions, Nielsen heuristics, Double Diamond, or design QA?\n  -> YES / NO (reason)\n\nStep 2 — ACTIVATE: For each YES, use Skill(skill-name) NOW before proceeding.\n\nStep 3 — IMPLEMENT: Only after activation, proceed with the task.\n\nNote: The 21 Design Bible skills (core-principles, typography, colors, etc.) are handled by Claude's native skill matching via their description frontmatter. Only the 3 process skills above need explicit evaluation.\n\nCRITICAL: The evaluation is WORTHLESS unless you ACTIVATE matching skills. Do NOT skip to implementation. If problem-definition is YES, do NOT suggest solutions or designs — only help define problems."
+      }
+    ]
+  }
+}

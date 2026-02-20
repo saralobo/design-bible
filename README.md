@@ -1,16 +1,16 @@
 # Design Bible
 
-> Absolute UI/UX rules for AIs that create interfaces in Figma.
-> Available as **Cursor Rules** (`.mdc`) and **Claude Code Skills**.
+> 24 UI/UX design skills + design engineering workflow for AI assistants building interfaces.
+> Built on the open [Agent Skills](https://agentskills.io) standard -- works with Claude Code, Cursor, Gemini CLI, VS Code, Amp, and any compatible agent.
 
 ---
 
 ## What is this?
 
-A repository of design rules that works as the **"bible"** for an AI design assistant. When these rules are active, the AI follows fundamental UI/UX principles before creating any screen.
+A repository of design rules that works as the **"bible"** for an AI design assistant, combined with a design engineering workflow for end-to-end project execution. When these rules are active, the AI follows fundamental UI/UX principles before creating any screen.
 
 ### The problem it solves:
-AIs can create interfaces in Figma, but without a design foundation — oval buttons when they should be circular, inconsistent colors, competing CTAs. This repository "trains" the AI with concrete, verifiable rules.
+AIs can create interfaces in Figma, but without a design foundation -- oval buttons when they should be circular, inconsistent colors, competing CTAs. This repository "trains" the AI with concrete, verifiable rules. The design engineering workflow adds structure to *how* the AI approaches projects: defining problems before jumping to solutions, auditing existing codebases, and following a phased methodology from brand to shipped product.
 
 ---
 
@@ -18,37 +18,51 @@ AIs can create interfaces in Figma, but without a design foundation — oval but
 
 ```
 design-bible/
-├── .claude/                              ← Claude Code integration
-│   ├── CLAUDE.md                         ← Project overview (loaded every session)
-│   ├── rules/                            ← Always-active rules (auto-loaded)
-│   │   ├── core-principles.md            ← Hierarchy, contrast, alignment
-│   │   ├── figma-execution.md            ← Figma API technical rules
-│   │   ├── anti-patterns.md              ← What to NEVER do (real errors)
-│   │   └── design-judgment.md            ← Spirit over letter, design taste
-│   └── skills/                           ← On-demand skills (auto-invoked by context)
-│       ├── ux-laws/SKILL.md              ← Fitts, Hick, Jakob, Miller, etc.
-│       ├── gestalt/SKILL.md              ← Proximity, similarity, closure
-│       ├── layout-spacing/SKILL.md       ← 8px grid, auto-layout, safe areas
-│       ├── typography/SKILL.md           ← Type scale, weights, formatting
-│       ├── colors/SKILL.md               ← Palette, contrast, dark mode
-│       ├── buttons-cta/SKILL.md          ← Hierarchy, sizes, circular
-│       ├── forms-inputs/SKILL.md         ← States, validation, labels
-│       ├── navigation/SKILL.md           ← Bottom nav, tabs, gestures
-│       ├── cards-lists/SKILL.md          ← Cards, lists, empty states
-│       ├── feedback-states/SKILL.md      ← Toasts, modals, loading
-│       ├── motion-transitions/SKILL.md   ← Easing, durations, transitions
-│       ├── micro-interactions/SKILL.md   ← Dan Saffer framework, catalog
-│       ├── accessibility/SKILL.md        ← WCAG 2.2, contrast, color blindness
-│       ├── nielsen-heuristics/SKILL.md   ← 10 usability heuristics
-│       ├── icons/SKILL.md                ← Material Symbols, sizing, containers
-│       ├── responsiveness/SKILL.md       ← Constraints, FILL/HUG/FIXED, adaptive
-│       └── visual-references/SKILL.md    ← World-class app design analysis
+├── .claude/                              <- Claude Code integration
+│   ├── CLAUDE.md                         <- Project overview (loaded every session)
+│   ├── rules/                            <- Always-active rules (auto-loaded)
+│   │   ├── core-principles.md            <- Hierarchy, contrast, alignment
+│   │   ├── figma-execution.md            <- Figma API technical rules
+│   │   ├── anti-patterns.md              <- What to NEVER do (real errors)
+│   │   └── design-judgment.md            <- Spirit over letter, design taste
+│   └── skills/                           <- On-demand skills (24 total)
+│       ├── ux-laws/SKILL.md              <- Fitts, Hick, Jakob, Miller, etc.
+│       ├── gestalt/SKILL.md              <- Proximity, similarity, closure
+│       ├── layout-spacing/SKILL.md       <- 8px grid, auto-layout, safe areas
+│       ├── typography/SKILL.md           <- Type scale, weights, formatting
+│       ├── colors/SKILL.md               <- Palette, contrast, dark mode
+│       ├── buttons-cta/SKILL.md          <- Hierarchy, sizes, circular
+│       ├── forms-inputs/SKILL.md         <- States, validation, labels
+│       ├── navigation/SKILL.md           <- Bottom nav, tabs, gestures
+│       ├── cards-lists/SKILL.md          <- Cards, lists, empty states
+│       ├── feedback-states/SKILL.md      <- Toasts, modals, loading
+│       ├── motion-transitions/SKILL.md   <- Easing, durations, transitions
+│       ├── micro-interactions/SKILL.md   <- Dan Saffer framework, catalog
+│       ├── accessibility/SKILL.md        <- WCAG 2.2, contrast, color blindness
+│       ├── nielsen-heuristics/SKILL.md   <- 10 usability heuristics
+│       ├── icons/SKILL.md                <- Material Symbols, sizing, containers
+│       ├── responsiveness/SKILL.md       <- Constraints, FILL/HUG/FIXED, adaptive
+│       ├── visual-references/SKILL.md    <- World-class app design analysis
+│       ├── problem-definition/           <- Problem definition partner (process)
+│       │   ├── SKILL.md
+│       │   └── references/
+│       ├── design-context/               <- Codebase design audit (process)
+│       │   ├── SKILL.md
+│       │   ├── references/
+│       │   └── scripts/design-scan.sh
+│       └── design-engineering/           <- Full design framework (process)
+│           ├── SKILL.md
+│           └── references/
+├── .claude-plugin/
+│   └── plugin.json                       <- Plugin metadata (v2.0.0)
 ├── .cursor/
-│   └── rules/                            ← Cursor IDE integration
+│   └── rules/                            <- Cursor IDE integration
 │       ├── 00-core-principles.mdc
 │       ├── 01-ux-laws.mdc
 │       ├── ... (21 rule files)
 │       └── 20-design-judgment.mdc
+├── hooks/
+│   └── hooks.json                        <- Forced skill evaluation hook
 └── README.md
 ```
 
@@ -56,33 +70,42 @@ design-bible/
 
 ## How to Use
 
-### Option 1: Claude Code (recommended)
-1. Clone or download this repository
-2. Open a terminal in the project directory
-3. Run `claude` to start Claude Code
-4. The 4 core rules load automatically every session
-5. The 17 contextual skills load on-demand when relevant to your task
-6. You can also invoke skills directly: `/ux-laws`, `/typography`, `/colors`, etc.
+### Option 1: Per-project (any compatible agent)
+1. Clone or download this repository into your project
+2. Any [Agent Skills-compatible](https://agentskills.io) tool discovers `.claude/skills/` automatically
+3. Skills load on-demand when relevant, or invoke directly: `/typography`, `/colors`, `/design-engineering`, etc.
 
-### Option 2: Cursor IDE
-1. Clone or download this repository
-2. Copy the `.cursor/rules/` folder into your Figma design project
-3. Open the project in Cursor IDE
-4. The AI automatically reads the rules before each response
+Works with: Claude Code, Cursor, Gemini CLI, VS Code, Amp, Goose, OpenCode, and others.
 
-### Option 3: Cursor global rules
-1. Clone or download this repository
-2. Copy the `.mdc` files to `~/.cursor/rules/` (global folder)
-3. The rules apply to ALL projects in Cursor
+### Option 2: Global install (available in all projects)
+1. Clone this repository
+2. Copy the skill directories to your global skills path:
+```bash
+cp -R .claude/skills/* ~/.claude/skills/
+```
+3. All 24 skills are now available in every project
+4. Optionally copy `hooks/hooks.json` to individual projects for forced skill evaluation
+
+Global paths by agent:
+| Agent | Global path |
+|---|---|
+| Claude Code | `~/.claude/skills/` |
+| Cursor | `~/.cursor/skills/` or `~/.claude/skills/` |
+| Gemini CLI | `~/.gemini/skills/` |
+
+### Option 3: Cursor Rules (legacy)
+1. Copy the `.cursor/rules/` folder into your project
+2. The 21 `.mdc` files load as Cursor Rules (older format, still supported)
+3. For global: copy `.mdc` files to `~/.cursor/rules/`
 
 ### Option 4: Manual reference
-1. Open any rule file and read the rules
+1. Open any skill file and read the rules
 2. Use as a checklist before creating screens in Figma
 3. Share with your team
 
 ---
 
-## Claude Code Skills Reference
+## Skills Reference
 
 ### Always-Active Rules (loaded every session)
 | Rule | Purpose |
@@ -92,7 +115,7 @@ design-bible/
 | Anti-Patterns | 17 documented errors to avoid |
 | Design Judgment | Spirit over letter, color restraint, design taste |
 
-### On-Demand Skills (loaded automatically when relevant)
+### On-Demand Design Skills (loaded automatically when relevant)
 | Skill | Invoke With | When Claude Uses It |
 |---|---|---|
 | UX Laws | `/ux-laws` | Designing interactions, layout positions, simplifying choices |
@@ -112,6 +135,30 @@ design-bible/
 | Icons | `/icons` | Icon buttons, Material Symbols, sizing |
 | Responsiveness | `/responsiveness` | Responsive screens, constraints, adaptive layout |
 | Visual References | `/visual-references` | Design inspiration from top-tier apps |
+
+### Process Workflow Skills
+| Skill | Invoke With | When Claude Uses It |
+|---|---|---|
+| Problem Definition | `/problem-definition` | Raw client input, meeting notes, defining problems before designing |
+| Design Context | `/design-context` | Landing in a new repo, auditing design decisions, generating DESIGN.md |
+| Design Engineering | `/design-engineering` | Full project workflow, audit, tokens, IA, design, build, QA |
+
+### Design Engineering Workflow
+
+The 3 process skills form a pipeline:
+
+```
+/problem-definition       /design-context         /design-engineering
+(Diamond 1: Problem)      (Audit existing)        (Diamond 2: Solution)
+       |                        |                         |
+  Raw client input        Scan repo + MCPs          Brand -> Tokens -> Assets
+  -> Problem statements     -> DESIGN.md             -> IA -> Design -> Build
+  -> Design Brief           -> Context gaps           -> Heuristic QA
+```
+
+### Forced Evaluation Hook
+
+The `hooks/hooks.json` file contains a `UserPromptSubmit` hook that forces Claude to evaluate whether the 3 process skills apply before every task. Based on Scott Spence's forced eval pattern (~84% activation vs ~20% baseline). The 21 Design Bible skills are handled automatically by Claude's native skill matching.
 
 ---
 
@@ -179,6 +226,9 @@ design-bible/
 | 18 | Responsiveness | Constraints, FILL/HUG/FIXED, adaptive |
 | 19 | Visual References | World-class app design analysis |
 | 20 | Design Judgment | Spirit over letter, design taste |
+| 21 | Problem Definition | Client input -> problem statements -> design brief |
+| 22 | Design Context | Codebase audit, MCP enrichment, DESIGN.md generation |
+| 23 | Design Engineering | Double Diamond, project audit, phased methodology |
 
 ---
 
