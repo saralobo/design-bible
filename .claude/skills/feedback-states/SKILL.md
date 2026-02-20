@@ -1,0 +1,263 @@
+---
+name: feedback-states
+description: "Loading states, toasts, error screens, success screens, progress indicators. Use when designing loading indicators, error/success states, toasts, banners, or system feedback."
+---
+
+# Feedback & States — System ↔ User Communication
+
+> Every click, every action, every wait needs visual feedback.
+> System silence = user insecurity.
+
+---
+
+## FUNDAMENTAL PRINCIPLE
+
+> **The system NEVER goes silent.** Every user action receives a visual response in < 100ms.
+> If something takes > 400ms, show loading. If it succeeded, celebrate. If it failed, explain.
+
+---
+
+## COMPONENT STATES
+
+Every interactive component MUST have these visual states:
+
+| State | Trigger | Visual | Duration |
+|---|---|---|---|
+| **Default** | None | Normal | — |
+| **Hover** | Mouse over (desktop) | Slightly darker bg, cursor pointer | Instant |
+| **Pressed/Active** | Touch/Click down | Darker bg, scale 0.97-0.98 | < 100ms |
+| **Focused** | Tab/Keyboard | 2px accent ring with 2px offset | Instant |
+| **Disabled** | isDisabled=true | Opacity 40%, cursor not-allowed | — |
+| **Loading** | Action in progress | Spinner/skeleton, maintains size | Until complete |
+| **Error** | Validation failed | Red border + icon + message | Until corrected |
+| **Success** | Action completed | Temporary green check | 2-3s |
+| **Selected** | Item selected | Accent bg 8%, check icon | Until deselected |
+
+---
+
+## FEEDBACK BY ACTION TYPE
+
+### 1. Instant Action (< 300ms)
+**Examples**: Toggle, checkbox, tab switch, like
+- **Feedback**: Immediate visual change (color, icon, state)
+- **Not needed**: Loading, toast, or message
+
+### 2. Quick Action (300ms — 2s)
+**Examples**: Save draft, send short message
+- **Feedback**: Inline spinner in the button OR skeleton
+- **On completion**: Momentary check (2s) or subtle toast
+
+### 3. Slow Action (2s — 10s)
+**Examples**: File upload, payment processing
+- **Feedback**: Progress bar with percentage OR spinner with descriptive text
+- **Text**: "Processing payment..." (describe WHAT is happening)
+- **On completion**: Dedicated success screen
+
+### 4. Very Long Action (> 10s)
+**Examples**: Background processing, report generation
+- **Feedback**: Progress bar + estimated time + "Notify when ready" option
+- **Allow**: The user to do other things while waiting
+
+---
+
+## TOASTS AND SNACKBARS
+
+### Anatomy:
+```
+┌──────────────────────────────────────┐
+│  ✓  Success message        [ Undo ] │
+└──────────────────────────────────────┘
+```
+
+### Rules:
+| Property | Value |
+|---|---|
+| Position | Bottom (above bottom nav), 16px margin |
+| Width | Full-width - 32px (16px each side) |
+| Height | 48-56px |
+| Border-radius | 8-12px |
+| Duration | 3-5 seconds (auto-dismiss) |
+| Max chars | ~60 characters (1 line) |
+| Action | Maximum 1 button (e.g., "Undo") |
+| Success color | Positive background with white text |
+| Error color | Negative background with white text |
+| Info color | Neutral-800 background with white text |
+
+### Toast Types:
+| Type | Icon | Color | Use |
+|---|---|---|---|
+| Success | ✓ check | Green | Action completed |
+| Error | ✕ cross | Red | Action failed |
+| Warning | ⚠ triangle | Yellow/Orange | Attention needed |
+| Info | ℹ circle | Blue/Neutral | Information |
+
+### ANTI-PATTERNS:
+- ❌ Toast overlapping CTA or bottom nav
+- ❌ Toast that doesn't disappear (blocks the screen)
+- ❌ More than 1 toast at the same time (stack carefully)
+- ❌ Toast for critical error (use modal or inline error)
+
+---
+
+## BANNERS AND ALERTS
+
+### Inline Banner (within the screen):
+```
+┌──────────────────────────────────────┐
+│  ⚠️  Your subscription expires in 3d │
+│      Renew now →                     │
+│                                  × │
+└──────────────────────────────────────┘
+```
+
+### Rules:
+- Position: Top of the screen, below the header
+- Dismissable: X to close (if non-critical)
+- Non-dismissable: Critical errors (account locked, etc.)
+- Action: Inline link or button
+- Colors: Same semantic pattern (success/error/warning/info)
+
+---
+
+## CONFIRMATION MODALS
+
+### When to use:
+- Destructive actions (delete, exit without saving)
+- Irreversible actions (send payment)
+- Actions with significant consequences
+
+### Anatomy:
+```
+┌──────────────────────────────────────┐
+│                                      │
+│  ⚠️ Confirm deletion?               │  ← Icon + Title
+│                                      │
+│  This action cannot be undone.       │  ← Clear description
+│  All data will be permanently        │
+│  lost.                               │
+│                                      │
+│     [ Cancel ]      [ Delete ]       │  ← Ghost + Destructive (red)
+│                                      │
+└──────────────────────────────────────┘
+```
+
+### Rules:
+- Overlay: 50-60% opacity black
+- Padding: 24px
+- Border-radius: 16-20px
+- Title: Clear question ("Delete this item?")
+- Description: Consequence ("Cannot be undone")
+- Cancel button: Ghost/secondary (left)
+- Destructive confirm button: Red filled (right)
+- Normal confirm button: Accent filled (right)
+- NEVER: "Yes" / "No" as labels (be specific)
+
+---
+
+## SUCCESS SCREENS
+
+### The Peak-End Rule:
+> The success screen is the LAST point in the flow. The user REMEMBERS it.
+> Invest design, emotion, and quality here.
+
+### Anatomy:
+```
+┌──────────────────────────────────────┐
+│                                      │
+│                                      │
+│            ✓ (animated)              │  ← Check with animation (scale + fade)
+│                                      │
+│       Payment Sent!                  │  ← heading-xl, positive or accent
+│                                      │
+│       $150.00                        │  ← display-lg, bold
+│       to John Smith                  │  ← body-lg, neutral-600
+│                                      │
+│                                      │
+│  ┌────────────────────────────────┐  │
+│  │  Transaction details...       │  │  ← Card with details (optional)
+│  └────────────────────────────────┘  │
+│                                      │
+│  [ Share ]        [ Go Home ]        │  ← Post-success actions
+│                                      │
+└──────────────────────────────────────┘
+```
+
+### Rules:
+- Animated check: Scale from 0 → 1.2 → 1.0, 400-600ms
+- Confetti/Celebration: Optional for big milestones (first purchase, goal reached)
+- Summary information: Show the essentials (amount, recipient)
+- Post-success CTAs: "Share", "View receipt", "Back to home"
+- Background: Can have a light accent color or keep the screen standard
+
+---
+
+## ERROR SCREENS
+
+### Recoverable Error:
+```
+┌──────────────────────────────────────┐
+│                                      │
+│         [Error illustration]         │
+│                                      │
+│    Connection failed                 │  ← heading-lg
+│    Check your internet               │  ← body-lg, neutral-600
+│    and try again.                    │
+│                                      │
+│    [ Try again ]                     │  ← Primary CTA
+│                                      │
+└──────────────────────────────────────┘
+```
+
+### Irrecoverable Error:
+```
+┌──────────────────────────────────────┐
+│                                      │
+│         [Error illustration]         │
+│                                      │
+│    Payment declined                  │  ← heading-lg, negative
+│    Your bank declined the            │  ← body-lg
+│    transaction. Contact your bank    │
+│    or try another method.            │
+│                                      │
+│    [ Try another method ]            │  ← Alternative CTA
+│    [ Back to home ]                  │  ← Secondary link
+│                                      │
+└──────────────────────────────────────┘
+```
+
+---
+
+## LOADING PATTERNS
+
+### Spinner:
+- Use: Quick actions, buttons, inline loading
+- Size: 20px (button), 24px (inline), 40px (full page)
+- Color: Accent or white (if on accent bg)
+- NEVER: Spinner alone on a screen without text
+
+### Skeleton / Shimmer:
+- Use: Content loading (lists, cards, pages)
+- Shape: Mirrors the real content layout
+- Animation: Shimmer left → right, 1.5-2s loop
+- PREFERABLE to spinner for page loading
+
+### Progress Bar:
+- Use: Uploads, downloads, processes with known progress
+- Height: 4-8px
+- Border-radius: height/2 (pill)
+- Color: Accent (progress) on neutral-200 (track)
+- With percentage if > 5 seconds
+
+---
+
+## FEEDBACK CHECKLIST
+
+- [ ] Does every button have visual feedback on press (< 100ms)?
+- [ ] Does loading appear within < 400ms for slow actions?
+- [ ] Are toasts positioned above the bottom nav?
+- [ ] Do toasts auto-dismiss in 3-5 seconds?
+- [ ] Do destructive actions have confirmation modals?
+- [ ] Does the success screen have animation/emotion?
+- [ ] Do error screens offer corrective action?
+- [ ] Does skeleton mirror the real content layout?
+- [ ] Do disabled states maintain original size?

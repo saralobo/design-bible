@@ -1,0 +1,739 @@
+---
+name: icons
+description: "Icons, Material Symbols, icon sizing, icon containers, optical alignment, Google Icons library. Use when adding icons to screens, working with icon buttons, or building any UI with icons."
+---
+
+# Icons — Consistency, Sizing, and Optical Alignment
+
+> Icons are the universal language of interfaces. When they're inconsistent
+> in size, weight, or style, the interface looks broken — even if no one
+> can pinpoint exactly why. Icon inconsistency is a subtle but devastating error.
+
+---
+
+## THE GOLDEN RULE OF ICONS
+
+> **Every icon in the same context MUST have the same visual bounding box.**
+> Same container size. Same icon optical size. No exceptions.
+
+"Same context" means:
+- Icons in the same row (quick actions, toolbars)
+- Icons in the same navigation bar (bottom nav, top bar)
+- Icons in the same list (leading icons on list items)
+- Icons in the same grid (action grids, dashboards)
+- Icons in the same card (action buttons within a card)
+
+---
+
+## ICON SIZE STANDARDS
+
+### Standard Sizes (Bounding Box):
+| Token | Size | Typical Use |
+|---|---|---|
+| icon-xs | 16×16px | Inline with small text, badges |
+| icon-sm | 20×20px | Inside small buttons (36px), secondary indicators |
+| icon-md | 24×24px | **Default for most UI** — lists, nav, toolbars |
+| icon-lg | 28×28px | Emphasized icons, bottom nav active state |
+| icon-xl | 32×32px | Feature icons, empty states, onboarding |
+| icon-2xl | 40×40px | Card leading icons, avatars placeholder |
+| icon-3xl | 48×48px | Hero icons, success/error screens |
+
+### RULE:
+> Pick ONE size per context and apply it to ALL icons in that context.
+> Within a row of 4 action buttons, all 4 icons are 24×24px. Period.
+
+---
+
+## THE ICON CONTAINER PATTERN
+
+### Why Containers?
+Even well-designed SVG icons from the same library can have slightly different
+optical weights. An arrow icon might "look" smaller than a gear icon at the
+same bounding box. The container pattern solves this.
+
+### How It Works:
+```
+┌──────────────────┐
+│                  │
+│   ┌──────────┐   │  ← Icon Container: FIXED size frame
+│   │   ICON   │   │  ← Actual icon SVG/vector inside
+│   └──────────┘   │
+│                  │
+└──────────────────┘
+    Button Frame
+```
+
+### Implementation in Figma:
+```javascript
+// ✅ CORRECT — Icon inside a fixed-size container
+function createIconContainer(parent, size = 24) {
+  const container = figma.createFrame();
+  container.name = `Icon/${size}`;
+  container.resize(size, size);
+  container.fills = [];  // Transparent
+  container.layoutMode = 'HORIZONTAL';
+  container.primaryAxisAlignItems = 'CENTER';
+  container.counterAxisAlignItems = 'CENTER';
+  container.primaryAxisSizingMode = 'FIXED';
+  container.counterAxisSizingMode = 'FIXED';
+  container.clipsContent = true;
+
+  parent.appendChild(container);
+  return container;
+}
+
+// Then place the actual icon (vector, text, or component) INSIDE the container
+// The container guarantees consistent outer dimensions
+```
+
+### RULE:
+> Every icon that appears alongside other icons MUST be wrapped in a
+> fixed-size container frame. The container enforces uniform bounding boxes
+> regardless of the icon's internal optical weight.
+
+---
+
+## ICON CONSISTENCY WITHIN GROUPS
+
+### Quick Actions Row (e.g., Pay, Lock, Statement, Settings):
+```
+❌ WRONG:
+[ $ ]  [ 🔒 ]  [ ≡ ]  [ ⚙ ]
+ 18px   22px   16px   20px   ← Different visual sizes!
+
+✅ CORRECT:
+[ $ ]  [ 🔒 ]  [ ≡ ]  [ ⚙ ]
+ 24px   24px   24px   24px   ← All inside 24×24 containers
+```
+
+### Bottom Navigation:
+```
+❌ WRONG:
+🏠    🔍    +    🔔    👤
+20px  24px 32px 22px  24px   ← Mismatched sizes
+
+✅ CORRECT:
+🏠    🔍    +    🔔    👤
+24px  24px  24px 24px  24px  ← All uniform
+(except FAB center icon which has its own rules)
+```
+
+### List Leading Icons:
+```
+❌ WRONG:
+💳 Credit Card       (icon 28px)
+🏦 Bank Transfer     (icon 22px)
+📱 Mobile Payment    (icon 26px)
+
+✅ CORRECT:
+💳 Credit Card       (icon 24px in 24×24 container)
+🏦 Bank Transfer     (icon 24px in 24×24 container)
+📱 Mobile Payment    (icon 24px in 24×24 container)
+```
+
+---
+
+## NEVER USE TEXT CHARACTERS AS ICONS
+
+### THE CRITICAL ANTI-PATTERN:
+
+```javascript
+// ❌ FATAL — Text characters are NOT icons
+const icon = figma.createText();
+icon.characters = '$';       // Dollar sign — renders ~18px tall at fontSize 24
+icon.fontSize = 24;
+
+const icon2 = figma.createText();
+icon2.characters = '⊘';     // Unicode symbol — renders ~22px tall at fontSize 24
+icon2.fontSize = 24;
+
+// Even with the SAME fontSize, these characters have
+// DIFFERENT visual sizes because of font metrics:
+// - ascenders, descenders
+// - character width vs height
+// - optical weight
+// - Unicode block differences
+```
+
+### WHY THIS HAPPENS:
+1. **Font metrics vary per character**: `$` has different proportions than `⊘`
+2. **Unicode symbols are inconsistent**: Symbols from different Unicode blocks
+   (Basic Latin vs. Miscellaneous Symbols) have wildly different optical sizes
+3. **Emoji rendering is OS-dependent**: Same emoji looks different on macOS vs Windows vs Android
+4. **No guaranteed bounding box**: Text characters don't respect a uniform visual grid
+
+### WHAT TO USE INSTEAD:
+
+| Priority | Source | Example |
+|---|---|---|
+| **1st (Best)** | **Material Symbols** from [fonts.google.com/icons](https://fonts.google.com/icons) | 3,000+ icons, variable font, M3-native |
+| **2nd** | SVG/Vector icons from a single icon library | Lucide, Phosphor, Heroicons |
+| **3rd** | Figma icon components from a shared library | Library icon components |
+| **4th** | Simple vector shapes drawn in Figma | Rectangle + lines = custom icon |
+| **5th (Last resort)** | Text character in a FIXED container | Only if no alternative exists |
+
+### If You MUST Use Text as Icons:
+```javascript
+// ✅ ACCEPTABLE — Text wrapped in fixed container with center alignment
+const ICON_SIZE = 24;
+
+const container = figma.createFrame();
+container.name = 'Icon/Dollar';
+container.resize(ICON_SIZE, ICON_SIZE);
+container.fills = [];
+container.layoutMode = 'HORIZONTAL';
+container.primaryAxisAlignItems = 'CENTER';
+container.counterAxisAlignItems = 'CENTER';
+container.primaryAxisSizingMode = 'FIXED';
+container.counterAxisSizingMode = 'FIXED';
+container.clipsContent = true;
+
+await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+const text = figma.createText();
+text.characters = '$';
+text.fontSize = 18;  // ← Adjust VISUALLY, not mathematically
+text.fontName = { family: 'Inter', style: 'Medium' };
+text.textAlignHorizontal = 'CENTER';
+text.textAlignVertical = 'CENTER';
+container.appendChild(text);
+
+// CRITICAL: Visually test ALL icons in the row together
+// Adjust individual fontSize values until they LOOK the same size
+```
+
+---
+
+## ICON LIBRARY RULES
+
+### 1. One Library Per Project
+> Choose ONE icon library and stick with it.
+> Mixing Lucide icons with Material Symbols with Feather icons creates
+> visual inconsistency in stroke weight, corner radius, and optical size.
+
+### Recommended Libraries:
+| Library | Style | Stroke | Best For |
+|---|---|---|---|
+| **Material Symbols** ⭐ | Variable (4 axes) | Variable | **M3 projects, universal** — [fonts.google.com/icons](https://fonts.google.com/icons) |
+| **Lucide** | Outline | 1.5-2px | Clean, modern apps |
+| **Phosphor** | Multiple weights | Variable | Versatile, 6 weights |
+| **Heroicons** | Outline + Solid | 1.5px | Tailwind/utility |
+| **SF Symbols** | Variable | Variable | iOS native |
+| **Tabler Icons** | Outline | 2px | Dashboard, admin |
+
+> **Material Symbols is the DEFAULT recommendation for all new projects**
+> unless the design system explicitly specifies a different library.
+> It is the official M3 icon system with 3,000+ icons, full variable
+> font support, and guaranteed consistency across all M3 components.
+
+### 2. One Weight Per Context
+> If using outline icons, ALL icons are outline.
+> If using filled (solid) icons, ALL icons are filled.
+> Don't mix outline and filled in the same nav bar or toolbar.
+
+| Context | Recommended Style |
+|---|---|
+| Bottom nav (inactive) | Outline |
+| Bottom nav (active) | Filled (same icon, filled variant) |
+| Toolbar actions | Outline |
+| List leading icons | Outline or Filled (pick one) |
+| Buttons with icon | Outline (matches text weight) |
+| Tab bar | Outline (inactive) / Filled (active) |
+
+### 3. Consistent Stroke Weight
+> All icons in the project should have the same stroke weight.
+> Standard: 1.5px or 2px. Never mix 1px icons with 2.5px icons.
+
+---
+
+## OPTICAL ALIGNMENT VS MATHEMATICAL ALIGNMENT
+
+### The Problem:
+A mathematically centered circle icon and a mathematically centered
+play triangle look off — the triangle appears to be shifted left.
+
+### The Fix:
+Some icons need **optical adjustments** (1-2px nudge) to look centered:
+- **Play/Arrow icons**: Shift 1-2px in the direction they point
+- **Asymmetric icons**: May need minor position tweaking
+- **Text-heavy icons**: May need to be 1px smaller than geometric icons
+
+### RULE:
+> Always visually inspect icon alignment after placing them.
+> Mathematical center ≠ Optical center.
+> Trust your eyes over the numbers, but only adjust by 1-2px maximum.
+
+---
+
+## ICON INSIDE BUTTONS — SIZING TABLE
+
+| Button Height | Icon Container Size | Icon Visual Size | Gap (icon → text) |
+|---|---|---|---|
+| 32px (XSmall) | 16×16px | 16px | 4px |
+| 36px (Small) | 16×16px | 16px | 6px |
+| 44px (Medium) | 20×20px | 20px | 8px |
+| 48px (Large) | 24×24px | 24px | 8px |
+| 56px (XLarge/FAB) | 24×24px | 24px | 8px |
+
+### RULE:
+> The icon size inside a button is ALWAYS smaller than the button height.
+> Ratio: icon ≈ 40-50% of button height (visually balanced).
+
+---
+
+## ICON INSIDE CIRCULAR BUTTONS — THE COMPLETE RECIPE
+
+This is the full recipe that prevents the "different-sized icons" problem:
+
+```javascript
+// ✅ COMPLETE — Circular button with properly sized icon
+async function createCircularIconButton(opts) {
+  const {
+    parent,
+    size = 52,         // Button size (width = height)
+    iconChar = '?',    // Fallback text character
+    iconFontSize = 20, // Visually calibrated — NOT same as container
+    bgColor = '#1C1C24',
+    iconColor = '#F0F0F5',
+    name = 'IconButton'
+  } = opts;
+
+  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+
+  // 1. Button frame — FIXED circle
+  const btn = figma.createFrame();
+  btn.name = `Button/${name}`;
+  btn.resize(size, size);
+  btn.cornerRadius = size / 2;
+  btn.fills = [{ type: 'SOLID', color: hexToRGB(bgColor) }];
+  btn.layoutMode = 'HORIZONTAL';
+  btn.primaryAxisAlignItems = 'CENTER';
+  btn.counterAxisAlignItems = 'CENTER';
+  btn.primaryAxisSizingMode = 'FIXED';
+  btn.counterAxisSizingMode = 'FIXED';
+
+  // 2. Icon container — FIXED, guarantees uniform bounding box
+  const ICON_CONTAINER_SIZE = Math.round(size * 0.46);  // ~46% of button
+  const iconFrame = figma.createFrame();
+  iconFrame.name = `Icon/${name}`;
+  iconFrame.resize(ICON_CONTAINER_SIZE, ICON_CONTAINER_SIZE);
+  iconFrame.fills = [];
+  iconFrame.layoutMode = 'HORIZONTAL';
+  iconFrame.primaryAxisAlignItems = 'CENTER';
+  iconFrame.counterAxisAlignItems = 'CENTER';
+  iconFrame.primaryAxisSizingMode = 'FIXED';
+  iconFrame.counterAxisSizingMode = 'FIXED';
+
+  // 3. Icon content (text fallback — ideally use SVG/component)
+  const icon = figma.createText();
+  icon.characters = iconChar;
+  icon.fontSize = iconFontSize;
+  icon.fontName = { family: 'Inter', style: 'Medium' };
+  icon.fills = [{ type: 'SOLID', color: hexToRGB(iconColor) }];
+  icon.textAlignHorizontal = 'CENTER';
+  icon.textAlignVertical = 'CENTER';
+
+  // 4. Assembly
+  iconFrame.appendChild(icon);
+  btn.appendChild(iconFrame);
+  if (parent) parent.appendChild(btn);
+
+  return btn;
+}
+```
+
+### KEY INSIGHT:
+> The `ICON_CONTAINER_SIZE` is the same for ALL buttons in the group.
+> Even if one icon character renders slightly larger or smaller,
+> the container clips and centers it, making all buttons look uniform.
+
+---
+
+## VISUAL CALIBRATION TABLE FOR TEXT-AS-ICON
+
+When forced to use text characters, use this calibration guide:
+
+| Character Type | Recommended fontSize | Notes |
+|---|---|---|
+| Currency symbols ($, €, £, ¥) | 18-20px in 24px container | These render tall and narrow |
+| Arrows (←, →, ↑, ↓) | 20-22px in 24px container | Usually well-balanced |
+| Math symbols (+, ×, ÷) | 20-22px in 24px container | Fairly consistent |
+| Miscellaneous (⊘, ◎, ⚙) | 18-20px in 24px container | Unicode blocks vary wildly |
+| Emoji (🔒, 📊, ⚡) | 16-18px in 24px container | OS-dependent rendering |
+| Letters (A, X, i) | 16-18px in 24px container | Follow font metrics |
+
+### CRITICAL:
+> These values are STARTING POINTS. You MUST screenshot and visually verify
+> that all icons in a row appear the same size. Adjust ±1-2px as needed.
+
+---
+
+## MATERIAL SYMBOLS — Google's Official Icon Library
+
+> Source: [fonts.google.com/icons](https://fonts.google.com/icons)
+> M3 Design: [m3.material.io/styles/icons/designing-icons](https://m3.material.io/styles/icons/designing-icons)
+> M3 Applying: [m3.material.io/styles/icons/applying-icons](https://m3.material.io/styles/icons/applying-icons)
+>
+> Material Symbols is the official M3 icon system with 3,000+ icons.
+> It replaces the older "Material Icons" and offers a variable font with
+> 4 customizable axes. This is the RECOMMENDED icon library for all projects.
+
+---
+
+### GETTING ICONS — How to Access
+
+| Method | How | Best For |
+|---|---|---|
+| **Browse & Download SVG** | Go to [fonts.google.com/icons](https://fonts.google.com/icons), search, download SVG | Figma projects (import SVG) |
+| **Variable Font** | Install `Material Symbols Outlined/Rounded/Sharp` font | Web/code projects |
+| **Figma Community** | Search "Material Symbols" in Figma Community libraries | Direct Figma usage |
+| **npm package** | `@material-symbols/font-400` or `@material-symbols/svg-400` | React/Vue/Angular projects |
+
+### Quick Search Workflow:
+```
+1. Open https://fonts.google.com/icons
+2. Type the concept (e.g., "credit card", "lock", "settings")
+3. Select the icon → Choose style (Outlined / Rounded / Sharp)
+4. Adjust: Weight, Grade, Optical Size, Fill
+5. Download SVG → Import into Figma
+```
+
+---
+
+### THE 3 STYLES
+
+Material Symbols comes in 3 style families. **Pick ONE per project.**
+
+| Style | Visual | Best For | Personality |
+|---|---|---|---|
+| **Outlined** | Clean strokes, open shapes | Default for most UI | Professional, neutral |
+| **Rounded** | Soft corners, friendly feel | Consumer apps, friendly tone | Warm, approachable |
+| **Sharp** | Hard corners, geometric | Enterprise, technical tools | Precise, serious |
+
+```
+Outlined:   ☐ → □ (open, geometric stroke)
+Rounded:    ☐ → ◻ (soft corners, organic)
+Sharp:      ☐ → ▪ (hard edges, angular)
+```
+
+### RULE:
+> Choose ONE style at the project start. All icons must use the same style.
+> Mixing Outlined with Rounded within the same interface is FORBIDDEN.
+
+---
+
+### THE 4 VARIABLE AXES
+
+Material Symbols icons are parametric — you control 4 visual properties:
+
+| Axis | Property | Range | Default | What It Controls |
+|---|---|---|---|---|
+| **Fill** | `FILL` | 0 or 1 | 0 (outline) | Filled vs outlined appearance |
+| **Weight** | `wght` | 100–700 | 400 | Stroke thickness |
+| **Grade** | `GRAD` | -25 to 200 | 0 | Fine-tune stroke without changing size |
+| **Optical Size** | `opsz` | 20–48 | 24 | Adapts detail for display size |
+
+#### Fill (FILL: 0 vs 1)
+```
+FILL: 0 (default) → Outline style — use for INACTIVE states
+FILL: 1           → Filled style — use for ACTIVE/SELECTED states
+
+Example: Bottom Navigation
+  Home (inactive)  = FILL: 0  (outline)
+  Home (active)    = FILL: 1  (filled)
+```
+
+#### Weight (wght: 100–700)
+```
+100 = Thin        → Decorative, large display only
+200 = Extra Light → Light UI, headers
+300 = Light       → Subtle, secondary icons
+400 = Regular     → DEFAULT — standard UI icons
+500 = Medium      → Slightly emphasized
+600 = SemiBold    → Bold actions, emphasis
+700 = Bold        → Maximum emphasis, strong CTAs
+```
+
+> **RULE**: Match icon weight to the text weight next to it.
+> If button text is SemiBold (600), use icon weight 500-600.
+> If body text is Regular (400), use icon weight 400.
+
+#### Grade (GRAD: -25 to 200)
+```
+-25  = Low grade    → Reduces weight without changing size (dark on light bg)
+  0  = Default      → Standard appearance
+200  = High grade   → Increases weight without changing size (light on dark bg)
+```
+
+> **Use case**: On dark backgrounds, bump Grade to +25 to +50 so icons
+> maintain the same PERCEIVED weight as they have on light backgrounds.
+
+#### Optical Size (opsz: 20–48)
+```
+20dp = Small icons  → More detail, thicker strokes (readable at 20px)
+24dp = Default      → Standard UI icon size
+40dp = Medium       → Feature/section icons
+48dp = Large        → Hero icons, empty states (thinner strokes, more detail)
+```
+
+> **CRITICAL**: Optical size adjusts the icon's INTERNAL design to look
+> correct at different display sizes. A 48dp icon rendered at 20px will
+> look too thin. Always match opsz to display size.
+
+---
+
+### M3 ICON GRID — How Icons Are Designed
+
+All Material Symbols icons are drawn on a standardized grid:
+
+```
+┌─────────────────────────┐  24dp × 24dp canvas
+│  ┌─────────────────┐    │
+│  │                 │    │  20dp × 20dp live area
+│  │   ┌─────────┐   │    │
+│  │   │  icon   │   │    │  Content drawn inside live area
+│  │   │ content │   │    │
+│  │   └─────────┘   │    │
+│  └─────────────────┘    │
+│        2dp padding       │  2dp clear padding on all sides
+└─────────────────────────┘
+```
+
+### Keyline Shapes (icon content boundaries):
+
+| Shape | Size | Used For |
+|---|---|---|
+| **Square** | 18×18dp (in 24dp canvas) | Grid/dashboard icons, settings |
+| **Circle** | 20×20dp | Account, status, round objects |
+| **Vertical Rectangle** | 16×20dp | Documents, phones, bottles |
+| **Horizontal Rectangle** | 20×16dp | Landscape media, cards |
+
+### RULE:
+> When creating CUSTOM icons, follow the same 24dp grid with 2dp clear
+> padding. This ensures custom icons mix seamlessly with Material Symbols.
+
+---
+
+### M3 ICON SIZES BY COMPONENT
+
+Material Design 3 specifies exact icon sizes for each component:
+
+| Component | Icon Size (dp) | Optical Size | Notes |
+|---|---|---|---|
+| **Icon button (standard)** | 24 | 24 | Default touch target 48dp |
+| **Icon button (small)** | 24 | 24 | Touch target 40dp |
+| **Filled icon button** | 24 | 24 | With filled container |
+| **FAB (standard)** | 24 | 24 | In 56dp container |
+| **FAB (small)** | 24 | 24 | In 40dp container |
+| **FAB (large)** | 36 | 36 | In 96dp container |
+| **Extended FAB** | 24 | 24 | Icon + label |
+| **Button (with icon)** | 18 | 20 | Leading icon in text button |
+| **Navigation bar (inactive)** | 24 | 24 | FILL: 0 (outline) |
+| **Navigation bar (active)** | 24 | 24 | FILL: 1 (filled) |
+| **Navigation rail** | 24 | 24 | Same fill behavior as bar |
+| **Navigation drawer** | 24 | 24 | Leading icon in list item |
+| **Top app bar** | 24 | 24 | Navigation + action icons |
+| **Bottom app bar** | 24 | 24 | Action icons |
+| **Text field (leading)** | 24 | 24 | Input prefix icon |
+| **Text field (trailing)** | 24 | 24 | Clear, visibility toggle |
+| **List item (leading)** | 24 | 24 | Leading icon in list row |
+| **List item (trailing)** | 24 | 24 | Trailing action/indicator |
+| **Chip (with icon)** | 18 | 20 | Leading icon in chip |
+| **Menu item** | 24 | 24 | Leading icon in menu |
+| **Snackbar (action)** | 24 | 24 | Close/dismiss icon |
+| **Badge** | — | — | No icon, numeric only |
+| **Tab (with icon)** | 24 | 24 | Above or beside tab label |
+| **Search bar** | 24 | 24 | Search + trailing icons |
+
+### RULE:
+> Follow the M3 size specifications above for EVERY component.
+> Most components use 24dp icons. The exceptions are:
+> - **Buttons with text**: 18dp icon
+> - **Chips**: 18dp icon
+> - **Large FAB**: 36dp icon
+
+---
+
+### M3 ICON COLORS & STATES
+
+#### Color Tokens for Icons:
+
+| Context | M3 Token | Typical Color | Description |
+|---|---|---|---|
+| **Primary icon** | `on-surface` | #1C1B1F | Default icon color |
+| **On primary bg** | `on-primary` | #FFFFFF | Icon on primary-colored surface |
+| **Secondary icon** | `on-surface-variant` | #49454F | Less emphasis, secondary actions |
+| **Disabled icon** | `on-surface` @ 38% | #1C1B1F/38% | Disabled state |
+| **Error icon** | `error` | #B3261E | Error/destructive indication |
+| **On colored surface** | Depends on surface | Contrasting | Must pass 3:1 contrast ratio |
+
+#### Icon States & Opacity:
+
+| State | Container Opacity | Icon Opacity | Description |
+|---|---|---|---|
+| **Enabled** | 0% | 100% | Default state |
+| **Hovered** | 8% of icon color | 100% | Subtle hover feedback |
+| **Focused** | 12% of icon color | 100% | Focus ring + container tint |
+| **Pressed** | 12% of icon color | 100% | Active press state |
+| **Disabled** | 0% | 38% | Greyed out, not interactive |
+| **Selected** | 100% (filled) | 100% | Active/chosen state |
+
+```javascript
+// ✅ Figma implementation — Icon states
+// Enabled (default)
+iconNode.opacity = 1.0;
+iconNode.fills = [{ type: 'SOLID', color: hexToRGB('#1C1B1F') }];
+
+// Disabled
+iconNode.opacity = 0.38;
+
+// Hover state — add container with 8% opacity tint
+const hoverBg = figma.createFrame();
+hoverBg.fills = [{ type: 'SOLID', color: hexToRGB('#1C1B1F'), opacity: 0.08 }];
+hoverBg.cornerRadius = size / 2;
+```
+
+---
+
+### USING MATERIAL SYMBOLS IN FIGMA — Practical Workflow
+
+#### Method 1: Download SVGs (Recommended for Figma)
+```
+1. Go to https://fonts.google.com/icons
+2. Search for the icon you need (e.g., "arrow_back")
+3. Select style: Outlined / Rounded / Sharp
+4. Set axes: Weight 400, Optical Size 24, Grade 0, Fill 0
+5. Click "Download SVG"
+6. In Figma: File → Place Image (or drag SVG into canvas)
+7. Wrap SVG in a FIXED container (24×24 for standard)
+```
+
+#### Method 2: Figma Community Library
+```
+1. In Figma, go to Community → search "Material Symbols"
+2. Open a vetted library (look for official or high-star ones)
+3. Enable it as a library in your file
+4. Insert icons as component instances
+5. Swap variants for different icons, weights, fills
+```
+
+#### Method 3: Variable Font (Advanced)
+```javascript
+// In Figma, if Material Symbols font is installed:
+await figma.loadFontAsync({ family: 'Material Symbols Outlined', style: 'Regular' });
+const icon = figma.createText();
+icon.fontName = { family: 'Material Symbols Outlined', style: 'Regular' };
+icon.fontSize = 24;
+icon.characters = 'arrow_back'; // Material Symbols uses ligature names
+
+// Wrap in standard container
+const container = createIconContainer(parent, 24);
+container.appendChild(icon);
+```
+
+---
+
+### MATERIAL SYMBOLS NAMING CONVENTION
+
+Icons use `snake_case` naming. Common icons for reference:
+
+| Category | Icon Names |
+|---|---|
+| **Navigation** | `arrow_back`, `arrow_forward`, `close`, `menu`, `more_vert`, `more_horiz`, `expand_more`, `expand_less`, `chevron_left`, `chevron_right` |
+| **Actions** | `search`, `settings`, `edit`, `delete`, `add`, `remove`, `share`, `download`, `upload`, `refresh`, `filter_list`, `sort` |
+| **Communication** | `mail`, `call`, `chat`, `notifications`, `message`, `send`, `forum` |
+| **Content** | `copy`, `paste`, `content_cut`, `add_circle`, `remove_circle`, `flag`, `link` |
+| **Media** | `play_arrow`, `pause`, `stop`, `skip_next`, `skip_previous`, `volume_up`, `volume_off`, `mic`, `videocam`, `photo_camera` |
+| **Social** | `person`, `group`, `thumb_up`, `thumb_down`, `star`, `favorite`, `share` |
+| **Finance** | `credit_card`, `payments`, `account_balance`, `receipt`, `savings`, `currency_exchange`, `wallet` |
+| **Status** | `check_circle`, `error`, `warning`, `info`, `help`, `pending`, `verified` |
+| **Toggle** | `visibility`, `visibility_off`, `lock`, `lock_open`, `bookmark`, `bookmark_border`, `toggle_on`, `toggle_off` |
+| **File** | `folder`, `description`, `attach_file`, `cloud_upload`, `cloud_download`, `image`, `picture_as_pdf` |
+| **Device** | `smartphone`, `laptop`, `tablet`, `watch`, `headset`, `battery_full`, `wifi`, `bluetooth` |
+| **Home** | `home`, `dashboard`, `calendar_today`, `schedule`, `task_alt`, `checklist` |
+
+> **Tip**: On [fonts.google.com/icons](https://fonts.google.com/icons), type any
+> concept and the search will find matching icons. Always verify the icon
+> communicates the intended action at the size you'll use it.
+
+---
+
+## ANTI-PATTERNS — ICONS
+
+### AP-I01: Mixed Icon Sizes in Same Row
+```
+❌ Pay (18px)  Lock (22px)  Statement (16px)  Settings (20px)
+✅ Pay (24px)  Lock (24px)  Statement (24px)  Settings (24px)
+```
+**Severity**: Major — breaks visual rhythm, looks unprofessional
+
+### AP-I02: Mixed Icon Libraries
+```
+❌ Lucide home + Material search + Feather bell + SF Symbols profile
+✅ Lucide home + Lucide search + Lucide bell + Lucide profile
+```
+**Severity**: Major — inconsistent stroke weight and style
+
+### AP-I03: Mixed Icon Styles (Outline + Filled)
+```
+❌ Outline home + Filled search + Outline bell + Filled profile
+✅ Outline home + Outline search + Outline bell + Outline profile
+   (Active state: Filled for the selected item only)
+```
+**Severity**: Moderate — creates confusion about which is active
+
+### AP-I04: Text Characters as Icons Without Container
+```
+❌ Raw text "$" placed directly in a button (fontSize varies per glyph)
+✅ Text "$" inside a FIXED 24×24 container with center alignment
+```
+**Severity**: Major — guarantees inconsistent sizing
+
+### AP-I05: Icon Without Accessible Label
+```
+❌ Button with only 🔍 icon (no text, no aria-label)
+✅ Button with 🔍 icon + "Search" label (or aria-label="Search")
+```
+**Severity**: Critical for accessibility
+
+### AP-I06: Oversized Icons in Small Buttons
+```
+❌ 32px icon inside 36px button (icon bleeds to edges)
+✅ 16px icon inside 36px button (comfortable breathing room)
+```
+**Severity**: Moderate — looks cramped, hard to tap
+
+---
+
+## ICON CHECKLIST
+
+Before finalizing any screen with icons:
+
+### Sizing & Consistency
+- [ ] Are ALL icons in the same row/group the same container size?
+- [ ] Is the icon size proportional to the button (40-50% of button height)?
+- [ ] Has the screen been visually inspected for optical size consistency?
+- [ ] Have you screenshotted and verified the icon row looks uniform?
+
+### Library & Style
+- [ ] Is there only ONE icon library used in the project?
+- [ ] Are icons the same style (all outline OR all filled) within a context?
+- [ ] Do icons have consistent stroke weight across the project?
+- [ ] If using Material Symbols: is ONE style chosen (Outlined/Rounded/Sharp)?
+
+### Material Symbols Specific
+- [ ] Is the `opsz` (optical size) matching the display size?
+- [ ] Is icon `weight` matching the surrounding text weight?
+- [ ] Are active states using `FILL: 1` and inactive using `FILL: 0`?
+- [ ] On dark backgrounds: is `GRAD` bumped to +25 to +50?
+- [ ] Are M3 component-specific sizes followed (18dp for buttons, 24dp for nav)?
+
+### States & Accessibility
+- [ ] Are active/inactive icon states clearly differentiated (fill toggle)?
+- [ ] Are disabled icons at 38% opacity?
+- [ ] Do standalone icons (no text label) have accessible names?
+- [ ] Are text-character icons (if any) wrapped in fixed-size containers?
+
+### Quality Gate
+- [ ] Icons sourced from [fonts.google.com/icons](https://fonts.google.com/icons) or equivalent?
+- [ ] No text characters used as icons without a FIXED container?
+- [ ] Icon color follows M3 token system (on-surface, on-primary, etc.)?

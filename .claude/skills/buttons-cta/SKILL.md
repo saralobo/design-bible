@@ -1,0 +1,211 @@
+---
+name: buttons-cta
+description: "Buttons, CTAs, button hierarchy, sizes, states, filled/outlined/text variants. Use when creating buttons, call-to-action elements, or interactive action components."
+---
+
+# Buttons & CTAs — Absolute Rules for Actions
+
+> Buttons are the interface between user intent and system action.
+> A poorly designed button = lost flow. A well-designed CTA = conversion.
+
+---
+
+## BUTTON HIERARCHY (Mandatory)
+
+Every screen must have AT MOST 3 action levels:
+
+| Level | Type | Visual Style | Per Screen |
+|---|---|---|---|
+| **Primary** | Main CTA | Filled (solid accent color) | **MAXIMUM 1** |
+| **Secondary** | Alternative action | Outlined (accent border, transparent bg) | Maximum 2 |
+| **Tertiary** | Auxiliary action | Ghost/Text (no border, no background) | As many as needed |
+
+### GOLDEN RULE:
+> **1 primary action per screen. ALWAYS. NO EXCEPTIONS.**
+> If there are 2 filled buttons with the same color on a screen, the hierarchy is WRONG.
+
+---
+
+## BUTTON SIZES
+
+| Size | Height | H Padding | Font Size | Use |
+|---|---|---|---|---|
+| **XSmall** | 32px | 12px | 12px | Inline actions, tags |
+| **Small** | 36px | 16px | 14px | Secondary actions, cards |
+| **Medium** | 44px | 20px | 14-16px | Default for most cases |
+| **Large** | 48-56px | 24px | 16px | Primary CTA, bottom actions |
+
+### TOUCH TARGET:
+- **Absolute minimum**: 44×44px (even if the visual button is smaller)
+- The touch target can be larger than the visual (invisible padding)
+
+---
+
+## CIRCULAR BUTTON (Icon Button / FAB)
+
+### THE MOST IMPORTANT RULE:
+> **width MUST be EQUAL to height. ALWAYS.**
+> **cornerRadius = width / 2 (exact half)**
+
+### Sizes:
+| Type | Size | CornerRadius |
+|---|---|---|
+| Icon Button Small | 36×36px | 18px |
+| Icon Button Medium | 44×44px | 22px |
+| Icon Button Large | 48×48px | 24px |
+| FAB Regular | 56×56px | 28px |
+| FAB Small | 40×40px | 20px |
+| FAB Extended | auto×56px | 28px (pill shape) |
+
+### IN FIGMA:
+```javascript
+// CORRECT — Perfectly circular button
+const btn = figma.createFrame();
+const SIZE = 56;  // or 44, 48, etc.
+btn.resize(SIZE, SIZE);
+btn.cornerRadius = SIZE / 2;  // EXACT HALF
+btn.layoutMode = 'HORIZONTAL';
+btn.primaryAxisAlignItems = 'CENTER';
+btn.counterAxisAlignItems = 'CENTER';
+
+// CRITICAL: FIXED on BOTH axes
+btn.primaryAxisSizingMode = 'FIXED';
+btn.counterAxisSizingMode = 'FIXED';
+
+// DO NOT:
+// btn.primaryAxisSizingMode = 'AUTO';  ← Will stretch with content!
+```
+
+### FATAL ANTI-PATTERN:
+- ❌ Auto-layout with `HUG` on both axes + uneven padding = OVAL, not circle
+- ❌ width = 56, height = 48 = OVAL
+- ❌ cornerRadius = 999 with different dimensions = OVAL
+- ✅ FIXED width = FIXED height + cornerRadius = size/2 = PERFECT CIRCLE
+
+---
+
+## FULL-WIDTH BUTTON (Mobile CTA)
+
+### When to use:
+- Primary CTA at the bottom of forms
+- Main action in bottom sheets
+- Confirmation button in flows
+
+### Implementation:
+```
+Parent: vertical auto-layout, horizontal padding 16-24px
+  └── Button: layoutSizingHorizontal = 'FILL'
+              height = 48-56px (FIXED)
+              cornerRadius = 8-12px
+```
+
+### RULE:
+> The FILL button inherits the parent's width minus padding.
+> The parent MUST have auto-layout BEFORE setting FILL on the child.
+
+---
+
+## BUTTON STATES
+
+Every button MUST have these states defined:
+
+| State | Visual Change |
+|---|---|
+| **Default** | Normal color |
+| **Hover** | Slightly darker background (desktop) |
+| **Pressed** | Darker background, scale 0.98 |
+| **Focused** | 2px ring/outline with 2px offset (accent) |
+| **Disabled** | 40% opacity, cursor not-allowed |
+| **Loading** | Spinner replacing text, width maintained |
+
+### DISABLED RULE:
+> A disabled button NEVER changes size.
+> NEVER hide the button — show it as disabled with an explanation tooltip.
+> The disabled button text must be the SAME as the normal state.
+
+---
+
+## CTA POSITIONING
+
+### In Forms:
+```
+┌──────────────────────────────┐
+│   Form Fields                │
+│   ...                        │
+│                              │
+│                              │
+├──────────────────────────────┤ ← Space/Divider
+│  [  Primary CTA (FILL)   ]   │ ← Bottom, fixed
+│  [  Tertiary link        ]   │ ← Optional, below
+└──────────────────────────────┘
+```
+
+### In Dialogs/Modals:
+```
+┌──────────────────────────────┐
+│  Modal Title                 │
+│  Description...              │
+│                              │
+│     [ Cancel ]  [ Confirm ]  │ ← Right-aligned, primary on right
+└──────────────────────────────┘
+```
+
+### POSITIONING RULE:
+- **Mobile**: Primary CTA in the bottom half (thumb zone)
+- **Destructive action**: NEVER on the left. Always on the right or at the end
+- **Cancel + Confirm**: Cancel (ghost) on the left, Confirm (filled) on the right
+- **NEVER**: Primary CTA at the top of the screen on mobile
+
+---
+
+## BUTTON LABELS
+
+### Best Practices:
+| ❌ Generic | ✅ Specific |
+|---|---|
+| "OK" | "Confirm payment" |
+| "Yes" | "Delete account" |
+| "Send" | "Send payment" |
+| "Continue" | "Go to review" |
+| "Submit" | "Create account" |
+| "Cancel" | "Back to home" |
+
+### RULE:
+> The button label must describe WHAT WILL HAPPEN, not just confirm.
+> Use verb + noun: "Send Payment", "Save Draft", "Delete Account"
+> Maximum 3-4 words in the label.
+
+---
+
+## BUTTONS WITH ICONS
+
+### Icon Positioning:
+- **Icon on the LEFT**: Reinforces meaning (e.g., 🔒 Secure Payment)
+- **Icon on the RIGHT**: Indicates direction/progression (e.g., Continue →)
+- **Icon only**: Only for universally recognized actions (←, X, +, 🔍)
+
+### Icon Size in Buttons:
+| Button Size | Icon Size | Gap |
+|---|---|---|
+| Small (36px) | 16px | 4px |
+| Medium (44px) | 20px | 8px |
+| Large (48-56px) | 24px | 8px |
+
+### Boolean Property:
+> In the design system, every button should have a `hasIcon` (Boolean) property.
+> When `hasIcon = false`, the icon disappears and padding adjusts automatically.
+
+---
+
+## BUTTON CHECKLIST
+
+- [ ] Maximum 1 primary CTA per screen?
+- [ ] Primary = filled, secondary = outlined, tertiary = ghost?
+- [ ] Minimum touch target of 44×44px?
+- [ ] Circular buttons have width === height?
+- [ ] CornerRadius of circular = size/2?
+- [ ] Descriptive label (verb + noun)?
+- [ ] All states defined (default, hover, pressed, disabled, loading)?
+- [ ] CTA positioned in the thumb zone (mobile)?
+- [ ] Disabled state maintains the same size?
+- [ ] Icons have a hasIcon boolean property?

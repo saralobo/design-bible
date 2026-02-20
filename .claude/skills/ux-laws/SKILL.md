@@ -1,0 +1,231 @@
+---
+name: ux-laws
+description: "UX Laws (Fitts, Hick, Miller, Jakob, Doherty). Use when designing interactions, deciding layout positions, simplifying choices, or evaluating usability decisions."
+---
+
+# UX Laws — Scientific Foundation for Design Decisions
+
+> Based on lawsofux.com (Jon Yablonski), cognitive psychology, and usability research.
+> Each law includes: definition, explanation, and PRACTICAL RULE for Figma application.
+
+---
+
+## 1. FITTS'S LAW
+
+**Definition**: The time to reach a target is a function of the distance to the target and the size of the target.
+
+**Formula**: T = a + b × log₂(2D/W)
+- T = movement time
+- D = distance to target
+- W = width/size of target
+
+**Explanation**: The larger and closer the button, the faster the user clicks it. The smaller and farther, the more time and errors.
+
+### PRACTICAL RULES:
+- **Primary CTA**: ALWAYS the largest button on screen. Minimum 48px height, preferably full-width on mobile
+- **Destructive actions**: Smaller and farther from the main CTA (prevent accidental clicks)
+- **FAB (Floating Action Button)**: 56×56px, positioned in the thumb zone (bottom-right corner)
+- **Header buttons**: Minimum 44×44px touch target, even if the visual icon is 24px
+- **Frequent actions**: Near the center or bottom of the screen (thumb zone)
+- **NEVER**: Place primary action in the top-left corner on mobile (hardest to reach)
+
+---
+
+## 2. HICK'S LAW
+
+**Definition**: The time to make a decision increases with the number and complexity of choices.
+
+**Formula**: T = b × log₂(n + 1)
+- T = decision time
+- n = number of options
+
+**Explanation**: Many options = paralysis. Few options = quick action.
+
+### PRACTICAL RULES:
+- **Main navigation**: Maximum 5 items (bottom nav: 3-5 items)
+- **Options menu**: If more than 7 items, group into categories
+- **Form**: Maximum 5-7 visible fields at a time. Use progressive disclosure for more
+- **Onboarding**: One choice per screen. NEVER overload the first experience
+- **Dropdown/Select**: If more than 10 options, use search/filter
+- **Actions per screen**: 1 primary + maximum 2 secondary
+- **NEVER**: Show 10+ action buttons on the same screen
+
+---
+
+## 3. JAKOB'S LAW
+
+**Definition**: Users spend most of their time on OTHER sites/apps. They prefer your product to work the same way as the ones they already know.
+
+**Explanation**: Don't reinvent the wheel. Familiar patterns reduce cognitive load.
+
+### PRACTICAL RULES:
+- **Bottom navigation**: Tab bar at the bottom (don't invent custom nav)
+- **Back button**: Top-left corner with ← arrow (don't use X for back navigation)
+- **Pull to refresh**: Standard gesture, don't change it
+- **Swipe to delete**: Swipe left reveals destructive action (red)
+- **Search**: Magnifying glass icon 🔍, search field at the top
+- **Settings**: Gear icon ⚙️, accessible from profile or menu
+- **NEVER**: Create custom gestures without onboarding. The user won't guess
+
+---
+
+## 4. MILLER'S LAW
+
+**Definition**: The average person can hold 7 (±2) items in working memory.
+
+**Explanation**: Group information into chunks of no more than 4-5 items for easier processing.
+
+### PRACTICAL RULES:
+- **Phone number**: Group into chunks: (11) 9 8765-4321, not 11987654321
+- **Card number**: 4 groups of 4 digits: 1234 5678 9012 3456
+- **PIN/OTP code**: Separate fields per digit (4-6 individual fields)
+- **Item list**: If exceeding 5-7 items, group with headers/sections
+- **Stepper/Wizard**: Maximum 5-7 visible steps in the progress indicator
+- **Price/Value**: Use thousand separators: $1,234.56 (not $1234.56)
+- **NEVER**: Show more than 7 items without visual categorization
+
+---
+
+## 5. VON RESTORFF EFFECT (Isolation Effect)
+
+**Definition**: When multiple similar objects are present, the one that differs most from the others is most remembered.
+
+**Explanation**: The item that "stands out" is what the user memorizes and acts upon.
+
+### PRACTICAL RULES:
+- **Primary CTA**: Solid accent color (the ONLY element with that color on screen). Other buttons = outlined or ghost
+- **Notification badge**: Red with white number — contrasts against any background
+- **Promotional price**: Different color + larger size than the original price
+- **Active state**: Selected tab/item must be VISIBLY different from the rest
+- **Error**: Red + icon. Never rely only on color (color blindness)
+- **NEVER**: Use the same color/weight/size for the main CTA and secondary actions
+
+---
+
+## 6. SERIAL POSITION EFFECT
+
+**Definition**: People tend to remember the first (primacy effect) and last (recency effect) items in a series.
+
+**Explanation**: Place the most important at the beginning OR at the end. The middle is forgotten.
+
+### PRACTICAL RULES:
+- **Bottom navigation**: Main action in the 1st or last item (Home on the left, Profile on the right)
+- **Feature list**: Most important first, second most important last
+- **Onboarding**: First and last screens are the most memorable
+- **Menu**: Most-used items at the top, least-used in the middle
+- **Form fields**: Most critical field at the top (e.g., email before preferences)
+- **NEVER**: Place the most important action in the middle of a 5+ item list
+
+---
+
+## 7. DOHERTY THRESHOLD
+
+**Definition**: Productivity soars when human-computer interactions occur in less than 400 milliseconds.
+
+**Explanation**: If the system takes more than 400ms to respond, the user loses their mental flow.
+
+### PRACTICAL RULES:
+- **Touch feedback**: Visual response in < 100ms (ripple, highlight, scale)
+- **Screen transition**: 200-500ms (300ms is the sweet spot)
+- **Loading state**: If > 1 second, show skeleton/shimmer
+- **Progress indicator**: If > 3 seconds, show progress bar with percentage
+- **Micro-interaction animation**: 150-300ms
+- **NEVER**: Leave the user without feedback for more than 400ms after an action
+
+---
+
+## 8. AESTHETIC-USABILITY EFFECT
+
+**Definition**: Aesthetically pleasing designs are perceived as easier to use.
+
+**Explanation**: Beauty builds trust. Beautiful interfaces make users tolerate more small issues.
+
+### PRACTICAL RULES:
+- **Generous spacing**: 16-24px padding inside cards/containers
+- **Clean typography**: Maximum 2 weights per screen (regular + semibold/bold)
+- **Consistent colors**: Maximum 3 main colors + neutrals
+- **Consistent border radius**: Choose 1 value (8px, 12px, or 16px) and use it for EVERYTHING
+- **Subtle shadows**: One light shadow (0 2px 8px rgba(0,0,0,0.08)) for elevation
+- **NEVER**: Mix different border-radius values (8px on one card, 16px on another, 4px on a third)
+
+---
+
+## 9. PEAK-END RULE
+
+**Definition**: People judge an experience based on the most intense moment (peak) and the ending, not the total sum.
+
+**Explanation**: The WOW moment and the conclusion define how the user REMEMBERS the experience.
+
+### PRACTICAL RULES:
+- **Success screen**: Invest design here! Animation, vibrant color, animated check
+- **Onboarding**: Last screen should be memorable (not generic)
+- **Checkout**: Purchase confirmation = visual celebration
+- **Error recovery**: After an error, the resolution should be smooth and satisfying
+- **Loading → Result**: The content reveal after loading should feel rewarding
+- **NEVER**: End a flow with a generic screen without emotion ("Done.")
+
+---
+
+## 10. ZEIGARNIK EFFECT
+
+**Definition**: People remember incomplete tasks better than completed ones.
+
+**Explanation**: A progress bar at 80% creates urgency to complete.
+
+### PRACTICAL RULES:
+- **Profile progress**: "Your profile is 70% complete" motivates completion
+- **Stepper/Wizard**: Clearly show "Step 2 of 4" with a progress bar
+- **Onboarding**: Visible progress indicator (dots or bar)
+- **Gamification**: Partially earned badges/medals motivate action
+- **Long forms**: Auto-save drafts, show progress
+- **NEVER**: Hide progress in multi-step flows
+
+---
+
+## 11. TESLER'S LAW (Conservation of Complexity)
+
+**Definition**: Every application has an inherent amount of complexity that cannot be removed. The question is: who deals with it — the system or the user?
+
+**Explanation**: Absorb complexity into the design. The user should not solve system problems.
+
+### PRACTICAL RULES:
+- **Autocomplete**: Fill in as much as possible automatically (ZIP → address)
+- **Smart defaults**: Pre-select the most common option
+- **Auto-formatting**: Phone, SSN, ZIP should format while typing
+- **Inline validation**: Validate field by field, not everything on submit
+- **NEVER**: Make the user type information the system can infer
+
+---
+
+## 12. POSTEL'S LAW (Robustness Principle)
+
+**Definition**: Be conservative in what you send, liberal in what you accept.
+
+**Explanation**: Accept various input formats, but always display in the correct format.
+
+### PRACTICAL RULES:
+- **Phone**: Accept with or without parentheses, dashes, country codes
+- **Email**: Case-insensitive, trim whitespace
+- **Search**: Tolerate typos, suggest corrections
+- **Date**: Accept various formats (01/01/2025, 1/1/25, 01-01-2025, Jan 1 2025)
+- **Currency**: Accept with or without symbols and separators
+- **NEVER**: Reject a valid input because of formatting
+
+---
+
+## QUICK REFERENCE — WHEN TO USE EACH LAW
+
+| Situation | Law |
+|---|---|
+| Button size/position | Fitts |
+| How many options to show | Hick |
+| Interaction patterns | Jakob |
+| Information grouping | Miller |
+| Highlight primary CTA | Von Restorff |
+| Item order in list/nav | Serial Position |
+| Feedback speed | Doherty |
+| Visual polish | Aesthetic-Usability |
+| Success/completion screens | Peak-End |
+| Progress/motivation | Zeigarnik |
+| Simplify for the user | Tesler |
+| Accept flexible inputs | Postel |
