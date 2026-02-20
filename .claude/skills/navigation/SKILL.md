@@ -1,0 +1,247 @@
+---
+name: navigation
+description: "Navigation patterns, bottom nav, tabs, drawer, gestures, screen transitions. Use when designing navigation structure, screen flow, wayfinding, or tab systems."
+---
+
+# Navigation — Patterns and Rules for User Flow
+
+> Bad navigation = confusing app. The user must ALWAYS know where they are,
+> how they got there, and how to go back. No exceptions.
+
+---
+
+## MOBILE NAVIGATION TYPES
+
+### 1. Bottom Navigation (Tab Bar)
+
+**When to use**: App with 3-5 main sections at the same hierarchical level.
+
+| Rule | Value |
+|---|---|
+| Number of items | 3 to 5 (NEVER more than 5) |
+| Height | 56-83px (including safe area) |
+| Icon | 24px, centered |
+| Label | 10-12px, below the icon |
+| Active item | Filled icon + accent label + indicator (pill/dot) |
+| Inactive item | Outline icon + neutral-600 label |
+| Touch target | 48×48px minimum per item |
+
+**Familiar patterns (Jakob's Law)**:
+| Position | Typical Item |
+|---|---|
+| 1 (left) | Home |
+| 2 | Search / Explore |
+| 3 (center) | Main action (or FAB overlay) |
+| 4 | Activity / Notifications |
+| 5 (right) | Profile / Settings |
+
+**ANTI-PATTERNS**:
+- ❌ 6+ items in bottom nav (use drawer or internal tabs)
+- ❌ Generic labels ("More", "Other")
+- ❌ Icons without labels (zero accessibility)
+- ❌ Bottom nav on modal or sub-flow screens
+
+---
+
+### 2. Top Navigation (Header/App Bar)
+
+**When to use**: Every screen that isn't root (has a parent).
+
+```
+┌──────────────────────────────────┐
+│  ← Back    Screen Title    [⚙️]  │
+└──────────────────────────────────┘
+```
+
+| Element | Rule |
+|---|---|
+| Height | 44-56px |
+| Back button | ← arrow on the left, 44×44px touch target |
+| Title | Centered or left-aligned (choose ONE pattern) |
+| Actions | Maximum 2 icons on the right |
+| Title font | 18-20px SemiBold |
+
+**RULES**:
+- Root screen (Home, tabs): Large title on the left (Large Title style)
+- Sub-screen: ← Back + centered title
+- Modal: X (close) on left or right + centered title
+- NEVER: Back button + Close button on the same screen (confusing)
+
+---
+
+### 3. Tabs (Segmented Navigation)
+
+**When to use**: Same-level content within a section.
+
+| Rule | Value |
+|---|---|
+| Position | Below the header, sticky |
+| Number of tabs | 2 to 5 |
+| Active indicator | 2-3px accent line below the tab |
+| Active font | SemiBold, accent or neutral-900 |
+| Inactive font | Regular, neutral-600 |
+| Swipe | Tab content can have horizontal swipe |
+| Scroll | If >4 tabs, horizontal scroll |
+
+---
+
+### 4. Drawer / Side Menu
+
+**When to use**: App with many sections (>5) or complex settings.
+
+| Rule | Value |
+|---|---|
+| Width | 80% of the screen (max 320px) |
+| Overlay | 50-60% opacity background |
+| Open | Swipe from left edge or hamburger icon ☰ |
+| Close | Swipe left, tap on overlay, or X |
+| Items | 24px icon + 16px label, 48px height per item |
+| Separators | Dividers between item groups |
+
+---
+
+## NAVIGATION PATTERNS
+
+### Stack Navigation (Push/Pop):
+```
+Home → List → Detail → Edit
+ ←      ←       ←        ←
+```
+- Each screen is "stacked" on top of the previous one
+- Back returns to the previous screen
+- Transition: Slide in from right (push), slide out to right (pop)
+
+### Modal Navigation:
+```
+Screen A → [Modal B] → Screen A (returned)
+```
+- Modal "floats" above the current screen
+- Close (X) or swipe down to dismiss
+- Transition: Slide up (open), slide down (close)
+- Background gets a dark overlay
+
+### Tab Navigation:
+```
+Tab 1 ↔ Tab 2 ↔ Tab 3
+```
+- Tabs are parallel, same level
+- Each tab can have its own navigation stack
+- Transition: Cross-fade or horizontal swipe
+
+---
+
+## BREADCRUMBS
+
+**When to use**: Deep hierarchies (>3 levels), mainly web/tablet.
+
+```
+Home > Category > Subcategory > Product
+```
+
+### Rules:
+- Separator: ">" or "/" (12px, neutral-400)
+- Clickable items: accent, underline on hover
+- Current item: neutral-900, not clickable
+- Mobile: Show only the previous level (← Subcategory)
+
+---
+
+## NAVIGATION GESTURES
+
+| Gesture | Action | Where |
+|---|---|---|
+| Swipe right from edge | Back (return) | iOS, stack screens |
+| Swipe down | Close modal/bottom sheet | Modals, sheets |
+| Horizontal swipe | Switch tab, next item | Tabs, carousels |
+| Swipe left on item | Reveal actions (delete, archive) | Lists |
+| Long press | Context menu | List items, images |
+| Pull down | Refresh | Lists, feeds |
+| Pinch | Zoom | Images, maps |
+
+### RULE:
+> Gestures are SHORTCUTS, not the only way to interact.
+> Every gesture-accessible action MUST have a button alternative.
+
+---
+
+## DEEP LINKING AND WAYFINDING
+
+### The user must ALWAYS know:
+1. **Where they are**: Screen title, active tab, breadcrumbs
+2. **Where they came from**: Functional back button
+3. **Where they can go**: Clear CTAs, visible nav items
+4. **How to get back to the start**: Home in bottom nav, clickable logo
+
+### State Indicators:
+- Badge with number: Pending notifications
+- Red dot: New content
+- Highlight/Bold: Unread item
+- Checkmark: Completed item
+
+---
+
+## NAVIGATION TRANSITIONS
+
+| Type | Duration | Easing | Use |
+|---|---|---|---|
+| Push (→) | 300-350ms | ease-in-out / gentle | Stack forward |
+| Pop (←) | 300-350ms | ease-in-out / gentle | Stack back |
+| Modal up (↑) | 300-400ms | ease-out | Open modal |
+| Modal down (↓) | 250-300ms | ease-in | Close modal |
+| Fade | 200-250ms | ease-in-out | Tab switch |
+| None | 0ms | — | Tabs (if no animation) |
+
+### IN FIGMA (Prototyping):
+```javascript
+// Stack navigation
+transition: 'SLIDE_IN'    // or SLIDE_OUT for back
+direction: 'LEFT'         // push forward = slide in from right (LEFT direction)
+duration: 0.35            // 350ms
+easing: { type: 'GENTLE' }
+
+// Modal
+transition: 'SLIDE_IN'
+direction: 'BOTTOM'       // slide up
+duration: 0.35
+easing: { type: 'EASE_IN_AND_OUT' }
+```
+
+---
+
+## COMMON FLOWS
+
+### Login/Register:
+```
+Splash → Login/Register → (Forgot Password)
+                        → Home
+```
+
+### E-commerce:
+```
+Home → Category → Product → Cart → Checkout → Success
+```
+
+### Fintech/Banking:
+```
+Home → Transfer Type → Enter Details → Confirm → Success
+  ↑ (back)   ↑ (back)    ↑ (back)
+```
+
+### Social:
+```
+Feed → Post Detail → Comments → Profile
+Tab: Feed | Search | Create | Activity | Profile
+```
+
+---
+
+## NAVIGATION CHECKLIST
+
+- [ ] Does the user know where they are on every screen?
+- [ ] Do all screens (except root) have a back button?
+- [ ] Does bottom nav have 3-5 items with icons + labels?
+- [ ] Do gestures have a button alternative?
+- [ ] Are transitions consistent (same type and duration)?
+- [ ] Do modals close with X AND with gesture?
+- [ ] Do sub-flows hide the main bottom nav?
+- [ ] Do tabs clearly indicate which one is active?
