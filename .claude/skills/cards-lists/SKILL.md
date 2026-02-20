@@ -1,0 +1,268 @@
+---
+name: cards-lists
+description: "Cards, lists, empty states, skeleton loading, content containers. Use when displaying collections, product listings, transaction lists, or card-based layouts."
+---
+
+# Cards & Lists — Patterns for Content Display
+
+> Cards and lists are the most used containers in mobile interfaces.
+> A well-designed card communicates information, hierarchy, and action at a glance.
+
+---
+
+## CARD ANATOMY
+
+```
+┌──────────────────────────────┐  ← border-radius: 12-16px
+│  ┌────────────────────────┐  │  ← Image (optional): aspect ratio 16:9 or 4:3
+│  │       Thumbnail         │  │
+│  └────────────────────────┘  │
+│                              │
+│  Title Text                  │  ← heading-md (16-18px SemiBold)
+│  Subtitle or description     │  ← body-md (14px Regular), neutral-600
+│  text that may wrap to       │
+│  two lines maximum.          │
+│                              │
+│  Tag   ·   Meta info         │  ← body-sm (12px), chips/badges
+│                              │
+│  [ Action ]                  │  ← Button or link (optional)
+└──────────────────────────────┘
+```
+
+### Spacing:
+| Property | Value |
+|---|---|
+| Internal padding | 16-24px (uniform) |
+| Gap between elements | 8-12px |
+| Border-radius | 12-16px |
+| Shadow (light mode) | 0 2px 8px rgba(0,0,0,0.08) |
+| Shadow (dark mode) | None (use lighter background) |
+| Border (alternative) | 1px neutral-200 (if no shadow) |
+
+---
+
+## CARD TYPES
+
+### 1. Content Card (Feed/Blog)
+- Image at the top (full-width inside the card)
+- Title + description + metadata
+- Action: tap on the entire card (navigates)
+
+### 2. Data Card (Dashboard/Finance)
+- Small icon/avatar + text
+- Large numeric value
+- Trend indicator (↑ green, ↓ red)
+- Background: can be colored
+
+### 3. Action Card (Quick Actions)
+- Centered icon + label below
+- Tap executes action
+- Size: 80-100px width, square or slightly rectangular
+- Grid: 3-4 columns
+
+### 4. Profile Card
+- Avatar + Name + Status
+- Actions: Message, Follow, etc.
+
+### 5. Transaction Card (Finance)
+- Icon/logo on the left (40-48px)
+- Name + description on the left
+- Value + timestamp on the right
+- Swipe actions (delete, archive)
+
+---
+
+## CARD RULES
+
+### Consistency:
+- All cards in the same list must have the SAME:
+  - Border-radius
+  - Padding
+  - Shadow/border
+  - Spacing between them
+- Gap between cards: 12-16px (vertical), 12-16px (horizontal grid)
+
+### Responsiveness:
+- Cards in a vertical list: FILL container width
+- Cards in a grid: Calculate width based on columns
+  - 2 columns: (container - gap - margins) / 2
+  - 3 columns: (container - 2×gap - margins) / 3
+- Cards in a carousel: Fixed width (280-320px), overflow hidden on the container
+
+### Tap Target:
+- If the entire card is clickable, the touch target is the entire card
+- If there are internal buttons, buttons must have at least 44×44px touch target
+- Press feedback: Scale 0.98 + opacity 0.9 on the entire card
+
+### CARD ANTI-PATTERNS:
+- ❌ Different padding on cards in the same list
+- ❌ Border-radius 8px on one card, 16px on the next
+- ❌ Card without visual feedback on tap (looks static)
+- ❌ Too much information in a card — maximum 3-4 lines of text
+- ❌ Card with more than 2 actions (1 primary + 1 secondary max)
+
+---
+
+## LIST ANATOMY
+
+```
+┌──────────────────────────────────────┐
+│  👤  Title text              12:30   │  ← height: 56-72px
+│      Subtitle text         ▶ Badge   │
+├──────────────────────────────────────┤  ← Divider: 1px, inset from left
+│  👤  Title text              13:45   │
+│      Subtitle text                   │
+├──────────────────────────────────────┤
+│  👤  Title text              14:00   │
+│      Subtitle text         ▶ Arrow   │
+└──────────────────────────────────────┘
+```
+
+### List Item Elements:
+| Position | Element | Size |
+|---|---|---|
+| Leading | Avatar/Icon/Thumbnail | 40-48px (avatar), 24px (icon) |
+| Center (primary) | Title | 16px SemiBold |
+| Center (secondary) | Subtitle | 14px Regular, neutral-600 |
+| Trailing | Value/Time/Chevron/Badge | 14px, neutral-600 + indicator |
+
+### Spacing:
+| Property | Value |
+|---|---|
+| Height per item | 56px (1 line), 72px (2 lines) |
+| Horizontal padding | 16px |
+| Gap between leading and center | 12-16px |
+| Gap between center and trailing | 8-16px |
+| Divider | 1px, inset 56-72px from left (aligns with text) |
+
+---
+
+## LIST TYPES
+
+### 1. Simple List (Settings style)
+- Icon + Label + Chevron ›
+- Tap navigates to sub-screen
+- Dividers between all items
+
+### 2. Feed List (Social style)
+- Avatar + Name + Time + Content preview
+- No dividers or subtle dividers
+- Swipe actions possible
+
+### 3. Selection List
+- Checkbox/Radio on left or right
+- Selection highlight (accent 8% bg)
+- "Select all" action in the header
+
+### 4. Transaction List (Finance)
+- Icon/Logo + Name + Description
+- Value on the right (positive = green, negative = neutral or red)
+- Grouping by date (section headers)
+
+---
+
+## LIST GROUPING
+
+### Section Headers:
+```
+TODAY
+├── Item 1
+├── Item 2
+└── Item 3
+
+YESTERDAY
+├── Item 4
+└── Item 5
+```
+
+- Header: UPPERCASE 12px Medium, neutral-600, padding top 24px
+- Sticky headers (optionally stick to the top when scrolling)
+
+---
+
+## EMPTY STATES
+
+When a list or grid is empty:
+
+```
+┌──────────────────────────────┐
+│                              │
+│         [Illustration]       │  ← Icon or illustration, 120-160px
+│                              │
+│       No results found       │  ← heading-md, neutral-900
+│     Try searching with a     │  ← body-md, neutral-600
+│       different term         │
+│                              │
+│     [ Try again ]            │  ← Secondary CTA (optional)
+│                              │
+└──────────────────────────────┘
+```
+
+### Rules:
+- Centered vertically and horizontally
+- Illustration > icon (more human)
+- Descriptive title (not "404" or "Error")
+- Subtitle with action suggestion
+- Optional CTA for corrective action
+
+---
+
+## LOADING STATES (SKELETON)
+
+### While content is loading:
+
+```
+┌──────────────────────────────┐
+│  ████████████████████████    │  ← Animated gray rectangle (shimmer)
+│  ██████████                  │
+│  █████████████████           │
+│                              │
+│  ████████████████████████    │
+│  ██████████                  │
+└──────────────────────────────┘
+```
+
+### Skeleton Rules:
+- Shape must MIRROR the real layout (same position, similar size)
+- Skeleton border-radius = real element's border-radius
+- Color: neutral-200 (base), neutral-100 (shimmer animation)
+- Animation: Shimmer from left to right, 1.5-2s loop
+- NEVER: Spinner alone in the center of the screen. Skeleton > Spinner ALWAYS.
+
+---
+
+## SWIPE ACTIONS IN LISTS
+
+### Swipe Left (Destructive Action):
+```
+┌──────────────────────────────────┐
+│  [Content]            │ 🗑 Delete │  ← Red background
+└──────────────────────────────────┘
+```
+
+### Swipe Right (Positive Action):
+```
+┌──────────────────────────────────┐
+│ ✓ Archive │           [Content]  │  ← Green/blue background
+└──────────────────────────────────┘
+```
+
+### Rules:
+- Maximum 2 actions per direction (1 recommended)
+- Colors indicate intent (red = destructive, green = positive)
+- Icon + short label (1 word)
+- Threshold for action: 30-40% of the width
+- Full swipe = automatic action (optional, with confirmation)
+
+---
+
+## CARDS & LISTS CHECKLIST
+
+- [ ] Do all cards in the same list have consistent styling?
+- [ ] Do cards have visual feedback on tap (scale/opacity)?
+- [ ] Is internal padding uniform (not 16px top, 12px bottom)?
+- [ ] Do lists use skeleton loading, not spinner?
+- [ ] Do empty states have illustration + descriptive text?
+- [ ] Are dividers inset (aligned with text, not full-width)?
+- [ ] Do transaction lists group by date?
+- [ ] Do cards not have too much information (max 3-4 lines of text)?

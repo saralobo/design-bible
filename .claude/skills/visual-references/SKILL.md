@@ -1,0 +1,762 @@
+---
+name: visual-references
+description: "Visual references from world-class apps (Nubank, Revolut, Cash App, Airbnb, Instagram, Uber). Use when seeking design inspiration, analyzing best practices, or building screens that need to match top-tier app quality."
+---
+
+# Visual References — Deconstructing World-Class App Design
+
+> This document is NOT a list of links. It is a detailed ANALYSIS of the best
+> apps in the world, deconstructed screen by screen. The purpose is for the AI
+> to learn EXACTLY what makes these designs work — the spacing, the hierarchy,
+> the color strategy, the typography — so it can replicate these patterns.
+>
+> Each app is analyzed across: Information Architecture, Visual Hierarchy,
+> Color Strategy, Typography, Spacing & Breathing Room, and Key UX Patterns.
+
+---
+
+## HOW TO USE THIS DOCUMENT
+
+When building a screen, find the closest category (fintech, social, e-commerce, etc.)
+and study the reference apps. Apply their patterns:
+- **Spacing rhythm** — Copy the exact spacing strategy, not the pixels
+- **Hierarchy formula** — How they use size + weight + color to create hierarchy
+- **Color restraint** — How few colors they actually use
+- **Information density** — How much (or little) they show per screen
+- **Breathing room** — How generous the whitespace is
+
+---
+
+## CATEGORY 1: FINTECH & BANKING
+
+### 🏦 NUBANK (Brazil — Best mobile banking UX in the world)
+
+**Why study Nubank**: Master class in simplicity. Proves that a financial app
+can be beautiful, clean, and trustworthy without being cluttered.
+
+#### Information Architecture:
+- Home screen shows ONLY: balance (hero) + 4 shortcuts + recent transactions
+- Each feature is a separate flow — never more than 1 task per screen
+- Navigation: Bottom tab (5 items) + shortcuts row on home
+- Depth: Home → Feature → Detail → Confirmation → Success (max 4-5 taps)
+
+#### Visual Hierarchy Strategy:
+```
+LAYER 1 (What you see first):
+  → Balance: 32-36px, Bold, primary text color
+  → It's the LARGEST element, top-center, immediately visible
+
+LAYER 2 (What you see second):
+  → Shortcuts row: 4 circular icon buttons with labels below
+  → Equal size (48-52px circles), consistent spacing, neutral background
+
+LAYER 3 (What you see third):
+  → Card sections: "My cards", "Recent transactions"
+  → Section titles: 18-20px, SemiBold
+  → Content within: 14-16px, Regular
+
+LAYER 4 (What you scan last):
+  → Transaction details: amounts, dates, descriptions
+  → 12-14px, Regular, secondary text color
+```
+
+#### Color Strategy:
+- **Brand purple (#820AD1)**: Used ONLY for the primary CTA and brand identity
+- **Background**: Pure white (#FFFFFF) on light mode
+- **Text primary**: Very dark gray (#1A1A1A), NOT pure black
+- **Text secondary**: Medium gray (#6E6E80)
+- **Success**: Green for positive values
+- **Error/Negative**: Red for charges, due dates
+- **KEY LESSON**: The purple appears in LESS than 5% of the screen. Restraint is what makes it powerful.
+
+#### Typography:
+- **Font**: Custom (Graphik), but Inter achieves similar results
+- **Balance/Hero value**: 32-36px Bold — the largest text on any screen
+- **Section title**: 20px SemiBold
+- **Body/Transaction name**: 16px Regular
+- **Secondary info (date, description)**: 14px Regular, gray
+- **Small detail (transaction ID)**: 12px Regular, light gray
+- **Weight distribution**: ~70% Regular, ~25% SemiBold, ~5% Bold
+- **KEY LESSON**: Only the monetary value is Bold. Everything else is Regular or SemiBold. This restraint creates hierarchy without visual noise.
+
+#### Spacing & Breathing Room:
+- **Screen side margins**: 24px
+- **Between sections**: 32-40px (very generous)
+- **Between items in a list**: 16px
+- **Card internal padding**: 20-24px
+- **Between icon in shortcut and label**: 8px
+- **Between shortcut buttons**: 16-20px (generous for thumb targets)
+- **KEY LESSON**: Nubank uses MORE whitespace than most fintech apps. The empty space creates a feeling of calm and trust — critical for a money app.
+
+#### Key UX Patterns to Copy:
+1. **One number dominates**: The balance is the hero. 32px+ Bold, center.
+2. **Shortcuts row**: 4 circular buttons in a horizontal row (max 4-5 visible)
+3. **Progressive disclosure**: Home shows summary → tap for detail
+4. **Transaction list**: Icon + Name + small description | Amount (right-aligned)
+5. **Purple used surgically**: Only on the primary CTA, never on backgrounds or multiple buttons
+6. **Full-width CTA at bottom**: Always in the safe thumb zone
+
+---
+
+### 💳 REVOLUT (UK — Best multi-feature fintech)
+
+**Why study Revolut**: Shows how to pack MANY features into a clean interface
+without overwhelming the user. Master of information density done right.
+
+#### Information Architecture:
+- Home: Balance (hero) + accounts carousel + quick actions + transactions
+- Uses card-based sections that can be horizontally scrolled
+- Bottom nav: 5 items (Home, Crypto, Exchange, Stocks, Hub)
+- Feature discovery through "Hub" tab — prevents nav bloat
+
+#### Visual Hierarchy Strategy:
+```
+LAYER 1: Balance — 32-40px Bold, top-left
+LAYER 2: Account selector — horizontal carousel of account cards
+LAYER 3: Quick actions row — 4 circular icon buttons
+LAYER 4: "Recent" section title → transaction list
+```
+
+#### Color Strategy:
+- **Near-black background** on dark mode (#0D0D12)
+- **White text** for primary (#FFFFFF — they break the "no pure white" rule, but it works with their near-black background)
+- **Accent blue (#0666EB)**: Only for primary CTAs and interactive elements
+- **Cards**: Slightly lighter surface (#1A1A24)
+- **Positive values**: Green (#00B386)
+- **Negative values**: Standard text color (not red — reduces anxiety)
+- **KEY LESSON**: Revolut's dark mode uses elevation through surface color (darker → lighter = lower → higher), never shadows.
+
+#### Typography:
+- **Balance**: 36-40px Bold
+- **Card title/Account name**: 16-18px SemiBold
+- **Body text**: 14-16px Regular
+- **Transaction amount**: 16px Medium (right-aligned)
+- **Date headers**: 12px Medium, uppercase, secondary color
+- **KEY LESSON**: Date section headers use UPPERCASE + small size + secondary color. This creates clear grouping without taking much visual space.
+
+#### Spacing & Breathing Room:
+- **Screen margins**: 16-20px (tighter than Nubank — more information-dense)
+- **Between sections**: 24-32px
+- **Between transactions**: 12-16px
+- **Card padding**: 16-20px
+- **KEY LESSON**: Revolut is slightly denser than Nubank because it has more features, but it compensates with strong section separation (32px+) between groups.
+
+#### Key UX Patterns to Copy:
+1. **Account carousel**: Horizontal scroll of account cards at the top
+2. **Section date headers**: "TODAY", "YESTERDAY", "15 FEB" — uppercase, small, gray
+3. **Transaction with merchant logo**: 40px circle with logo + name + category
+4. **Amount right-aligned**: Monetary values always on the right, aligned
+5. **Feature hub**: A dedicated "More" tab that lists all features in a clean grid
+
+---
+
+### 💸 CASH APP (US — Best minimalist fintech)
+
+**Why study Cash App**: The most EXTREME example of minimalism in fintech.
+Every screen has almost nothing on it — and that's the brilliance.
+
+#### Information Architecture:
+- Home screen: JUST the balance. That's it. Giant number, center screen.
+- Actions below: Pay, Request (2 buttons only)
+- Bottom nav: Home, Discover, Cash Card, Investing, Banking
+- Each section is its own world — minimal cross-navigation
+
+#### Visual Hierarchy Strategy:
+```
+LAYER 1: Balance — 48-64px Bold, dead center of the screen
+         This is EXTREME. The entire screen is one number.
+
+LAYER 2: Pay / Request buttons — 2 pill buttons, side by side
+         Green accent for "Pay"
+
+LAYER 3: Activity feed — small, below the fold
+         Transaction list in a minimal format
+```
+
+#### Color Strategy:
+- **Background**: White (#FFFFFF) or near-black (#000000)
+- **Brand green (#00D632)**: ONLY on the "Pay" button and success states
+- **Text**: Standard black or white depending on mode
+- **KEY LESSON**: Cash App uses essentially 2 colors: black/white + green. That's it. The radical color restraint is what makes it feel premium.
+
+#### Typography:
+- **Balance**: 48-64px Bold — the largest of ANY fintech app
+- **Button labels**: 16-18px SemiBold
+- **Transaction names**: 16px Regular
+- **Amounts**: 16px Medium
+- **KEY LESSON**: The hierarchy is achieved almost entirely through SIZE, not color or weight. The balance is 4x larger than anything else.
+
+#### Spacing & Breathing Room:
+- **The most whitespace of any fintech app**
+- Home screen is ~60% empty space
+- Balance is vertically centered with massive margins above and below (100px+)
+- **KEY LESSON**: Empty space IS the design. Cash App proves that courage in whitespace = premium feeling.
+
+#### Key UX Patterns to Copy:
+1. **Hero number pattern**: One massive number, center screen, nothing competing
+2. **Binary CTA**: Only 2 actions (Pay/Request) — ultimate Hick's Law application
+3. **Radical simplicity**: If it's not essential, it doesn't exist on the screen
+4. **Green = money action**: Green only appears when money moves
+
+---
+
+### 🌐 WISE (UK — Best for international transfers)
+
+**Why study Wise**: Exceptional at making a COMPLEX process (international
+money transfer) feel simple through progressive disclosure and clear steps.
+
+#### Visual Hierarchy Strategy:
+```
+Transfer flow:
+  Step 1: Amount input — giant input field, currency selectors
+  Step 2: Recipient — clean form, minimal fields
+  Step 3: Review — summary card with all details
+  Step 4: Pay — payment method selection
+  Step 5: Success — animated check + receipt
+
+Each step has ONE primary action. The CTA is always "Continue".
+```
+
+#### Color Strategy:
+- **Brand green (#00B386)**: Accent, CTAs, success states
+- **Background**: White with very subtle gray sections (#F5F7FA)
+- **Text hierarchy**: Black (#1A1A1A) → Gray (#6E7885) → Light gray (#9DA7B5)
+- **Fee breakdown**: Uses color sparingly — green for "you save", neutral for fees
+- **KEY LESSON**: In a multi-step flow, color consistency step-to-step builds trust. The same green CTA on every step creates rhythm.
+
+#### Key UX Patterns to Copy:
+1. **Big input pattern**: Amount fields are HUGE (40px+ font) with currency dropdowns
+2. **Fee transparency**: Shows exact fees, exchange rate, estimated delivery inline
+3. **Review screen**: Summary card with all details before confirmation
+4. **Progress stepper**: Clear "Step X of Y" with visual progress bar
+5. **Comparison**: Shows "you save $X vs banks" — builds confidence in the action
+
+---
+
+## CATEGORY 2: SOCIAL & CONTENT
+
+### 📸 INSTAGRAM (Meta — Best content-first interface)
+
+**Why study Instagram**: The gold standard for content-focused UI. The interface
+disappears so the content (photos/videos) can shine.
+
+#### Information Architecture:
+- Feed: Full-bleed media + minimal chrome (username + actions)
+- Bottom nav: Home, Search, Reels (+), Activity, Profile
+- Stories: Horizontal scroll of circles at the top
+- Each content card: Avatar+Name → Media → Actions → Caption → Comments
+
+#### Visual Hierarchy Strategy:
+```
+LAYER 1: The content (photo/video) — FULL WIDTH, no padding
+         Media IS the hierarchy. It's the largest element.
+
+LAYER 2: Action bar — Like, Comment, Share, Save
+         Icons only, 24px, uniform size, horizontal row
+
+LAYER 3: Username (above media) — 14px SemiBold
+         Likes count + Caption — 14px Regular
+
+LAYER 4: Timestamp — 12px, very light gray
+         "View all X comments" — 14px, gray
+```
+
+#### Color Strategy:
+- **Background**: Pure white (light) or pure black (dark) — ZERO brand color on the feed
+- **Icons**: Black/white only in the feed
+- **Accent red (heart)**: Red ONLY when liked — Von Restorff in action
+- **Accent blue**: Only for links and verified badges
+- **Stories ring**: Gradient (purple→orange) only on unseen stories
+- **KEY LESSON**: Instagram removed ALL color from the interface so user content is the only color on screen. The UI is invisible.
+
+#### Typography:
+- **Username**: 14px SemiBold (just enough to be clickable, not dominant)
+- **Caption text**: 14px Regular
+- **Likes count**: 14px SemiBold
+- **Timestamp**: 12px Regular, light gray
+- **Navigation labels**: None (icon-only bottom nav — one of the few apps that can get away with this because of brand familiarity)
+- **KEY LESSON**: ALL text is 12-14px. Instagram intentionally keeps text small so it never competes with visual content.
+
+#### Spacing & Breathing Room:
+- **Media**: Full-width, zero side margins (image is king)
+- **Action bar padding**: 12-16px horizontal, 8-12px vertical
+- **Between posts**: 8-16px (minimal — encourages scrolling)
+- **Between caption and comments**: 4-8px
+- **KEY LESSON**: Tight vertical spacing between posts creates an infinite scroll feeling. But WITHIN a post, spacing is generous enough to separate actions from content.
+
+#### Key UX Patterns to Copy:
+1. **Full-bleed media**: Images/videos go edge-to-edge — maximum impact
+2. **Action bar pattern**: Row of icon buttons below content (like, comment, share, save)
+3. **Stories bar**: Horizontal scroll of circular avatars at the top of a feed
+4. **Double-tap to like**: Gesture shortcut with heart animation (micro-interaction reference)
+5. **Pull to refresh**: Standard gesture, minimal loading indicator
+
+---
+
+### 🐦 X / TWITTER (Best for text-first content)
+
+**Why study X**: Shows how to create hierarchy in a text-heavy interface
+where there are no images to anchor the eye.
+
+#### Visual Hierarchy Strategy:
+```
+Each tweet card:
+LAYER 1: Author avatar (40px) + Name (16px SemiBold) + Handle (14px gray)
+LAYER 2: Tweet text (15-16px Regular) — LEFT-ALIGNED, full width
+LAYER 3: Media (if any) — rounded corners, below text
+LAYER 4: Action bar — Reply, Retweet, Like, Share, Views — GRAY icons with counts
+```
+
+#### Color Strategy:
+- **Background**: White or black (mode-dependent)
+- **Brand blue (#1D9BF0)**: Only for links, active states, and the Tweet button
+- **Gray hierarchy**: Multiple grays for metadata (handle, timestamp, counts)
+- **Red**: Liked heart only
+- **Green**: Retweet only
+- **KEY LESSON**: In a text-heavy app, the accent color appears EVEN LESS than in a visual app. Blue is reserved for interactivity.
+
+#### Typography:
+- **Author name**: 15-16px SemiBold
+- **Handle + timestamp**: 14-15px Regular, gray
+- **Tweet body**: 15-16px Regular (surprisingly small for being the "content")
+- **Metrics (likes, retweets)**: 13px Regular, gray
+- **KEY LESSON**: X keeps the tweet body at the SAME size as the author name. The hierarchy comes from weight (SemiBold name vs Regular body) and color (black name vs gray handle), NOT from size difference.
+
+#### Key UX Patterns to Copy:
+1. **Feed item structure**: Avatar left | Name+Handle top | Content below | Actions bottom
+2. **Inline engagement**: Like/RT/Reply counts visible inline, not hidden
+3. **Thread indicators**: Vertical line connecting related posts
+4. **FAB for compose**: Floating blue circle, bottom-right, the only accent color element on feed
+
+---
+
+## CATEGORY 3: E-COMMERCE & MARKETPLACE
+
+### 🛍️ SHOPIFY SHOP APP (Best mobile e-commerce experience)
+
+**Why study Shopify**: Clean e-commerce without the visual chaos of traditional
+shopping apps. Proves that e-commerce can be beautiful.
+
+#### Visual Hierarchy Strategy:
+```
+Product page:
+LAYER 1: Product image — FULL WIDTH, swipeable carousel
+LAYER 2: Price — 24-28px Bold (the SECOND thing you see)
+LAYER 3: Product name — 20px SemiBold
+LAYER 4: Description — 14-16px Regular
+LAYER 5: "Add to Cart" — full-width CTA, sticky at bottom
+
+Home page:
+LAYER 1: Featured product/collection — large hero card
+LAYER 2: Product grid — 2 columns, image + name + price
+LAYER 3: Categories — horizontal scroll chips
+```
+
+#### Color Strategy:
+- **Background**: White (#FFFFFF)
+- **Accent**: Black (#000000) for CTAs — the "Add to Cart" button is BLACK
+- **Price**: Black, bold — stands out through weight, not color
+- **Sale price**: Red or green (indicates discount)
+- **KEY LESSON**: Shopify uses BLACK as the accent color. This creates a luxury/premium feel. No bright blues or greens needed.
+
+#### Typography:
+- **Price**: 24-28px Bold (dominant — people shop by price)
+- **Product name**: 18-20px SemiBold
+- **Description**: 14-16px Regular, gray
+- **"Add to Cart"**: 16px SemiBold, white on black
+- **KEY LESSON**: Price is visually MORE prominent than the product name. This is intentional — it aids decision-making.
+
+#### Key UX Patterns to Copy:
+1. **Product image carousel**: Full-width, swipeable, with dot indicators
+2. **Sticky CTA**: "Add to Cart" button fixed at the bottom, always visible
+3. **2-column product grid**: Square images + name + price below
+4. **Price prominence**: Price is Bold and larger than the product name
+5. **Review stars**: ★★★★☆ (4.2) — small, below title, in gold/yellow
+
+---
+
+### 🏠 AIRBNB (Best search & discovery UX)
+
+**Why study Airbnb**: The master of search-driven design. Shows how to present
+complex information (locations, dates, prices, ratings) in a clean way.
+
+#### Visual Hierarchy Strategy:
+```
+Search results:
+LAYER 1: Property photo — full-width card, rounded corners, LARGE (60% of card)
+LAYER 2: Location + rating — 16px SemiBold + ★ 4.92
+LAYER 3: Property type + host — 14px Regular, gray
+LAYER 4: Price — 16px SemiBold + "/night" in Regular gray
+LAYER 5: Dates — 14px Regular, below price
+```
+
+#### Color Strategy:
+- **Background**: White
+- **Brand pink/red (#FF385C)**: ONLY on the search icon, logo, and wishlist heart
+- **Text**: Near-black (#222222) → Gray (#717171)
+- **Star rating**: Black (not yellow!) — keeps the palette minimal
+- **KEY LESSON**: Airbnb uses their brand color even MORE sparingly than Instagram. Pink appears maybe 3 times on the entire home screen.
+
+#### Typography:
+- **Search bar placeholder**: 14px SemiBold (the search bar IS the hero)
+- **Listing title**: 16px SemiBold
+- **Listing details**: 14px Regular, gray
+- **Price**: 16px SemiBold (price/night)
+- **Rating**: 14px SemiBold with ★ icon
+- **Category tabs**: 12px Regular, with icon above
+- **KEY LESSON**: Airbnb's type sizes are remarkably CLOSE together (14-16px range). The hierarchy comes from weight and color, not dramatic size differences.
+
+#### Spacing & Breathing Room:
+- **Between listing cards**: 24px (generous)
+- **Card internal padding**: 0 for image (full-bleed within card), 12-16px for text
+- **Screen margins**: 24px
+- **Category bar**: Horizontal scroll, generous touch targets (64px+ height with icon+label)
+- **KEY LESSON**: The large gap between cards (24px) gives each listing its own "stage" — the user processes one listing at a time.
+
+#### Key UX Patterns to Copy:
+1. **Category bar**: Horizontal scroll of icon+label pills at the top (Airbnb popularized this)
+2. **Card = full image + text below**: Image takes 60%+ of card height
+3. **Map toggle**: Subtle "Map" button that shows geographic view
+4. **Wishlist heart**: Top-right of image, white circle with heart (overlays on image)
+5. **Image carousel dots**: Small dots on the image indicating more photos
+
+---
+
+## CATEGORY 4: RIDE-HAILING & MAPS
+
+### 🚗 UBER (Best map-based interface)
+
+**Why study Uber**: Shows how to layer UI elements OVER a map without
+creating chaos. The interface is minimal because the map provides context.
+
+#### Visual Hierarchy Strategy:
+```
+Home (requesting a ride):
+LAYER 1: Map — FULL SCREEN, IS the background
+LAYER 2: Search bar — "Where to?" at the top, floating on the map
+LAYER 3: Quick action pills — Home, Work, recent places
+LAYER 4: Bottom sheet — ride options, price, ETA
+
+During ride:
+LAYER 1: Map with route — full screen
+LAYER 2: Bottom sheet — driver info, ETA, minimal
+LAYER 3: Top bar — destination name only
+```
+
+#### Color Strategy:
+- **Map**: Muted/desaturated colors (light gray map style)
+- **UI elements**: Black and white (maximum contrast over the map)
+- **CTA**: Black filled button ("Confirm UberX")
+- **Brand green**: Only for UberEats differentiation
+- **Price**: Black, bold
+- **KEY LESSON**: When you have a map background, ALL UI must be high-contrast (black/white). No pastels, no subtle colors — they get lost on the map.
+
+#### Typography:
+- **"Where to?"**: 18-20px SemiBold (the main call-to-action is TEXT, not a button)
+- **Ride type name**: 16px SemiBold
+- **Price**: 16px SemiBold
+- **ETA**: 14px Regular, gray
+- **Address**: 14px Regular
+- **KEY LESSON**: Uber's search bar uses text as the CTA. "Where to?" is simultaneously a label and a button. Brilliant economy of space.
+
+#### Key UX Patterns to Copy:
+1. **Map as background**: Full-screen map with floating UI elements on top
+2. **Bottom sheet for options**: Ride types in a draggable bottom sheet
+3. **Address shortcut pills**: "Home", "Work" as horizontally scrollable chips
+4. **Floating search bar**: The "Where to?" input floats above the map
+5. **Minimal during active state**: Once a ride is active, UI reduces to bare essentials
+
+---
+
+## CATEGORY 5: PRODUCTIVITY & TOOLS
+
+### 📝 LINEAR (Best SaaS/productivity design)
+
+**Why study Linear**: The most beautiful productivity tool ever made.
+Shows that "business software" doesn't have to be ugly.
+
+#### Visual Hierarchy Strategy:
+```
+Issue view:
+LAYER 1: Issue title — 20-24px SemiBold
+LAYER 2: Status/Priority badges — colored pills
+LAYER 3: Description — 14-16px Regular
+LAYER 4: Metadata — assignee, labels, project — 12-14px, gray sidebar
+```
+
+#### Color Strategy:
+- **Background dark mode**: Very dark (#0A0A0F) — almost black
+- **Surface elevation**: #13131A → #1C1C26 → #252530
+- **Accent purple (#5E6AD2)**: Primary CTA, active states
+- **Status colors**: Gray (backlog), Yellow (in progress), Green (done), Red (bug)
+- **Text**: White (#E8E8ED) → Gray (#6B6F76)
+- **KEY LESSON**: Linear's dark mode uses a very SUBTLE blue undertone in its grays (compare #1C1C26 vs pure gray #1C1C1C). This blue undertone gives the entire app a premium, cool feel.
+
+#### Typography:
+- **Font**: Inter (same as our Design Bible standard)
+- **Issue title**: 20-22px SemiBold
+- **Body text**: 14-15px Regular
+- **Metadata labels**: 12px Medium, gray
+- **Navigation items**: 13-14px Regular
+- **KEY LESSON**: Linear uses Inter at relatively small sizes (13-15px) for most UI, letting the content (issue titles) stand out by being noticeably larger.
+
+#### Spacing & Breathing Room:
+- **Sidebar width**: 240px fixed
+- **Content padding**: 24-32px
+- **Between list items**: 1px divider, items are 36-40px height
+- **Between sections**: 24px
+- **KEY LESSON**: Linear achieves density through tight list items (36-40px height) but generous section spacing. This creates an information-rich but organized feel.
+
+#### Key UX Patterns to Copy:
+1. **Command palette (⌘K)**: Quick access to any action — search-driven navigation
+2. **Status badges**: Colored pills/icons that communicate state at a glance
+3. **Keyboard-first**: Every action has a shortcut — efficiency for power users
+4. **Sidebar navigation**: Fixed left sidebar with collapsible sections
+5. **Dark mode as default**: Premium dark palette with blue undertones
+
+---
+
+### 🎵 SPOTIFY (Best content discovery + dark mode)
+
+**Why study Spotify**: The king of dark mode design and content-driven
+personalization. Shows how to present recommendations without overwhelming.
+
+#### Visual Hierarchy Strategy:
+```
+Home screen:
+LAYER 1: Recently played — 2×3 grid of small cards, quick access
+LAYER 2: Made for You — horizontal scroll of large album cards
+LAYER 3: Section titles — "Good evening", "Recently played"
+LAYER 4: Album/playlist name — 14px below each card
+
+Now Playing:
+LAYER 1: Album art — MASSIVE, nearly full width (90%), centered
+LAYER 2: Track name + artist — 20-24px + 16px below the art
+LAYER 3: Progress bar — thin accent line
+LAYER 4: Controls — Play/Pause (large, center) + Skip (smaller, sides)
+```
+
+#### Color Strategy:
+- **Background**: Very dark (#121212 — the Google recommendation!)
+- **Surface**: Slightly lighter (#1DB954 is NOT the background — common mistake)
+- **Brand green (#1DB954)**: ONLY for the Shuffle/Play button and premium badges
+- **Text primary**: White (#FFFFFF)
+- **Text secondary**: #B3B3B3
+- **Album art colors**: Spotify extracts dominant color from album art for gradients at the top of screens. This makes each screen feel unique without adding brand colors.
+- **KEY LESSON**: Spotify's genius is using CONTENT COLORS (from album art) instead of brand colors for visual interest. The green barely appears.
+
+#### Typography:
+- **Section title ("Good evening")**: 24-28px Bold
+- **Subsection title**: 18-20px SemiBold
+- **Album/playlist name**: 14px SemiBold
+- **Artist name**: 12-14px Regular, gray
+- **Now Playing track**: 22-24px Bold
+- **Now Playing artist**: 16px Regular, gray
+- **KEY LESSON**: Spotify uses Bold (700) for section titles and track names — heavier than most apps. This creates a strong, confident feel that matches the brand energy.
+
+#### Spacing & Breathing Room:
+- **Screen margins**: 16px (tighter — information-dense)
+- **Between section title and content**: 12-16px
+- **Between sections**: 32-40px
+- **Card gap in grid**: 8-12px
+- **Card gap in carousel**: 12-16px
+- **KEY LESSON**: Spotify is denser than most apps because it's about discovery — you WANT to see many options. But the 32-40px section gap creates clear "chapters."
+
+#### Key UX Patterns to Copy:
+1. **Quick access grid**: 2×3 small rectangular cards for recently played (top of home)
+2. **Horizontal carousels**: Large square cards in scrollable rows per category
+3. **Dynamic gradient**: Top of screen gets a gradient from the album art dominant color
+4. **Mini player**: Persistent mini-bar at the bottom showing current track
+5. **Now Playing**: Album art takes 60%+ of screen — the music IS the interface
+
+---
+
+## CATEGORY 6: HEALTH & WELLNESS
+
+### 🧘 HEADSPACE (Best calming/wellness UI)
+
+**Why study Headspace**: Shows how visual design can create an EMOTION.
+The interface makes you feel calm before you even start meditating.
+
+#### Color Strategy:
+- **Background**: Warm white (#FFF8F0) or soft dark (#1C1534)
+- **Brand colors**: Warm orange (#F47D31) + soft blue (#5B8FCA) + muted yellow
+- **NO sharp/bright colors**: Everything is muted, soft, slightly desaturated
+- **Illustrations**: Custom illustrations with rounded, friendly shapes
+- **KEY LESSON**: Headspace proves that color TEMPERATURE matters. Warm tones (oranges, yellows, warm whites) create calm. Cool tones (sharp blues, neon greens) create energy. Choose the emotional palette that matches your app's purpose.
+
+#### Typography:
+- **Font**: Custom rounded font (very friendly, approachable)
+- **Titles**: 24-28px Bold, but with a rounded/soft font face
+- **Body**: 16px Regular
+- **KEY LESSON**: Font CHOICE communicates emotion. A geometric, rounded font feels friendly and approachable. A geometric, sharp font (like Inter) feels professional and serious. Match the font to the product personality.
+
+#### Key UX Patterns to Copy:
+1. **Illustration-driven UI**: Custom illustrations replace photos for a unique brand feel
+2. **Emotional color palette**: Warm, muted colors for calm; bright, saturated for energy
+3. **Progress as motivation**: Streak counters, completion badges, gentle gamification
+4. **Audio-visual pairing**: Visual animations synced with audio content
+5. **Session cards**: Large cards with illustration + title + duration (easy scanning)
+
+---
+
+## UNIVERSAL PATTERNS — WHAT THE BEST APPS ALL SHARE
+
+### 1. The Hierarchy Formula
+Every great app follows this exact pattern:
+```
+ONE hero element        → 28-40px, Bold
+Section titles          → 18-22px, SemiBold
+Body content            → 14-16px, Regular
+Metadata/Secondary      → 12-14px, Regular, gray
+```
+The ratio between hero and body is AT LEAST 2:1 (e.g., 36px hero : 16px body).
+
+### 2. The Color Restraint Rule
+- **Maximum 1 accent color** on any screen
+- **Accent appears on less than 10% of the screen** (usually just the CTA)
+- **Text hierarchy** is achieved through weight + gray shades, NOT color
+- **Status colors** (red, green, yellow) only when showing actual status
+
+### 3. The Spacing Pattern
+| Zone | Space | Why |
+|---|---|---|
+| Between SECTIONS | 32-48px | Clear chapter separation |
+| Between ITEMS in a list | 12-16px | Grouped but distinct |
+| Inside a CARD | 16-24px uniform | Container feeling |
+| Screen MARGINS | 16-24px | Breathing room from edges |
+| Label to FIELD | 4-8px | Tight relationship |
+
+### 4. The Information Density Spectrum
+```
+MINIMAL ←————————————————————→ DENSE
+Cash App   Nubank   Airbnb   Spotify   Revolut   Linear
+ (10%)     (30%)    (40%)     (50%)     (60%)     (70%)
+```
+- Finance personal → lean minimal (trust through simplicity)
+- E-commerce → medium (need to show products)
+- Productivity → dense (power users want information)
+
+### 5. The Dark Mode Elevation System
+Every world-class dark mode app uses this:
+```
+Level 0 (Background):  #0A0A0F to #121212  ← Darkest
+Level 1 (Surface):     #14141A to #1E1E1E  ← Cards, nav
+Level 2 (Elevated):    #1C1C24 to #252525  ← Popovers, sheets
+Level 3 (Overlay):     #24242E to #2C2C2C  ← Modals, dropdowns
+```
+Lighter = higher elevation. NEVER use shadows in dark mode.
+
+### 6. The CTA Placement
+In 100% of the best apps:
+- **Primary CTA** is in the **bottom third** of the screen (thumb zone)
+- **Primary CTA** is either full-width or prominently centered
+- **Primary CTA** is the ONLY element with the accent color
+- **Secondary actions** are ghost/outlined/text buttons
+
+---
+
+## PATTERN LIBRARY — SCREEN RECIPES
+
+### Recipe: Finance Home Screen
+```
+Based on: Nubank + Cash App
+─────────────────────────────
+1. Header: Greeting + Avatar (right)        → 56px FIXED
+2. Balance Card: Large value + currency      → 32-40px Bold, center
+3. Quick Actions: 4 circular buttons + label → 52×52px FIXED
+4. Section Title: "Recent Transactions"      → 18px SemiBold
+5. Transaction List: Icon + Name + Amount    → 56-72px per item
+6. CTA (if needed): Fixed at bottom          → FILL × 48px
+```
+
+### Recipe: E-Commerce Product List
+```
+Based on: Shopify + Airbnb
+─────────────────────────────
+1. Header: Category name + Filter icon       → 56px FIXED
+2. Category Chips: Horizontal scroll pills   → 36px height, HUG width
+3. Product Grid: 2 columns                   → Image (square) + Name + Price
+4. Product Card: Image (60%) + Text (40%)    → FILL width, HUG height
+5. Image: Aspect ratio 1:1 or 4:3           → Full width within card
+6. Price: Bold, larger than name             → 18px Bold vs 14px Regular
+```
+
+### Recipe: Content Feed
+```
+Based on: Instagram + X/Twitter
+─────────────────────────────
+1. Header: App name/logo + Action icons      → 56px FIXED
+2. Stories Bar: Horizontal avatar circles     → 64px circles, 12px gap
+3. Feed Item: Avatar + Author + Content      → Full width
+4. Media: Full-bleed image/video             → 0px side margin
+5. Action Bar: Like, Comment, Share, Save    → 24px icons, 16px gap
+6. Caption: Author (SemiBold) + text (Reg)   → 14px
+```
+
+### Recipe: Dark Mode Dashboard
+```
+Based on: Linear + Spotify + Revolut
+─────────────────────────────
+1. Background: #0A0A0F (near-black)
+2. Surface cards: #14141A (slightly lighter)
+3. Elevated elements: #1C1C24
+4. Text primary: #E8E8ED (not pure white)
+5. Text secondary: #6B6F76
+6. Accent: ONE color (blue/purple/green)
+7. Section spacing: 32-40px
+8. Card padding: 20-24px
+9. Border-radius: 12-16px (consistent)
+10. No shadows — use surface color for elevation
+```
+
+### Recipe: Multi-Step Flow (Transfer/Payment)
+```
+Based on: Wise + Nubank
+─────────────────────────────
+1. Header: ← Back + "Step X of Y" + Close    → 56px FIXED
+2. Progress Bar: Thin accent line on top      → 4px, percentage fill
+3. Title: Clear question/instruction          → 24px SemiBold
+4. Input Area: Large, focused input           → 56px height, 20px font
+5. Helper/Context: Secondary info below       → 14px Regular, gray
+6. CTA: Full-width at bottom, fixed           → "Continue" → FILL × 48px
+7. Transition: Slide-left between steps       → 300ms, gentle
+```
+
+---
+
+## REFERENCE SOURCES FOR CONTINUED STUDY
+
+### Screenshot Curations:
+- **Mobbin.com** — Curated screenshots of real apps organized by pattern
+- **Screenlane.com** — Mobile UI examples searchable by screen type
+- **Pageflows.com** — Full user flow recordings (onboarding, checkout, etc.)
+- **Pttrns.com** — Mobile design patterns by category
+
+### Design System References:
+- **material.io** — Google Material Design 3 (component specs)
+- **developer.apple.com/design** — Apple Human Interface Guidelines
+- **carbondesignsystem.com** — IBM Carbon (enterprise patterns)
+- **primer.style** — GitHub Primer (developer tools patterns)
+
+### Books That Shaped These Patterns:
+- "Refactoring UI" — Adam Wathan & Steve Schoger (THE practical design book)
+- "Don't Make Me Think" — Steve Krug (usability fundamentals)
+- "The Design of Everyday Things" — Don Norman (design psychology)
+- "Microinteractions" — Dan Saffer (motion and feedback)
+- "Laws of UX" — Jon Yablonski (UX laws applied)
+
+---
+
+## APPLYING REFERENCES WHEN BUILDING
+
+### Before creating any screen, answer:
+
+1. **What category is this screen?** (fintech, social, e-commerce, etc.)
+2. **Which reference app is closest to this use case?**
+3. **What is that app's hierarchy formula?** (What's the hero? What's secondary?)
+4. **What is their spacing pattern?** (Generous like Nubank or dense like Revolut?)
+5. **What is their color strategy?** (How many colors? Where does accent appear?)
+6. **What is their typography formula?** (Sizes, weights, hierarchy)
+
+Then build using THOSE specific patterns, not generic defaults.

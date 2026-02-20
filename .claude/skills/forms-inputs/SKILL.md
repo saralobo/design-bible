@@ -1,0 +1,219 @@
+---
+name: forms-inputs
+description: "Forms, input fields, validation, error states, dropdowns, toggles. Use when building forms, login screens, data input interfaces, or any screen with user input."
+---
+
+# Forms & Inputs — Rules for Input Fields
+
+> Forms are where money is made or lost.
+> A well-designed form = conversion. A bad form = abandonment.
+
+---
+
+## INPUT FIELD ANATOMY
+
+```
+┌──────────────────────────────────┐
+│  Label                           │  ← 14px SemiBold, neutral-800
+│  ┌────────────────────────────┐  │
+│  │ 🔍  Placeholder text      │  │  ← 16px Regular, neutral-400
+│  └────────────────────────────┘  │  ← Height: 48-56px
+│  Helper text                     │  ← 12px Regular, neutral-600
+└──────────────────────────────────┘
+```
+
+### Spacing:
+| Gap | Value |
+|---|---|
+| Label → Input | 4-8px |
+| Input → Helper text | 4px |
+| Field → Field (same group) | 16-20px |
+| Group → Group (sections) | 32px |
+
+---
+
+## INPUT SIZES
+
+| Size | Height | Use |
+|---|---|---|
+| Small | 40px | Inline filters, table cells |
+| Medium | 48px | Default for forms |
+| Large | 56px | Main fields, landing pages |
+
+### RULE:
+> Choose 1 size for the entire form. NEVER mix sizes in the same form.
+> **Recommended: 48px** (balances touch target and space)
+
+---
+
+## INPUT STATES
+
+| State | Border | Background | Label | Icon |
+|---|---|---|---|---|
+| **Default** | 1px neutral-300 | White/transparent | neutral-600 | neutral-400 |
+| **Hover** | 1px neutral-800 | White | neutral-600 | neutral-600 |
+| **Focused** | 2px accent | White | accent | accent |
+| **Filled** | 1px neutral-300 | White | neutral-600 (shrunk) | neutral-800 |
+| **Error** | 2px negative (red) | red 4% bg | negative | negative |
+| **Disabled** | 1px neutral-200 | neutral-100 | neutral-400 | neutral-300 |
+| **Read-only** | None or 1px dashed | neutral-50 | neutral-600 | — |
+
+### ERROR RULE:
+> Error = red border + ⚠️ icon + error message below the field
+> NEVER rely only on red color (color blindness)
+> Error message replaces helper text, same position
+> Error message: specific ("Invalid ID, check the digits") not generic ("Error")
+
+---
+
+## INPUT TYPES
+
+### Text Field:
+- Height: 48-56px
+- Horizontal padding: 16px
+- Font size: 16px (MINIMUM — prevents auto-zoom on iOS)
+- Placeholder: lighter tone than actual text
+- Border-radius: 8px
+
+### Text Area:
+- Minimum height: 88-120px (3-4 lines)
+- Resize: vertical only (on mobile, fixed)
+- Character counter: "0/280" in the bottom-right corner
+- Same border style as text field
+
+### Select/Dropdown:
+- Visual identical to text field + chevron ▼ on the right
+- Chevron: 20px, neutral-600
+- Options list: Dropdown with level 2 shadow
+- Selected option: Background accent 8% opacity
+- Maximum 6-8 visible options, then scroll
+
+### Search:
+- 🔍 icon on the left (leading)
+- X button (clear) on the right when there's text
+- Can have pill border-radius (height/2) or standard (8px)
+- Suggest results in dropdown as user types
+
+### Password:
+- 👁 toggle icon on the right (show/hide)
+- NEVER autocomplete off on password fields
+- Strength indicator: colored bar below (red → yellow → green)
+- Password requirements: checkbox list below the field
+
+### PIN / OTP:
+- Individual separated fields (1 digit per field)
+- 4-6 fields in a horizontal row
+- Auto-focus on the next field after typing
+- Size: 48×56px per field
+- Gap: 8-12px between fields
+- Automatic numeric keyboard (inputmode="numeric")
+
+---
+
+## LABELS AND PLACEHOLDERS
+
+### Label:
+- ALWAYS visible (doesn't disappear when typing)
+- Position: ABOVE the field (not inside)
+- Floating label: Acceptable if well implemented (label animates up on focus)
+- Required indicator: red asterisk * after the label
+- Optional indicator: "(optional)" in gray after the label
+
+### Placeholder:
+- NOT a substitute for a label. It's a FORMAT EXAMPLE.
+- Ex: Label "SSN" → Placeholder "000-00-0000"
+- Ex: Label "Email" → Placeholder "you@email.com"
+- Color: neutral-400 (50% of normal text)
+- Disappears on focus or typing
+
+### ANTI-PATTERNS:
+- ❌ Placeholder as label (disappears and user forgets the field)
+- ❌ Label inside the field without float (confusion between value and label)
+- ❌ Label below the field (not natural)
+- ❌ No label (zero accessibility)
+
+---
+
+## VALIDATION
+
+### Principles:
+1. **Inline, real-time**: Validate field by field when the user leaves the field (onBlur)
+2. **Don't validate while typing** (except: password, search)
+3. **Clear message**: "SSN must have 9 digits" not "Invalid field"
+4. **Persistent**: Error visible until corrected
+5. **Scroll to error**: In long forms, auto-scroll to the first error
+
+### Validation Timing:
+| Moment | When to Use |
+|---|---|
+| onBlur (leaves the field) | Fields with format (SSN, email, phone) |
+| onChange (while typing) | Password (strength), search (autocomplete) |
+| onSubmit (on submit) | Final validation of all fields |
+
+### Auto-Formatting:
+- Phone: Add formatting automatically while typing
+- Card: Separate into 4 groups of 4 digits
+- ZIP code: Auto-format with dash/space
+- Currency: $X,XXX.XX with separators
+
+---
+
+## LONG FORMS
+
+### Progressive Disclosure:
+- Break into steps (wizard) with progress indicator
+- Maximum 5-7 fields per step
+- Auto-save between steps
+
+### Stepper/Wizard:
+```
+  ● ─── ● ─── ○ ─── ○
+ Data   Address  Review   Payment
+```
+- Active step: filled circle, accent color
+- Completed step: filled circle + check ✓, positive color
+- Future step: outlined circle, neutral color
+- Connecting line: 2px, neutral-300 (future), accent (completed)
+
+---
+
+## FIELD GROUPING
+
+### When to Group:
+- Fields about the same topic: First Name + Last Name
+- Address fields: ZIP + Street + Number + Apt
+- Payment fields: Card Number + Expiry + CVV
+
+### How to Group:
+- **Horizontal row**: First Name [50%] + Last Name [50%] (gap 12-16px)
+- **Section with title**: "Shipping Address" → fields below
+- **Card/container**: Subtle background to delimit group
+
+### RULE:
+> Fields in a horizontal row ONLY when they are related AND short.
+> NEVER put email + password in the same row (long fields).
+
+---
+
+## FORM ACCESSIBILITY
+
+- Every input MUST have an associated label (for screen readers)
+- Tab order must follow visual order (top → bottom, left → right)
+- Error messages must be announced by screen readers (aria-live)
+- Required fields must be marked with asterisk + aria-required
+- Correct autocomplete attributes (name, email, tel, etc.)
+
+---
+
+## FORM CHECKLIST
+
+- [ ] Do all fields have a visible label?
+- [ ] Is input font size ≥ 16px (prevent iOS zoom)?
+- [ ] Is input height consistent across the entire form?
+- [ ] Are all states defined (default, focused, error, disabled)?
+- [ ] Does error show icon + descriptive text + color?
+- [ ] Is validation inline (not only on submit)?
+- [ ] Are related fields grouped?
+- [ ] Do long forms use stepper with auto-save?
+- [ ] Is auto-formatting applied for phone/card/ZIP?
+- [ ] Is placeholder an example, not a label?
