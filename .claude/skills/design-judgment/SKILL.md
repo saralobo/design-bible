@@ -1,0 +1,261 @@
+---
+name: design-judgment
+description: "Design taste and judgment over mechanical rule-following. Color restraint, whitespace, hero elements, consistency lessons from real failures. Use when reviewing final designs, resolving rule conflicts, or when a screen looks wrong despite following rules."
+---
+
+# Rule 20 — Design Judgment: Spirit Over Letter
+
+> **This is the most important rule in the entire Design Bible.**
+>
+> Following rules mechanically without design taste makes screens WORSE,
+> not better. Rules are guidelines — JUDGMENT is what makes design good.
+> This document captures hard-won lessons from real failures.
+
+---
+
+## THE CARDINAL RULE
+
+```
+Rules exist to GUIDE judgment, not REPLACE it.
+
+If following a rule makes the screen uglier, the rule is being
+applied wrong — not the screen.
+```
+
+---
+
+## LESSON 1: COLOR RESTRAINT MEANS RESTRAINT
+
+### What went wrong:
+Added red (#E50914) for Netflix merchant icon and green (#34C759) for
+"Available $2,152.50" text because the color rules say "use semantic colors."
+
+### The correct interpretation:
+Semantic colors (red = error, green = success) are for **system states**
+(validation errors, success messages), NOT for content decoration.
+
+```
+WRONG: Netflix icon in red because "Netflix brand is red"
+RIGHT: All merchant icons in the same neutral surface color
+
+WRONG: "Available $2,152.50" in green because "available = positive"
+RIGHT: All financial metadata in neutral gray — the NUMBER speaks for itself
+
+WRONG: Multiple accent colors on one screen
+RIGHT: ONE accent color, used in LESS than 5% of the screen (CTA + 1 detail)
+```
+
+### The Rule:
+**On any given screen, count the distinct non-neutral colors. If you have more
+than 2 (the accent + one status indicator), you have too many.** The premium
+apps (Nubank, Cash App, Linear) use essentially 1 color + grays.
+
+---
+
+## LESSON 2: DON'T FIX WHAT ISN'T BROKEN
+
+### What went wrong:
+The original screen (v1) used text characters ($, x, =, o) as icons inside
+circle containers. They looked clean and polished. Rule 17 says "don't use
+raw text as icons." So v2 replaced them with crude hand-drawn vector paths
+that looked terrible.
+
+### The correct interpretation:
+Rule 17's INTENT is "icons should be visually consistent." A clean text
+character inside a proper FIXED container achieves this perfectly. A crude
+hand-drawn vector path VIOLATES the intent while following the letter.
+
+```
+WRONG: "Rule 17 says no text, so I'll draw crude SVG paths"
+RIGHT: "Rule 17 says be consistent, so I'll use clean chars in FIXED containers"
+
+The hierarchy of icon quality:
+1. BEST:  Proper icon library (Phosphor, Lucide, SF Symbols) — if available
+2. GOOD:  Clean text characters inside FIXED containers — proven, consistent
+3. BAD:   Hand-drawn vector paths — crude, inconsistent, unprofessional
+4. WORST: Raw text without containers — different sizes, no alignment
+```
+
+### The Rule:
+**When a proven approach already looks good, don't change it just because
+a rule seems to say otherwise. The APPEARANCE is the judge, not the
+specification.**
+
+---
+
+## LESSON 3: HEADER ICON BUTTONS NEED VISUAL CONTAINERS
+
+### What went wrong:
+Header back arrow was rendered as a raw vector chevron without a circle
+background. The three dots were floating without a container. Both looked
+broken and unfinished.
+
+### The correct pattern:
+Header icon buttons MUST have:
+- A circular container (40-44px) with a subtle fill (surface2)
+- The icon centered inside
+- ALL header icon buttons the same size and style
+
+```
+WRONG:
+  <- Credit Card  ...     (icons floating naked)
+
+RIGHT:
+  (<-) Credit Card (...)   (icons inside circles with bg)
+```
+
+### The Rule:
+**Every interactive icon in a header or toolbar MUST be inside a tappable
+container (circle or rounded rect) with a visible background. Naked floating
+icons look broken.**
+
+---
+
+## LESSON 4: WHITESPACE IS NOT EMPTY — IT'S THE DESIGN
+
+### What went wrong:
+v2 had a larger credit card, larger balance text, and larger icon buttons.
+This pushed everything down, eliminating breathing room. The screen felt
+cramped despite having "correct" spacing values between sections.
+
+### The correct interpretation:
+Whitespace is measured by the OVERALL composition, not individual gaps.
+If section-to-section spacing is 32px but each section is 20% larger,
+the screen is DENSER, not more spacious.
+
+```
+WRONG: "I have 32px between sections, so spacing is correct"
+RIGHT: "Does the overall screen FEEL light and airy? Can I breathe?"
+
+The test: Can you see the BACKGROUND between sections?
+If the content fills >80% of the visible viewport, it's too dense.
+Aim for 60-70% content, 30-40% visible background.
+```
+
+### The Rule:
+**After building a screen, zoom out to 50% and squint. The screen should
+have visible "air" between major groups. If it's a solid wall of content,
+reduce element sizes or increase section spacing until you can breathe.**
+
+---
+
+## LESSON 5: CENTER ALIGNMENT FOR HERO ELEMENTS
+
+### What went wrong:
+v2 left-aligned the balance value ($2,847.50) which made it feel like
+just another text element. The balance is supposed to be THE HERO.
+
+### The correct interpretation:
+Hero elements (the one piece of information that dominates the screen)
+should be CENTERED to create visual weight and importance.
+
+```
+WRONG: Left-aligned balance next to a right-aligned date
+       $2,847.50                    Due Mar 15
+
+RIGHT: Centered balance, with supporting text below
+                Current Bill
+                $1,247.30
+                Due Mar 15
+```
+
+### The Rule:
+**If an element is the HERO (the largest, most important value on the screen),
+center it. Centering creates visual gravity and signals "this is THE thing."
+Supporting/contextual info goes below it, also centered.**
+
+---
+
+## LESSON 6: MATCHING ELEMENTS MUST BE VISUALLY IDENTICAL
+
+### What went wrong:
+v2 used different colors for merchant transaction icons (red for Netflix,
+green for Spotify, orange for Amazon). This created visual chaos and drew
+attention to decoration instead of information.
+
+### The correct pattern:
+All elements in a LIST that serve the same FUNCTION must look identical
+except for their content.
+
+```
+WRONG:
+  Red N  Netflix      -$15.99    (red draws attention here)
+  Green S  Spotify    -$11.99    (green draws attention here)
+  Orange A  Amazon    -$84.30    (the amounts are lost)
+
+RIGHT:
+  Gray N  Netflix     -$15.99    (neutral — eye goes to the name + amount)
+  Gray U  Uber        -$24.50    (consistent — easy to scan the list)
+  Gray A  Amazon      -$84.30    (the INFORMATION hierarchy is preserved)
+```
+
+### The Rule:
+**In a list of items, visual decoration (icons, colors) should be
+UNIFORM so the eye can focus on the CONTENT (names, amounts, dates).
+The only exception is status indicators (pending, completed, failed).**
+
+---
+
+## THE DESIGN JUDGMENT CHECKLIST
+
+Before finalizing ANY screen, answer these questions:
+
+### 1. Color Check
+- [ ] How many distinct non-neutral colors are visible? (Target: <=2)
+- [ ] Does the accent color appear in <=5% of the screen?
+- [ ] Are there any semantic colors (red/green) that aren't for actual status?
+
+### 2. Breathing Room Check
+- [ ] Zoom to 50% and squint — can you see background between sections?
+- [ ] Is the content <=70% of the visible viewport?
+- [ ] Is the hero element given generous vertical space?
+
+### 3. Consistency Check
+- [ ] Are all header icon buttons the same size and style?
+- [ ] Are all list items visually identical (except content)?
+- [ ] Are all quick action buttons the same size, color, and corner radius?
+
+### 4. Polish Check
+- [ ] Do icon buttons have visible container backgrounds?
+- [ ] Are icons rendered cleanly (not crude vector paths)?
+- [ ] Is the hero element centered and dominant?
+
+### 5. Restraint Check
+- [ ] Did I resist adding a color "just because the brand has that color"?
+- [ ] Did I resist making elements bigger "because the rule says X size"?
+- [ ] If I compare to Nubank/Cash App — is my screen as SIMPLE as theirs?
+
+---
+
+## WHEN RULES CONFLICT WITH JUDGMENT
+
+```
+1. Build the screen following the rules
+2. Take a screenshot
+3. Ask: "Does this LOOK good? Does it feel premium?"
+4. If NO — identify which rule application is causing the problem
+5. Adjust the rule's interpretation, keeping the SPIRIT
+6. Screenshot again and compare
+7. The version that LOOKS better wins
+
+The screenshot is the ultimate judge. Not the specification.
+```
+
+---
+
+## REFERENCE: THE v1 vs v2 vs v3 COMPARISON
+
+This lesson came from building 3 versions of a credit card screen:
+
+| Element | v1 (good) | v2 (worse) | v3 (best) |
+|---|---|---|---|
+| Header icons | Circle + bg | Naked, broken | Circle + bg |
+| Merchant icons | All neutral | Brand colors | All neutral |
+| Available text | Neutral gray | Green accent | Neutral gray |
+| Balance | Centered | Left-aligned | Centered |
+| Breathing room | Generous | Cramped | Generous |
+| Action icons | Clean text | Crude vectors | Clean text |
+| Color count | 1 (blue) | 4 (blue+red+green+orange) | 1 (blue-purple) |
+
+**v2 was worse DESPITE having more rules** because the rules were applied
+mechanically. v3 is better because the rules were applied with JUDGMENT.

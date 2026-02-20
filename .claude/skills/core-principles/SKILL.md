@@ -1,3 +1,8 @@
+---
+name: core-principles
+description: "Fundamental design principles, 4 pillars (hierarchy, contrast, alignment, proximity), mobile rules, touch targets, safe areas. Use when starting any new screen design, reviewing fundamentals, or establishing visual hierarchy."
+---
+
 # RULE ZERO — Fundamental Design Principles
 
 > This document is the foundation of EVERYTHING. Before creating any visual element, these rules are inviolable.
@@ -47,8 +52,8 @@
 ## GOLDEN RULES FOR MOBILE
 
 ### Touch Targets
-- **Absolute minimum**: 44×44px (Apple HIG) / 48×48dp (Material Design)
-- **Recommended**: 48×48px
+- **Absolute minimum**: 44x44px (Apple HIG) / 48x48dp (Material Design)
+- **Recommended**: 48x48px
 - **Spacing between targets**: minimum 8px
 - **Circular button MUST be circular**: width === height, cornerRadius = width/2
 - NEVER create an oval button when the intent is circular
@@ -85,7 +90,7 @@ Before creating any screen in Figma, answer:
 - [ ] What is the SINGLE primary action of this screen?
 - [ ] What is the visual hierarchy? (1st, 2nd, 3rd element)
 - [ ] Does the spacing follow the 8px grid?
-- [ ] Do touch targets have at least 44×44px?
+- [ ] Do touch targets have at least 44x44px?
 - [ ] Is text contrast sufficient (4.5:1)?
 - [ ] Does the user know how to go back?
 - [ ] Is there enough breathing room between sections?
