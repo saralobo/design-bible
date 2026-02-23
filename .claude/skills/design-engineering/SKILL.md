@@ -177,11 +177,12 @@ Don't design the happy path only. The happy path is 20% of the interaction desig
 5. Page-level compositions
 6. Micro-interactions and polish
 
-**Design QA loop:** After each major screen:
-- Screenshot implementation vs. design reference
+**Design QA loop:** After each major screen, verify on available surfaces:
+- Screenshot implementation vs. design reference (Figma if connected, original spec if not)
 - Check spacing, color, typography, alignment, responsive
+- If agentation + agent-browser are available: run critique mode on the rendered page for automated design review
 - Run heuristic scan on the core flow (at this stage, heuristics catch what slipped through)
-- Fix discrepancies immediately
+- Fix discrepancies immediately (self-driving mode if agentation is available, manual otherwise)
 
 ### Phase 6: Cross-Surface Consistency
 
@@ -205,11 +206,11 @@ Don't design the happy path only. The happy path is 20% of the interaction desig
 
 | Category | Tools |
 |---|---|
-| Design | Figma, Excalidraw, Paper |
+| Design | Figma (when available), Excalidraw, Paper, or straight to code |
 | AI Assets | Recraft (icons, illustrations, SVGs, mockups), Claude (copy, code), Midjourney/DALL-E (photorealistic) |
 | Development | Next.js + TypeScript + Tailwind, shadcn/ui, Framer Motion, Vercel |
 | Design-Code Bridge | Objects, Claude Code |
-| QA | Manual screenshot comparison, heuristic audit, tokens file as source of truth |
+| QA | Manual screenshot comparison, heuristic audit, agentation critique mode (when available), tokens file as source of truth |
 
 ---
 

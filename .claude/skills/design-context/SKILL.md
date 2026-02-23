@@ -138,6 +138,13 @@ Combine everything into TWO outputs for the main agent:
 ```
 ## Design Context Audit
 
+### Available Design Surfaces
+**Figma:** [connected / not connected — link if found in repo]
+**Browser:** [dev server detected at URL / not detected — check package.json scripts]
+**Agentation:** [MCP connected / not available]
+**Code:** [framework, styling approach, component library]
+**Primary surface:** [figma | browser | code-only | both]
+
 ### In the Repo
 **Documents:** [written context found]
 **External links:** [tool URLs discovered]
