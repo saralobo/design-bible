@@ -1,0 +1,623 @@
+---
+alwaysApply: true
+description: "The 17 classical design principles (hierarchy, balance, contrast, emphasis, proportion, scale, unity, variety, rhythm, repetition, pattern, movement, white space, color, lines, shapes, texture). Use when composing layouts, evaluating visual quality, or making any compositional decision."
+---
+
+# The 17 Principles of Design — Theoretical Foundation for Visual Composition
+
+> These are the foundational principles that underpin EVERY visual decision.
+> The other modules in this Design Bible are practical implementations of these principles.
+> Before creating or evaluating any composition, internalize these — they are the WHY behind the rules.
+>
+> Sources: "Universal Principles of Design" (Lidwell, Holden & Butler),
+> "Refactoring UI" (Wathan & Schoger), "Design Elements" (Timothy Samara),
+> Toptal, Figma Resource Library, NN/g, Medium/Bootcamp.
+
+---
+
+## HOW ELEMENTS AND PRINCIPLES RELATE
+
+**Elements** are the raw materials (line, shape, color, texture, space, value, form).
+**Principles** are the rules for arranging those materials into effective compositions.
+
+```
+ELEMENTS (what you use)          PRINCIPLES (how you arrange them)
+─────────────────────            ─────────────────────────────────
+Line                             Hierarchy
+Shape / Form                     Balance
+Color                            Contrast
+Texture                          Emphasis
+Space                            Proportion & Scale
+Value (light/dark)               Unity & Variety
+                                 Rhythm, Repetition & Pattern
+                                 Movement
+                                 White Space
+                                 Lines, Shapes, Texture (as compositional tools)
+```
+
+A principle without an element is abstract theory.
+An element without a principle is visual noise.
+
+---
+
+## 1. HIERARCHY
+
+**Definition**: The deliberate arrangement of elements to signal their order of importance, guiding the viewer from most to least critical.
+
+**Why it matters in UI**: Users scan — they don't read. If everything has equal visual weight, nothing communicates. Hierarchy ensures the primary action, the key information, and the navigation path are unmistakable.
+
+### PRACTICAL RULES:
+- Establish **3 levels** minimum: primary (what they see first), secondary (supporting info), tertiary (metadata/actions)
+- Use **size, weight, color, and position** together — not just one
+- The most important element gets the most visual contrast against its surroundings
+- In a screen, the eye should land on the **primary element within 1 second**
+- Test: squint at the screen — what you see first IS your hierarchy (whether intended or not)
+
+### COMMON MISTAKE:
+```
+WRONG: All text same size, same weight, same color
+       → User scans randomly, misses the primary action
+
+RIGHT: Title 28px Bold, body 16px Regular, caption 12px Gray
+       → Eye flows: title → body → caption
+```
+
+**See also**: 00-core-principles (4 Pillars), 04-typography (type scale)
+
+---
+
+## 2. BALANCE
+
+**Definition**: The distribution of visual weight across a composition so that it feels stable and intentional, not lopsided or chaotic.
+
+**Why it matters in UI**: Unbalanced layouts create subconscious tension and distrust. Users perceive balanced interfaces as more professional and reliable.
+
+### TYPES:
+- **Symmetrical**: Equal weight on both sides of a center axis. Conveys formality, stability, trust (e.g., login screens, pricing tables)
+- **Asymmetrical**: Different elements arranged to create dynamic equilibrium. Conveys energy, modernity (e.g., dashboards, marketing pages)
+- **Radial**: Elements radiate from a center point (e.g., circular menus, progress indicators)
+
+### PRACTICAL RULES:
+- If one side has a heavy element (large image, bold text), the other needs counterweight (more elements, darker color, or white space)
+- Consistent padding left = right creates implicit symmetrical balance
+- Cards in a grid: same size + equal gap = balanced by default
+- Full-width images or hero sections: center the text to maintain axis balance
+- Asymmetric layouts require **intentional** weight distribution — not accidental imbalance
+
+### COMMON MISTAKE:
+```
+WRONG: Large image on the left, tiny text on the right, nothing else
+       → Feels like the design is "falling" to the left
+
+RIGHT: Large image left + headline + CTA right (enough weight to counterbalance)
+       → Dynamic but stable
+```
+
+**See also**: 02-gestalt (symmetry and order), 03-layout-spacing (grid system)
+
+---
+
+## 3. CONTRAST
+
+**Definition**: The degree of difference between elements. The greater the difference, the easier it is to distinguish, compare, and prioritize them.
+
+**Why it matters in UI**: Contrast is the primary mechanism for accessibility and hierarchy. Without sufficient contrast, text is unreadable and interactive elements are invisible.
+
+### TYPES OF CONTRAST:
+- **Value**: Light vs dark (the most critical for readability)
+- **Color**: Complementary or opposing hues
+- **Size**: Large vs small (creates hierarchy)
+- **Weight**: Bold vs light (typography)
+- **Shape**: Rounded vs angular
+- **Density**: Packed vs spacious
+
+### PRACTICAL RULES:
+- Text contrast: minimum 4.5:1 (normal), 3:1 (large) per WCAG 2.2 AA
+- Primary CTA should have the **highest contrast** on the screen
+- Use contrast to separate sections: alternate background colors (white → gray → white)
+- Don't create contrast for decoration — create it for **communication**
+- Low contrast = deemphasized. High contrast = emphasized. Be intentional about both.
+
+### COMMON MISTAKE:
+```
+WRONG: Everything high contrast — bold text, bright colors, large sizes everywhere
+       → Nothing stands out because everything screams
+
+RIGHT: ONE high-contrast element (the CTA), rest at medium/low contrast
+       → Clear focal point
+```
+
+**See also**: 00-core-principles (Contrast pillar), 05-colors (contrast ratios), 13-accessibility (WCAG)
+
+---
+
+## 4. EMPHASIS
+
+**Definition**: The technique of making one element the dominant focal point in a composition, drawing the viewer's attention first.
+
+**Why it matters in UI**: Every screen should answer one question: "What should I do here?" Emphasis makes that answer obvious. Without a focal point, the user wanders.
+
+### PRACTICAL RULES:
+- **One primary focal point per screen section** — never two elements competing for attention
+- Achieve emphasis through: size (make it bigger), color (make it the accent), position (place it centrally or in the natural scan path), isolation (surround it with white space)
+- De-emphasize secondary elements by reducing their size, weight, or contrast
+- The primary CTA is **always** the most emphasized interactive element
+- Fine print and legal text are intentionally de-emphasized — this is correct usage of the principle
+
+### COMMON MISTAKE:
+```
+WRONG: Two buttons side by side, same size, same color, same weight
+       → User doesn't know which to click first
+
+RIGHT: Primary button filled + bold, secondary button outlined + lighter
+       → Clear emphasis on the primary action
+```
+
+**See also**: 06-buttons-cta (button hierarchy), 00-core-principles (one primary action)
+
+---
+
+## 5. PROPORTION
+
+**Definition**: The size relationship between elements within a composition. Proportion determines whether elements feel harmonious or discordant.
+
+**Why it matters in UI**: Proportion signals importance. Larger elements are perceived as more important. Disproportionate elements feel "off" even when users can't articulate why.
+
+### PRACTICAL RULES:
+- Icons within buttons: icon should be ~60-70% of the button's inner height
+- Logo in header: should not overpower the navigation — typically 24-32px height
+- Card image vs card content: maintain a ratio (e.g., 16:9 image, content fills remaining space)
+- Hero section: headline proportion should dwarf body text (e.g., 40px vs 16px = 2.5:1 ratio)
+- If an element feels "too big" or "too small," it violates proportion — trust that instinct
+- Use the type scale ratios (1.25 Major Third, 1.333 Perfect Fourth) for proportional harmony
+
+### COMMON MISTAKE:
+```
+WRONG: Icon 48px inside a 56px button → icon overwhelms the button
+RIGHT: Icon 24px inside a 56px button → icon breathes within its container
+
+WRONG: Logo 64px height in a 56px header → logo dominates everything
+RIGHT: Logo 28px height in a 56px header → logo present but not dominating
+```
+
+**See also**: 04-typography (type scale), 17-icons (icon sizing)
+
+---
+
+## 6. SCALE
+
+**Definition**: The size of elements relative to each other and to the composition as a whole. Scale creates visual importance and a sense of depth.
+
+**Why it matters in UI**: Scale is the most immediate way to establish hierarchy. Users instinctively assign more importance to larger elements. Strategic scale differences guide the eye.
+
+### PRACTICAL RULES:
+- Use scale to establish **at least 3 distinct size levels** in any composition
+- Hero/display text should be 2-3x larger than body text
+- Primary cards can be larger than secondary cards to signal priority
+- Scale down less important elements rather than scaling up important ones (prevents bloat)
+- On mobile, scale is compressed — maintain relative proportions even as absolute sizes decrease
+- Never let scale distort element integrity (e.g., stretching an image non-proportionally)
+
+### COMMON MISTAKE:
+```
+WRONG: All cards same size in a dashboard where one metric is critical
+       → The critical metric is lost among equals
+
+RIGHT: Feature card at 2x width, secondary cards at 1x
+       → Scale communicates: "THIS metric matters most"
+```
+
+**See also**: 03-layout-spacing (responsive), 18-responsiveness-constraints
+
+---
+
+## 7. UNITY
+
+**Definition**: The sense that all elements in a composition belong to the same system and work toward a common purpose. The whole feels intentional, not assembled from random parts.
+
+**Why it matters in UI**: Unity = trust. When elements feel disconnected (different styles, inconsistent spacing, mixed metaphors), users perceive the product as unpolished or unreliable.
+
+### PRACTICAL RULES:
+- Use a **consistent color palette** across all screens (max 1 accent + neutrals + semantic)
+- One typeface family (or two at most with clear roles)
+- Same border-radius across all components (e.g., 8px everywhere, or 12px everywhere — not mixed)
+- Same shadow style for all elevated elements
+- Same icon style (don't mix outline and filled icons in the same context)
+- Same spacing scale used globally (8px grid)
+- A design system IS the implementation of unity
+
+### COMMON MISTAKE:
+```
+WRONG: Card A has 8px radius, Card B has 16px radius, Button has 24px radius
+       → Three different visual languages on one screen
+
+RIGHT: All containers 12px radius, all buttons 8px radius (smaller for inline)
+       → Consistent visual language
+```
+
+**See also**: 02-gestalt (similarity), 05-colors (palette), 20-design-judgment
+
+---
+
+## 8. VARIETY
+
+**Definition**: Intentional differences between elements that create visual interest and prevent monotony. Variety is the counterbalance to unity.
+
+**Why it matters in UI**: Too much uniformity is boring and hard to scan — if everything looks the same, nothing has priority. Variety creates visual landmarks that help users navigate.
+
+### PRACTICAL RULES:
+- Vary **within the system** — different card types (horizontal, vertical, featured) using the same components
+- Alternate section backgrounds (light → dark → light) to create visual rhythm
+- Use imagery, illustration, or icons to break up text-heavy sections
+- Vary content block heights to avoid a monotonous grid
+- Variety should serve hierarchy — larger/different = more important, not just "different for fun"
+- **Too much variety = chaos**. Limit variations to 2-3 per element type
+
+### COMMON MISTAKE:
+```
+WRONG: Every section has the same layout — hero, 3 cards, CTA, repeat
+       → User stops paying attention after the second section
+
+RIGHT: Hero → 3 cards → testimonial (different layout) → 2-col feature → CTA
+       → Each section feels fresh but cohesive
+```
+
+**See also**: 20-design-judgment (varying layouts), 16-anti-patterns (generic AI slop)
+
+---
+
+## 9. RHYTHM
+
+**Definition**: A visual flow or tempo created by the patterned recurrence of elements and the spaces between them. Rhythm guides how the eye moves through a composition.
+
+**Why it matters in UI**: Rhythm makes layouts feel intentional and scannable. Regular rhythm creates predictability (good for data); flowing rhythm creates dynamism (good for marketing).
+
+### TYPES:
+- **Regular**: Same element, same spacing (e.g., list items at 16px gap)
+- **Alternating**: Two patterns that repeat (e.g., image-left/text-right → text-left/image-right)
+- **Progressive**: Elements change gradually (e.g., cards that get smaller as priority decreases)
+- **Flowing**: Organic, curved arrangements (e.g., onboarding illustrations that flow down the page)
+- **Random**: No discernible pattern (rarely appropriate in UI — use with extreme care)
+
+### PRACTICAL RULES:
+- The spacing scale (8, 16, 24, 32, 48) IS your rhythm system
+- Consistent gap between list items creates regular rhythm
+- Section spacing should follow a predictable pattern (e.g., always 48px between major sections)
+- Break rhythm intentionally to create emphasis (a larger gap before a CTA signals "this is different")
+- F-pattern and Z-pattern scanning are the natural rhythms of web reading
+
+### COMMON MISTAKE:
+```
+WRONG: Section gaps vary randomly — 24px, 48px, 12px, 36px
+       → No rhythm, feels chaotic
+
+RIGHT: All section gaps 48px, subsection gaps 24px, item gaps 16px
+       → Clear 3-level rhythm
+```
+
+**See also**: 03-layout-spacing (spacing scale), 11-motion-transitions (temporal rhythm)
+
+---
+
+## 10. REPETITION
+
+**Definition**: The deliberate reuse of visual elements (colors, shapes, textures, fonts, spacing) to create consistency and reinforce relationships.
+
+**Why it matters in UI**: Repetition trains users. When a blue button always means "primary action," users learn the pattern and navigate faster. Repetition IS learnability.
+
+### PRACTICAL RULES:
+- **All primary buttons** must look identical (same color, radius, height, font weight)
+- **All headings at the same level** must use the same type treatment
+- **All cards** in a list must share the same structure (image size, padding, text hierarchy)
+- Navigation patterns repeat across all screens (same position, same style)
+- If you introduce a visual element once, either repeat it or remove it — a one-off feels accidental
+- Repetition + small variation = rhythm (see Principle 9)
+
+### COMMON MISTAKE:
+```
+WRONG: Primary button on Screen A is rounded, on Screen B is square
+       → User has to re-learn the interface on every screen
+
+RIGHT: Primary button is ALWAYS 48px height, 8px radius, filled accent color
+       → User knows what to expect
+```
+
+**See also**: 02-gestalt (similarity), 06-buttons-cta (button consistency)
+
+---
+
+## 11. PATTERN
+
+**Definition**: The intentional repetition of multiple design elements working together to form a recognizable visual system. Patterns are repetition at a higher level of complexity.
+
+**Why it matters in UI**: UI patterns are the learned conventions users bring from other apps. Following established patterns (top nav, bottom tabs, pull-to-refresh) reduces cognitive load. Breaking them creates friction.
+
+### PRACTICAL RULES:
+- Follow **platform conventions**: bottom tab bar on mobile, top nav on web, sidebar on desktop apps
+- Card patterns: thumbnail + title + description + action is a learned pattern — don't reinvent without reason
+- Form patterns: label above input, error below, submit at bottom — users expect this
+- List patterns: consistent row height, left-aligned content, right-aligned metadata/chevron
+- When you MUST break a pattern, make the new pattern learnable within one interaction
+- Document your patterns in a design system — patterns only work when they're consistent
+
+### COMMON MISTAKE:
+```
+WRONG: Settings uses a list pattern, but some items are cards, some are toggles
+       inline, some are full-width buttons → No recognizable pattern
+
+RIGHT: All settings items use the same row pattern (label + control right-aligned)
+       → Scannable, predictable, fast
+```
+
+**See also**: 08-navigation (nav patterns), 09-cards-lists (card/list patterns), 01-ux-laws (Jakob's Law)
+
+---
+
+## 12. MOVEMENT
+
+**Definition**: The path the viewer's eye follows through a composition, directed by the arrangement of visual elements. Movement is how you control the viewing sequence.
+
+**Why it matters in UI**: If you can't control where the eye goes, you can't control what the user understands or does. Movement ensures users see the most important content first and find CTAs naturally.
+
+### PRACTICAL RULES:
+- Design for natural scan patterns: **F-pattern** (text-heavy pages), **Z-pattern** (minimal pages)
+- Place the primary CTA in the **terminal position** of the scan path (bottom-right for Z, end of content for F)
+- Use visual weight (size, color, contrast) to create "stepping stones" the eye follows
+- Leading lines (explicit or implied) direct the eye toward the focal point
+- On mobile, movement is predominantly **top-to-bottom** — place critical info above the fold
+- Animation and motion create literal movement — use them to direct attention, not distract
+
+### COMMON MISTAKE:
+```
+WRONG: CTA placed top-left, body content below, image bottom-right
+       → Eye path is Z but CTA is at the START, not the END
+
+RIGHT: Headline top-left → supporting image → body text → CTA bottom
+       → Eye naturally arrives at the CTA after absorbing the message
+```
+
+**See also**: 11-motion-transitions (animated movement), 00-core-principles (F-pattern)
+
+---
+
+## 13. WHITE SPACE (Negative Space)
+
+**Definition**: The empty or unmarked areas in a composition — between elements, around elements, and within elements. White space is not wasted space; it is an active compositional tool.
+
+**Why it matters in UI**: White space controls density, improves readability, creates breathing room, and signals importance. Premium apps feel premium largely because of generous white space.
+
+### PRACTICAL RULES:
+- **More white space around an element = more perceived importance**
+- Content should fill no more than 60-70% of the viewport — the remaining 30-40% is breathing room
+- Padding inside cards: at least 16px (preferably 24px)
+- Section separators: use white space (32-48px gap) instead of explicit divider lines when possible
+- Don't fear empty space — **fear cramped space**
+- White space does NOT mean literally white — it means "unused by content" (can be any background color)
+- The luxury brands test: Apple, Linear, Stripe all use generous white space as a design strategy
+
+### COMMON MISTAKE:
+```
+WRONG: Every pixel filled with content, cards touching each other, no padding
+       → Feels cheap, overwhelming, hard to scan
+
+RIGHT: Generous padding, clear gaps between sections, content island in a sea of space
+       → Feels premium, focused, easy to scan
+```
+
+**See also**: 03-layout-spacing (spacing scale), 20-design-judgment (Lesson 4: whitespace)
+
+---
+
+## 14. COLOR (as Compositional Principle)
+
+**Definition**: The strategic use of hue, saturation, and value to create mood, guide attention, communicate meaning, and establish visual hierarchy within a composition.
+
+**Why it matters in UI**: Color is the fastest-processing visual property. Users register color before shape, size, or text. Used well, it clarifies. Used poorly, it creates noise.
+
+### PRACTICAL RULES:
+- **60-30-10 rule**: 60% dominant color (usually neutral), 30% secondary, 10% accent
+- Accent color = primary action color. Use it for CTAs, active states, links — and almost nothing else
+- Limit non-neutral colors to **2 maximum** on any screen (accent + one status)
+- Color for meaning: red = error/destructive, green = success, yellow/orange = warning, blue = info
+- Don't use semantic colors for decoration (no green text just because "green = positive vibes")
+- Dark mode: reduce saturation and brightness; never invert pure black/white
+- Color creates grouping: same-colored elements are perceived as related (Gestalt similarity)
+
+### COMMON MISTAKE:
+```
+WRONG: 5 different accent colors on one screen — blue buttons, green labels,
+       orange badges, purple links, red icons → Color soup
+
+RIGHT: Blue accent for ALL interactive elements, gray for content, red only for errors
+       → Color communicates function, not decoration
+```
+
+**See also**: 05-colors (full color system), 13-accessibility (contrast), 20-design-judgment (Lesson 1)
+
+---
+
+## 15. LINES
+
+**Definition**: Explicit or implied marks that connect, divide, direct, or enclose areas in a composition. In UI, lines are structural tools that organize information.
+
+**Why it matters in UI**: Lines create structure without adding visual weight. Implied lines (created by alignment) are even more powerful than drawn lines. Every grid is a system of invisible lines.
+
+### TYPES IN UI:
+- **Explicit lines**: Dividers, borders, underlines, rules (1px, subtle opacity)
+- **Implied lines**: Created by element alignment — a left-aligned column of text creates an invisible vertical line
+- **Leading lines**: Direct the eye toward a focal point (e.g., a perspective photo pointing toward the CTA)
+- **Contour lines**: Borders and outlines that define element shapes (e.g., input field borders)
+
+### PRACTICAL RULES:
+- Prefer **implied lines** (alignment) over explicit lines (dividers) when possible — cleaner, lighter
+- When using explicit dividers: 1px, low opacity (5-10%), never full-width if content has horizontal padding
+- Horizontal lines separate content vertically; vertical lines separate content horizontally
+- Consistent left-alignment creates a strong implicit vertical line that anchors the layout
+- Grid lines are invisible but essential — they are the skeleton of every layout
+- Don't overuse borders — if proximity and background already group elements, a border is redundant
+
+### COMMON MISTAKE:
+```
+WRONG: Every card has a 2px solid border + 1px dividers between every row inside
+       → Visual noise, heavy, cluttered
+
+RIGHT: Cards use background fill + shadow (no border), subtle dividers only where needed
+       → Clean, modern, relies on proximity and region instead of lines
+```
+
+**See also**: 02-gestalt (continuity), 03-layout-spacing (grid), 09-cards-lists
+
+---
+
+## 16. SHAPES AND FORM
+
+**Definition**: Shapes are enclosed two-dimensional areas (geometric or organic). Form adds the illusion of three dimensions. In UI, shapes communicate personality and function.
+
+**Why it matters in UI**: Shape language creates emotional associations. Rounded shapes feel friendly and approachable. Angular shapes feel precise and technical. Consistent shape language creates brand identity.
+
+### SHAPE ASSOCIATIONS:
+| Shape | Communicates | UI Usage |
+|---|---|---|
+| **Circle** | Unity, completion, friendliness | Avatars, FABs, progress indicators |
+| **Rectangle** | Stability, structure, reliability | Cards, containers, buttons, inputs |
+| **Rounded rectangle** | Modern, approachable, safe | Most UI components (iOS/Material standard) |
+| **Triangle** | Direction, action, warning | Arrows, dropdowns, warning icons |
+| **Organic/blob** | Playfulness, creativity, humanity | Illustrations, onboarding, marketing |
+
+### PRACTICAL RULES:
+- Choose **one shape language** for the product and be consistent (e.g., all 8px radius = modern but structured)
+- Circular elements: width MUST equal height, cornerRadius = width/2. Never oval.
+- Don't mix geometric and organic shapes in the same functional context
+- Elevation (shadows) creates the illusion of form (3D) — use consistently per elevation level
+- Shape contrast (a circle among rectangles) creates emphasis — use intentionally
+- Interactive elements should have recognizable, tappable shapes (not abstract blobs)
+
+### COMMON MISTAKE:
+```
+WRONG: Button is oval (width ≠ height but cornerRadius = height/2)
+       → Unintentional shape, looks like a bug
+
+RIGHT: Button is rounded rectangle (consistent radius) OR perfect circle (w = h)
+       → Intentional shape, clear affordance
+```
+
+**See also**: 06-buttons-cta (button shapes), 16-anti-patterns (AP-01 cylindrical button), 17-icons
+
+---
+
+## 17. TEXTURE
+
+**Definition**: The visual or tactile quality of a surface. In digital UI, texture refers to visual treatment that creates depth, warmth, or character — from subtle grain to glassmorphism.
+
+**Why it matters in UI**: Texture adds depth and personality to flat digital interfaces. Used sparingly, it creates a premium feel. Overused, it creates visual noise.
+
+### TYPES IN DIGITAL UI:
+- **Subtle grain/noise**: Adds warmth to gradients and solid backgrounds (1-3% opacity)
+- **Glassmorphism**: Frosted glass effect (backdrop-blur + transparency) — creates depth
+- **Shadows**: Simulate light and depth, creating layered form
+- **Gradient**: Smooth color transitions that add visual richness
+- **Pattern overlay**: Subtle repeating pattern on backgrounds for visual interest
+- **Photography/imagery**: Real textures in photos provide visual richness
+
+### PRACTICAL RULES:
+- In most UI, texture should be **background-level** — never competing with content
+- Subtle over bold: 1-3% noise, light shadows, gentle gradients — not heavy textures
+- Glass effects: ensure text on top maintains WCAG contrast (backdrop-blur is not enough)
+- Shadows should follow a consistent elevation system (see Gestalt figure-ground)
+- Don't add texture to compensate for poor hierarchy — fix the hierarchy first
+- Flat design is not "no texture" — it's "texture through color, spacing, and type" instead of skeuomorphism
+- If removing the texture makes the design BETTER, remove it
+
+### COMMON MISTAKE:
+```
+WRONG: Heavy noise overlay on all backgrounds + drop shadows on everything
+       + gradient on every card → Visually exhausting, dated
+
+RIGHT: Clean backgrounds, one subtle gradient on the hero, consistent shadows
+       only on elevated elements → Modern, focused, texture serves the design
+```
+
+**See also**: 02-gestalt (figure-ground, elevation levels), 05-colors (gradients)
+
+---
+
+## HOW PRINCIPLES INTERACT
+
+No principle works alone. The power is in their interaction:
+
+| Principle A | + Principle B | = Result |
+|---|---|---|
+| **Contrast** | + **Emphasis** | High contrast creates the focal point |
+| **Repetition** | + **Unity** | Repeated elements unify the composition |
+| **Variety** | + **Rhythm** | Varied elements with consistent spacing create flow |
+| **Scale** | + **Hierarchy** | Larger elements are perceived as more important |
+| **White space** | + **Emphasis** | Isolation through space draws attention |
+| **Balance** | + **Movement** | Balanced weight still guides the eye directionally |
+| **Color** | + **Contrast** | Color difference is the primary contrast mechanism |
+| **Lines** | + **Movement** | Lines direct the eye path through the composition |
+| **Shapes** | + **Unity** | Consistent shape language unifies visual identity |
+| **Pattern** | + **Repetition** | Patterns are systems of repeated elements |
+| **Proportion** | + **Balance** | Proportional elements feel balanced naturally |
+| **Texture** | + **Variety** | Texture adds richness without structural variety |
+| **Rhythm** | + **Movement** | Rhythmic spacing creates directional flow |
+
+---
+
+## COMPOSITION CHECKLIST
+
+Before finalizing any screen, evaluate against these questions:
+
+### Hierarchy & Emphasis
+- [ ] Can I name the #1 element on this screen within 1 second?
+- [ ] Is there a clear primary → secondary → tertiary visual order?
+- [ ] Is the primary CTA the most emphasized interactive element?
+
+### Balance & Proportion
+- [ ] Does the layout feel stable (symmetrical) or intentionally dynamic (asymmetrical)?
+- [ ] Are element sizes proportional to their importance?
+- [ ] Do icons, text, and containers maintain harmonious proportions?
+
+### Contrast & Color
+- [ ] Does text meet WCAG contrast minimums (4.5:1 / 3:1)?
+- [ ] Is there exactly ONE accent color used for primary actions?
+- [ ] Are non-neutral colors limited to 2 (accent + status)?
+
+### Unity & Variety
+- [ ] Do all elements feel like they belong to the same visual system?
+- [ ] Is there enough variation to prevent monotony and aid scanning?
+- [ ] Are border-radius, shadows, and spacing consistent across components?
+
+### Rhythm & Movement
+- [ ] Does spacing follow a predictable pattern (e.g., 16/24/48)?
+- [ ] Does the eye naturally flow from primary to CTA?
+- [ ] Do scan patterns (F or Z) align with content placement?
+
+### White Space, Lines & Texture
+- [ ] Is there breathing room between sections (30-40% visible background)?
+- [ ] Am I using alignment (implied lines) instead of explicit dividers where possible?
+- [ ] Does texture enhance or compete with content?
+
+### Shapes & Pattern
+- [ ] Is the shape language consistent (same radius, same style)?
+- [ ] Do UI patterns follow platform conventions?
+- [ ] Are all circular elements truly circular (width = height)?
+
+---
+
+## REFERENCE SOURCES
+
+### Books
+- "Universal Principles of Design" — Lidwell, Holden & Butler
+- "Refactoring UI" — Adam Wathan & Steve Schoger
+- "Design Elements: Understanding the Rules and Knowing When to Break Them" — Timothy Samara
+- "Don't Make Me Think" — Steve Krug
+- "The Design of Everyday Things" — Don Norman
+
+### Articles
+- [Toptal — The 12 Principles of Design](https://www.toptal.com/designers/ui/principles-of-design)
+- [Figma — 13 Core Graphic Design Principles](https://www.figma.com/resource-library/graphic-design-principles/)
+- [NN/g — 5 Principles of Visual Design in UX](https://www.nngroup.com/articles/principles-visual-design/)
+- [Medium/Bootcamp — The Core of UX/UI Composition](https://medium.com/design-bootcamp/the-core-of-ux-ui-composition-60f4414d7cc9)
+- [Medium — Elements & Principles of Design Explained](https://medium.com/@succynice/elements-principles-of-design-explained-4a84824244c0)
+- [Medium — Visual Design Principles for Web Design](https://medium.com/@juddblck2/visual-design-principles-for-web-design-b43c3fe23268)
+- [UC Berkeley — Design Fundamentals: Elements & Principles](https://guides.lib.berkeley.edu/design)
